@@ -1,0 +1,19 @@
+class Solution {
+    public boolean isPalindrome(int x) {
+        String s = String.valueOf(x); // Convert to String
+        int n = s.length(); // Store the String length to int n for traversing 
+
+        for (int i=0; i<n/2; i++) { 
+            /*s.charAt(i) will traverse from the start of the string while on the other hand s.charAt(n-i-1)
+             will traverse from the end of the string & if both are not equal we will return false*/
+            if (s.charAt(i) != s.charAt(n-i-1)) return false; 
+        }
+
+        // if the above conditions become false it means the number is palindrome & we return true
+        return true;
+    }
+public static void main(String[] args) {
+    Solution obj = new Solution();
+    System.out.println(obj.isPalindrome(12344321));
+}
+}
