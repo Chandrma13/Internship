@@ -1,0 +1,20 @@
+class Solution{ //introducing a Solution class
+  /*introducing twoSum method with parameters nums and target  */
+    public int[] twoSum(int[] nums, int target) {  
+        //traversing array through integer i in array nums to find first element
+        for (int i = 0; i < nums.length; i++) {
+            //traversing array through integer j which is next element of i in array nums to find second element
+            for (int j = i + 1; j < nums.length; j++) {
+            //checking if sum of element at index i and index j is equal to the target or not
+                if (nums[i] + nums[j] == target) {
+                    //if sum of i and j comes equal to target we return new array of i and j 
+                    //which are the index of elements whose sum is equal to the target
+                    return new int[] {i, j};
+                }
+            }
+        }
+        //if we do not find any pair whose sum is equal to target return empty array
+        return new int[] {};
+    }
+   
+}
