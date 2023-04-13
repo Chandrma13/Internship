@@ -1,0 +1,35 @@
+/**
+* Definition for a binary tree node.
+* public class TreeNode {
+*     int val;
+*     TreeNode left;
+*     TreeNode right;
+*     TreeNode() {}
+*     TreeNode(int val) { this.val = val; }
+*     TreeNode(int val, TreeNode left, TreeNode right) {
+*         this.val = val;
+*         this.left = left;
+*         this.right = right;
+*     }
+* }
+*/
+class Solution {
+    //introducing method isSameTree with p as first binary tree's node and q as second
+   public boolean isSameTree(TreeNode p, TreeNode q) { 
+    //if p & q both are pointing towards null hence binary tree is empty or fully traversed, hence equal.
+       if(p==null && q==null) return true; 
+
+    /*if p is pointing towards another node but q is pointing towards
+     null or vice versa we return false as they will not be considered as same/equal binary trees*/
+       if(p!=null && q==null || p==null && q!=null) return false;
+
+    /*if value in p nodes are not equal to values in q nodes we return false 
+      as they will not be considered as same/equal binary trees*/
+       if(p.val!=q.val) return false;
+      
+    /*now we will use recursion for traversing through all the left nodes and right nodes of both trees
+       also we have used && operator as it will only be considered same if both left nodes and right nodes
+       of the tree have same structure and values */
+       return isSameTree(p.left,q.left) && isSameTree(p.right,q.right);
+   }
+} 
