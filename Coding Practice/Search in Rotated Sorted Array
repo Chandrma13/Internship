@@ -1,0 +1,37 @@
+public class Sol{
+    public int search(int[] nums, int target) {
+        int start = 0; //initialize variable start for the starting index of array 
+        int end = nums.length - 1; //initialize the variable end for the ending index of array
+        while (start <= end){ 
+            int mid = (start + end) / 2; //initializing a variable mid that will store the mid index while performing a binary search
+            if (nums[mid] == target) //if index mid is equal to target return mid 
+                return mid;
+        
+            if (nums[start] <= nums[mid]){ //because the array is twisted check if element at start is less than or equals to mid if true:
+                //check two cases:
+                //if target is less than the element at mid index of array **AND** target is greater than equals to element at starting index 
+                if (target < nums[mid] && target >= nums[start]) 
+                    {end = mid - 1;}//update the value of end as mid-1 because the target is between num[start] and num[mid]
+                 else{
+                    start = mid + 1;}//if the above condition is not true update the value of start as mid+1 
+            } 
+                
+            if (nums[mid] <= nums[end]){//if mid index is smaller than the end index of the array then:
+               //check two cases:
+                //if target is more than the element at mid index of array **AND** target is less than equals to element at ending index 
+                if (target > nums[mid] && target <= nums[end])
+                   { start = mid + 1;} //update the value of start as mid+1 because the target is between num[mid] and num[end]
+                 else
+                   { end = mid - 1;}//if the above condition is not true update the value of end as mid-1
+            }
+        }
+        return -1; //return -1 if target is not present in the array nums
+    }
+    public static void main(String[] args) {
+        //initialise the parameter variables and call the function
+        int nums[]={4,5,6,7,0,1,2};
+        int target = 0;
+        Sol s = new Sol();
+        System.out.println(s.search(nums, target));
+    }
+}
