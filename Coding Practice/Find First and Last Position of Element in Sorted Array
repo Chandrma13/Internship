@@ -1,0 +1,49 @@
+import java.util.Arrays;
+
+public class Sol{
+    public int[] searchRange(int[] nums, int target) {
+        int[] result = new int[2];  //Introduce a new array that will store the result
+        result[0] = findFirst(nums, target); //Store index of target when it appeared first
+        result[1] = findLast(nums, target); //Store index of target when it appeared last
+        return result;
+    }
+    //function to search the index of first occurance of target by performing binary search because it is given that array is sorted
+    private int findFirst(int[] nums, int target){
+        int idx = -1; //initialize a variable idx that will return the index of first occurance of target or -1
+        int start = 0;//initialize a variable start that stores the starting index of the array
+        int end = nums.length - 1; //initialize a variable end that stores the ending index of the array
+        while(start <= end){ 
+            int mid = (start + end) / 2; //initialize a variable that will store mid index 
+            if(nums[mid] >= target){ //if the element at mid index is greater than equal to target 
+                end = mid - 1;  //update the value of end to mid -1 because the target is present in the first half of the array
+            }else{
+                start = mid + 1;//if the above condition is false update the value of start because the target is not in the first half of the array
+            }
+            if(nums[mid] == target) idx = mid;//now if index of mid is equal to target update the value of idx to mid
+        }
+        return idx;//return the updated value of idx or return -1 if target is not in the array 
+    }
+    //function to search the index of last occurance of target by performing binary search because it is given that array is sorted
+    private int findLast(int[] nums, int target){
+        int idx = -1; //initialize a variable idx that will return the index of first occurance of target or -1
+        int start = 0;//initialize a variable start that stores the starting index of the array
+        int end = nums.length - 1;//initialize a variable end that stores the ending index of the array
+        while(start <= end){
+            int mid = (start + end) / 2;//initialize a variable that will store mid index 
+            if(nums[mid] <= target){//if the element at mid index is smaller than equal to target 
+                start = mid + 1;  //update the value of start to mid -1 because the target is present in the second half of the array
+            }else{
+                end = mid - 1; //if the above condition is false update the value of end because the target is not in the second half of the array
+            }
+            if(nums[mid] == target) idx = mid; //now if index of mid is equal to target update the value of idx to mid
+        }
+        return idx;//return the updated value of idx or return -1 if target is not in the array 
+    }
+public static void main(String[] args) {
+    //initialize the parameter variables and call the function
+    int nums[]={5,7,7,8,8,10};
+    int target = 8;
+    Sol s = new Sol();
+    System.out.println( Arrays.toString(s.searchRange(nums, target))); 
+   
+}}
