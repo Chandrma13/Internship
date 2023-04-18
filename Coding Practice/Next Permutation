@@ -1,0 +1,43 @@
+public class Sol{
+    public void nextPermutation(int[] A) {
+        if(A == null || A.length <= 1) return;//If A is null or length of Array A is less than equals to 1 it means the array does not have any element thus we return 
+        int i = A.length - 2;   //declaring "i" an integer that is storing the index of second last element of the array A
+        while(i >= 0 && A[i] >= A[i + 1]) i--; // Using while loop to find 1st element i that breaks descending order
+        if(i >= 0) {                           // If not entirely descending means we found the point where A[i]<A[i+1]
+            int j = A.length - 1;              // declaring a variable j that will store the index of last element of array
+            while(A[j] <= A[i]) j--;           // Now loop until A[j] becomes greater than A[i]
+            swap(A, i, j);                     // Call Swap function and Switch i and j
+        }
+        reverse(A, i + 1, A.length - 1);       // Call Reverse function and Reverse the descending sequence
+    }
+    
+    public void swap(int[] A, int i, int j) { //Swapping function for swapping A[i] and A[j] by storing them in a temporary variable tmp
+        int tmp = A[i]; //initialising tmp as A[i]
+        A[i] = A[j];    //now updating A[i] as A[j]
+        A[j] = tmp;     //now updating A[j] as temp
+    }
+    
+    public void reverse(int[] A, int i, int j) {//function to reverse the array between i and j
+        while(i < j) swap(A, i++, j--);
+    }
+    //function to print the array
+    public static void printArray(int[] A) {
+        System.out.print("["); //statement to print the opening bracket, using print instead of println here because we have to print all the elements right after the opening bracket
+        for(int i = 0; i < A.length; i++) {
+            if(i > 0) System.out.print(", "); //statement to print ","after every index, using print instead of println here because we have to print all the elements in the same line 
+            System.out.print(A[i]); //printing elements of array, again using print instead of println to avoid line break
+        }
+        System.out.println("]");//finally prinitng the closing bracket of the array using println
+    }
+    public static void main(String[] args) {
+        //initialise the array and call the function
+        int[] A = {1, 2, 3}; 
+        System.out.print("Original permutation: ");
+        printArray(A); //it will print the original array
+       
+        //Now calling the nextPermutation function to print the next permutation of array
+        Sol s = new Sol();
+        s.nextPermutation(A);
+        System.out.print("Next permutation: ");
+        printArray(A);
+    }}
