@@ -1,0 +1,50 @@
+import java.util.*;
+class Solution {
+    public int calculate(String s) {
+        int sum = 0; //initialize a variable sum
+        int sign = 1; //initialize a variable sign that will store the current sign of character while iterating
+        Stack<Integer>st = new Stack<>(); //Declaring a stack st
+        for(int i = 0;i<s.length();i++){ //Using a for loop to traverse through the String s
+            char ch = s.charAt(i); // using character type variable ch to traverse through each index of string i 
+            if(Character.isDigit(ch)){ //Check if ch is a digit
+                int val = 0; //initialising a variable val 
+                //using while loop to traverse through string s until i reaches the last index or the next index is not a digit
+                 while(i < s.length() && Character.isDigit(s.charAt(i))){
+                     val = val * 10 + (s.charAt(i) - '0');//update val
+                     i++; //increase the value of i by 1
+                 }
+             i--; //it will update the value of i after we found a non digit character in above while loop
+             val = val * sign; //updating the value of val
+             sign = 1; //update the value of sign to 1
+             sum += val; //update the value of sum by adding val to it
+            }
+            //if ch is an opening paranthesis
+            else if(ch == '('){
+              st.push(sum); //pushing the current value of sum onto the stack
+              st.push(sign);//pushing the current value of sign onto the stack
+              //resetting their values to 0 and 1
+                sum = 0;
+                sign = 1;
+            }
+            //if ch is an closing paranthesis
+            else if(ch == ')'){
+                sum *= st.pop();//update the value of sum by multiplying the value popped from the stack that is sign
+                sum += st.pop();//now update the value of sum by adding the value popped from the stack(updated previous sum)
+            }
+            //check if the ch is '-'
+            else if(ch == '-'){
+                sign*= -1;//update the value of sign to negative
+            }
+        }
+        return sum; //finally return the updated value of sum
+
+    }
+    public static void main(String[] args) {
+       // initialise the parameter variable string s and call the function
+        String s = "1 + (2 - 3) + 4";
+        Solution solution = new Solution();
+        int result = solution.calculate(s);
+        System.out.println("Result: " + result);
+    }
+    
+}
