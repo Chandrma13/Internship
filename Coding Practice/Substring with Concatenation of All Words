@@ -1,0 +1,55 @@
+import java.util.*;
+
+class Solution {
+    public List<Integer> findSubstring(String s, String[] words) {
+        // create a map to count the frequency of each word in words
+        final Map<String, Integer> counts = new HashMap<>();
+        for (final String word : words) {
+            counts.put(word, counts.getOrDefault(word, 0) + 1);
+        }
+        
+        // create a list to store the starting indices of substrings that contain all words in words
+        final List<Integer> indexes = new ArrayList<>();
+        
+        // get the length of s and the number and length of words
+        final int n = s.length(), num = words.length, len = words[0].length();
+        
+        // loop through each possible starting index of a substring that contains all words in words
+        for (int i = 0; i < n - num * len + 1; i++) {
+            // create a map to count the frequency of each word in the current substring
+            final Map<String, Integer> seen = new HashMap<>();
+            
+            // loop through each word in words and check if it appears in the current substring
+            int j = 0;
+            while (j < num) {
+                final String word = s.substring(i + j * len, i + (j + 1) * len);
+                if (counts.containsKey(word)) {
+                    seen.put(word, seen.getOrDefault(word, 0) + 1);
+                    if (seen.get(word) > counts.getOrDefault(word, 0)) {
+                        // if the current word appears too many times, the substring is not valid, so break out of the loop
+                        break;
+                    }
+                } else {
+                    // if the current word is not in words, the substring is not valid, so break out of the loop
+                    break;
+                }
+                j++;
+            }
+            
+            // if the loop completed without breaking, the substring is valid, so add its starting index to the list
+            if (j == num) {
+                indexes.add(i);
+            }
+        }
+        
+        // return the list of starting indices of valid substrings
+        return indexes;
+    }
+    public static void main(String[] args) {
+        //initialize the values of parameter varaibles String s and String[] words and call the function
+        String s ="barfoofoobarthefoobarman";
+        String[] words ={"bar","foo","the"};
+        Solution sol = new Solution();
+        System.out.println(sol.findSubstring(s, words));
+    }
+}
