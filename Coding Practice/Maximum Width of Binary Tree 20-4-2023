@@ -1,0 +1,73 @@
+import java.util.*;
+//class to define a binary tree
+ class TreeNode {
+      int val;
+      TreeNode left;
+      TreeNode right;
+      TreeNode() {}
+      TreeNode(int val) { this.val = val; }
+      TreeNode(int val, TreeNode left, TreeNode right) {
+          this.val = val;
+          this.left = left;
+          this.right = right;
+      }
+  }
+ 
+public class Sol {
+    //function to calculate the maximum width of a binary tree
+public int widthOfBinaryTree(TreeNode root) {
+    //using the breadth first search approach
+    Queue<TreeNode> q = new LinkedList<>(); //make a queue q to store the nodes
+    Queue<Integer> qIndex = new LinkedList<>();//make a queue qIndex to store the index of q node
+    q.add(root); //add the root node to q
+    qIndex.add(1); //store index, assuming root's index is 1
+    int max = 0; //initialize a variable max that will store the maximum width
+    while(!q.isEmpty()) //now iterate until q is not empty
+    {
+        int size = q.size(); //initialize a variable 'size' that will store the size of q
+        int start = 0, end = 0; //initialize two variables start and end to 0
+        for(int i=0; i<size; i++)//Iterate through the current level nodes
+        {
+            TreeNode node = q.remove();//remove the current node from the q
+            int index = qIndex.remove();//remove the corresponding index of the current node from qIndex
+            if(i==0) start = index; //if current node is the first node in the level update the value of start to index
+            if(i==size-1) end = index; //if current node is the last node in the level update the value of end to index
+            if(node.left!=null)//if current node has a left child
+            {
+                q.add(node.left);//add the left child to q
+                /*In breadth first search the index of the left node corresponding to the current node can be
+                 * calculated as 2*index of the current node i.e assume the index of the current node is 1 so the 
+                 * index of its left node would be 2*1 that is 2 
+                 */
+                qIndex.add(2*index); //add the corresponding index of the left child to qIndex 
+            }
+            
+            if(node.right!=null)//if current node has a right child
+            {
+                q.add(node.right);//add the right child to q
+                /*In breadth first search the index of the right node corresponding to the current node can be
+                 * calculated as 2*index of the current node + 1. i.e assume the index of the current node is 1 so the 
+                 * index of its left node would be 2*1 + 1 that is 3
+                 */
+                qIndex.add(2*index+1); //add the corresponding index of the right child to qIndex
+            }
+        }
+        max = Math.max(max, end - start + 1);//update the value of max 
+    }
+    return max;    //return the updated value of max
+}
+public static void main(String[] args) {
+    // Initialize a binary tree
+    TreeNode root = new TreeNode(1);
+    root.left = new TreeNode(2);
+    root.right = new TreeNode(3);
+    root.left.left = new TreeNode(4);
+    root.left.right = new TreeNode(5);
+    root.right.right = new TreeNode(7);
+
+    // call the function and print the result
+    Sol s = new Sol();
+ System.out.println("Maximum width of the binary tree: " + s.widthOfBinaryTree(root));
+}
+
+}
