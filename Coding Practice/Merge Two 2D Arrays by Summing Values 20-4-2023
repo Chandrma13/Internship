@@ -1,0 +1,55 @@
+import java.util.*;
+class Solution {
+    public int[][] mergeArrays(int[][] nums1, int[][] nums2) {
+        // Creating a HashMap to store the merged arrays
+        Map<Integer,Integer> map = new HashMap<>();
+        
+        // Iterating through nums1 array and adding its values to the map
+        for(int[] a : nums1){
+            map.put(a[0],a[1]);
+        }
+        
+        // Iterating through nums2 and merging its values with the values in the map
+        for(int[] a : nums2){
+            if(map.containsKey(a[0])){ //if map already contains the key 
+                map.put(a[0], map.get(a[0])+a[1]);//add map contains the key add the value of nums2 to the value of nums1 stored in the map 
+            }
+            else{
+                map.put(a[0],a[1]);//else add the pair to the map
+            }
+        }
+        
+        // Creating a 2D array to store the merged and sorted array
+        int ans[][] = new int[map.size()][2];
+        int i=0;
+        
+        // Iterating through the keys in the map and storing the key-value pairs in the ans array
+        for(int key : map.keySet()){
+            ans[i++] = new int[] {key,map.get(key)};
+        }
+        
+        // Sorting the ans array in ascending order based on the keys
+        Arrays.sort(ans, (a,b) -> a[0]-b[0]);
+        
+        // Returning the merged and sorted array
+        return ans;
+    }
+     public static void main(String[] args) {
+        //initialize nums1 and nums2 and call the function
+        int[][] nums1 = {{1, 3}, {2, 2}, {5, 1}};
+        int[][] nums2 = {{2, 1}, {3, 2}, {4, 1}, {5, 2}};
+    
+        Solution sol = new Solution();
+        int[][] merged = sol.mergeArrays(nums1, nums2);
+    
+        // print the merged array
+        System.out.print("{");
+        for (int i = 0; i < merged.length; i++) {
+         System.out.print(Arrays.toString(merged[i]) );
+             if(i< merged.length -1) {
+            System.out.print(", ");
+             }
+            }System.out.println("}");
+        }
+    }
+    
