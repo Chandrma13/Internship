@@ -1,0 +1,27 @@
+import java.util.*;
+class Solution {
+    public List<String> fizzBuzz(int n) {
+        //create a new array list ans that will store the answer after dividing it by 15,3 and 5 and store "Fizzbuzz","Fizz","Buzz" and updated value of i accordingly
+        List<String> ans = new ArrayList<>();
+        for (int i = 1; i <= n; i++) {//creating a loop that will start with 1 and run until it reaches n
+            if (i % 15 == 0) { //if i is fully divisible by 15 i.e it leaves remainder of 0 when divided by 15 
+                ans.add("FizzBuzz"); // if above condition is true add "Fizzbuzz" to the arraylist ans
+            } else if (i % 3 == 0) {//if i is fully divisible by 3 i.e it leaves remainder of 0 when divided by 3
+                ans.add("Fizz");   // if above condition is true add "Fizz" to the arraylist ans
+            } else if (i % 5 == 0) {//if i is fully divisible by 5 i.e it leaves remainder of 0 when divided by 5 
+                ans.add("Buzz"); // if above condition is true add "Buzz" to the arraylist ans
+            } else {
+                ans.add(String.valueOf(i));//If none of the above conditions are true add the current value of i to Arraylist ans
+            }
+        }
+                         
+        return ans; //return the updated Arraylist ans            
+    }
+    public static void main(String[] args) {
+        //Initialize n and call the function
+        int n = 17;
+        Solution s = new Solution();
+        System.out.println(s.fizzBuzz(n));
+    }
+}
+
