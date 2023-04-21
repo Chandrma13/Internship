@@ -1,0 +1,32 @@
+import java.util.*;
+class Solution {
+    public boolean isHappy(int n) {
+        // Create a hashset to keep track of the numbers that have already been seen so that it wont repeat.
+        Set<Integer> seen = new HashSet<>();
+        
+        // Loop until either n becomes 1 (in which case n is a happy number) or n is seen again (in which case n is not a happy number)
+
+        while (n != 1 && !seen.contains(n)) {
+            // Add n to the set of seen numbers
+            seen.add(n);
+            
+            int sum = 0; //initialising a variable sum that will store the sum of digits
+            while (n != 0) { //while n is not equal to 0
+                int digit = n % 10; //initialize a variable digit that will store the last digit of n
+                sum += digit * digit;//update the value of sum by adding square of digit
+                n /= 10; //update the value of n by removing the last digit of n by diving it by 10
+            }
+            
+            n = sum; // Update n with the sum of the squares of its digits
+            
+        }
+     // If n is 1, it is a happy number; otherwise, it is not
+        return n == 1;
+    }
+    public static void main(String[] args) {
+     Solution s = new Solution(); //create a new object of the main class
+    
+     System.out.println( s.isHappy(367)); // print the method
+      
+    }
+}
