@@ -1,0 +1,26 @@
+import java.util.*;
+class Solution {
+    public String addBinary(String a, String b) {
+        StringBuilder sb = new StringBuilder(); //initialising sb a new string builder that will store the final result
+       /*Initialising variable integers i and j as the last index of string a and b repectively
+        * Initialising int carry to store carry while adding the strings*/
+        int i = a.length() - 1, j = b.length() -1, carry = 0;
+        while (i >= 0 || j >= 0) { //Iterating string a,b through i and j respectively until it reaches index 0
+            int sum = carry; //Initialising a variable sum to store current carry value
+            if (j >= 0) sum += b.charAt(j--) - '0'; //add the value of character at index j in string b to variable sum and then decrementing the value of j
+            if (i >= 0) sum += a.charAt(i--) - '0';  //add the value of character at index i in string a to variable sum and then decrementing the value of i
+            sb.append(sum % 2); //add the last binary digit of sum by performing modulo operator to the new string sb
+            carry = sum / 2; //calculate carry by dividing the sum by 2
+        }
+        if (carry != 0) sb.append(carry); //If carry is not equals to 0, add it to the new string sb
+        return sb.reverse().toString(); //return the reversed sb 
+    }
+    public static void main(String[] args) {
+        //Initialise parameter variables and call the function
+        String a = "11";
+        String b = "1";
+        Solution s = new Solution();
+        System.out.println(s.addBinary(a, b));
+    }
+    }
+    
