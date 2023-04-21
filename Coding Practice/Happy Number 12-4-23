@@ -10,20 +10,17 @@ class Solution {
             // Add n to the set of seen numbers
             seen.add(n);
             
-            // Compute the sum of the squares of the digits of n
-            int sum = 0;
-            while (n != 0) {
-                int digit = n % 10;
-                sum += digit * digit;
-                n /= 10;
+            int sum = 0; //initialising a variable sum that will store the sum of digits
+            while (n != 0) { //while n is not equal to 0
+                int digit = n % 10; //initialize a variable digit that will store the last digit of n
+                sum += digit * digit;//update the value of sum by adding square of digit
+                n /= 10; //update the value of n by removing the last digit of n by diving it by 10
             }
             
-            // Update n with the sum of the squares of its digits
+            n = sum; // Update n with the sum of the squares of its digits
             
-            n = sum;
         }
-        
-        // If n is 1, it is a happy number; otherwise, it is not
+     // If n is 1, it is a happy number; otherwise, it is not
         return n == 1;
     }
     public static void main(String[] args) {
