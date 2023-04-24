@@ -1,0 +1,18 @@
+class Solution {
+       public boolean checkPowersOfThree(int n) {
+            if(n==0){    //if n becomes 0 after recursion 
+                return true; //we return true
+            }
+            int x = n%3; //Initialize an integer variable x that will store the remainder of the current value of n when divided by 3 
+            if(x==2){ //if the remainder is 2 it means n cannot be further divided by 3 and cannot be written as sum of powers of 3
+                return false; //we return false
+            }
+            return checkPowersOfThree(n/3);//update the value of n for recursion
+        }
+        public static void main(String[] args) {
+            //initialse n and call the function
+            int n  = 1;
+            Solution s = new Solution();
+            System.out.println(s.checkPowersOfThree(n));
+        }
+}
