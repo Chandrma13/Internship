@@ -1,0 +1,50 @@
+class Solution {
+    //Initialising two string arrays tens and ones that are storing the tens values and ones values respectively
+    String[] tens = {"", "Ten", "Twenty", "Thirty", "Forty", "Fifty", "Sixty", "Seventy", "Eighty", "Ninety"};
+    String[] ones = {"", "One", "Two", "Three", "Four", "Five", "Six", "Seven", "Eight", "Nine", "Ten", "Eleven",
+                    "Twelve", "Thirteen", "Fourteen", "Fifteen", "Sixteen", "Seventeen", "Eighteen", "Nineteen"};
+   
+    public String numberToWords(int num) { //Initialising a function numberToWords that will return string value of num
+        if (num == 0) //if num is equal to 0 
+            return "Zero";//return zero
+        
+        return helper(num).trim(); //return helper function after removing the whitespaces in the starting and ending of the sb Stringbuilder
+    }
+    
+    private String helper(int num) {//helper function that will take integer value as parameter and convert it into string
+        StringBuilder sb=new StringBuilder(); //Initialising a new stringBuider sb that will store the String value of num
+        //considering all the cases and adding them to sb with help of recursion
+        if (num >= 1000000000) { //if num is greater or equals to 1 billion 
+    /*using recursion and calling the helper function updating the parameter as (num/1000000000) add " Billion " as n>=1000000000
+     then again calling the helper function after updating the perimeter as(num % 1000000000) and it will recurse to next level for next digit in num*/
+            sb.append(helper(num / 1000000000)).append(" Billion ").append( helper(num % 1000000000));
+        } else if  (num >= 1000000) {//if num is greater or equals to 1 million
+    /*using recursion and calling the helper function updating the parameter as (num / 1000000) add " Million " as n>=1000000
+     then again calling the helper function after updating the perimeter as (num % 1000000) and it will recurse to next level for next digit in num*/        
+            sb.append(helper(num / 1000000)).append(" Million ").append( helper(num % 1000000));
+        }else if (num >= 1000) {//if num is greater or equals to 1 thousand
+     /*using recursion and calling the helper function updating the parameter as (num / 1000) add " Thousand " as n>=1000
+     then again calling the helper function after updating the perimeter as (num % 1000) and it will recurse to next level for next digit in num*/        
+            sb.append(helper(num / 1000)).append(" Thousand ").append( helper(num % 1000));
+        }else if (num >= 100) {//if num is greater or equals to 1 hundred
+     /*using recursion and calling the helper function updating the parameter as (num / 100) add " Hundred " as n>=100
+     then again calling the helper function after updating the perimeter as (num % 100) and it will recurse to next level for next digit in num*/
+            sb.append(helper(num / 100)).append(" Hundred ").append( helper(num % 100));
+        }else if (num >= 20) {//if num is greater or equals to twenty
+     /*add the element at (num/10) index in array tens add space or empty string and then add recursive value after calling the 
+     function hepler by updating the perimeter as (n%10), recurse to next level for next digit in num*/
+            sb.append(tens[num / 10]).append(" ").append( helper(num % 10));
+        } else { //if none of the above is true then num is smaller than 20
+            sb.append(ones[num]);//in this case add the element at index num in array ones to string sb
+        }
+        return sb.toString().trim(); //return the updated value of sb and remove unnecessary whitespaces at the starting and ending 
+        
+    }
+    public static void main(String[] args) {
+        //Initialize num variable and call the function
+        int num = 1123456789;
+        Solution s = new Solution();
+     System.out.println(s.numberToWords(num));
+    }
+    
+}
