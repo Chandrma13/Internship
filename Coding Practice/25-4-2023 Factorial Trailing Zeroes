@@ -1,0 +1,16 @@
+class Solution {
+    //to calculate trailing zeroes we will check the occurance of 5s in n because only pair of 5s with even integers can give zeroes 
+        //for example 5*2=10, 5*4=20, 25*4=5*5*4=100
+        //now if talk about factorials take 5!=5*4*3*2*1=120,it have only one trailing zero because there is only one 5 and hence only one pair can be formed with 5
+        //10!=10*9*8*7*6* 5!=3628800 this can be written as 10!=5*2*9*8*7*6* 5!, now we know it has two 5s(one in 5! and other as 10 =5*2) so it will have 2 trailing zeroes as two pairs can be formed 
+    public int trailingZeroes(int n) {
+        //if n is greater or equal to 5 divide n by 5 and use recursion to update the value of n to n/5 in function trailingZeroes
+        //else return 0
+        return n>=5 ? n/5 + trailingZeroes(n/5): 0;
+         }
+    public static void main(String[] args) {
+        //call the function and set value of n
+        Solution s = new Solution();
+        System.out.println(s.trailingZeroes(10));
+    }
+}
