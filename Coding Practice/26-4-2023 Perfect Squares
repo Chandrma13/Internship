@@ -1,0 +1,22 @@
+class Sol{
+public int numSquares(int n) {
+    //if n is smaller than 4 we will return n because 1 is the only perfect square smaller than 4 
+    //for eg - if n=2 it can only be written as n= 1^2 + 1^2, as the sum of 2 squares of 1 hence we will return 2
+	if (n < 4)     
+		return n;
+	
+	int ans = n;//initialising a variable ans that will store the minimum number of perfect squares added to make n
+	
+	for (int i = 1; i * i <= n; i++) {//initialising for loop that will increase i by 1  until i*i is smaller than n or equals to n
+		int square = i * i; //initialising a variable square that will store the square of i and update itself as the value of i will inrease
+		//now update the value of n as whatever is minimum ans or recursive 1+ numSquares(n-square)
+        ans = Math.min(ans, 1 + numSquares(n - square));
+	}
+	
+	return ans;//return updated value of ans
+}
+public static void main(String[] args) {
+    //call the function and initialise parameter n
+    Sol s = new Sol();
+    System.out.println(s.numSquares(11));
+}}
