@@ -1,0 +1,51 @@
+ class ListNode {//Initialising a Linked List
+      int val;
+      ListNode next;
+      ListNode(int x) { val = x; }
+  }
+class Solution {
+    public void deleteNode(ListNode node) {//function to delete node
+     
+        // Set value of current node as value of next node
+        node.val = node.next.val;
+        
+        // Delete the next node from list
+        node.next = node.next.next;
+        
+    }
+    public static void main(String[] args) {
+        // Create a linked list
+        ListNode head = new ListNode(1);
+        head.next = new ListNode(2);
+        ListNode nodeToDelete = new ListNode(3);
+        head.next.next = nodeToDelete;
+        head.next.next.next = new ListNode(4);
+        head.next.next.next.next = new ListNode(5);
+        
+        // using while loop to iterate and print the original list
+        ListNode current = head;
+        while (current != null) {
+            System.out.print(current.val);
+            current = current.next;
+            if (current !=null) {
+                System.out.print(" -> ");
+            }
+        }
+        System.out.println();
+        
+        //call the function to delete the node with value 3 from the list
+        Solution solution = new Solution();
+        solution.deleteNode(nodeToDelete);
+        
+        // Print the updated list
+        current = head;
+        while (current != null) {
+            System.out.print(current.val);
+            current = current.next;
+            if (current !=null) {
+                System.out.print(" -> ");
+            }
+        }
+    }
+    
+}
