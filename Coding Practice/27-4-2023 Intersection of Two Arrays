@@ -1,0 +1,31 @@
+import java.util.*;
+class Sol{
+    public int[] intersection(int[] nums1, int[] nums2) {
+        HashSet<Integer> set = new HashSet(); //Initialise a hashset set to store both arrays
+        HashSet<Integer> res = new HashSet(); //Initialise a hashset res to store the answer/result or Intersection
+        
+        for(int i = 0; i < nums1.length; i++){//Initialising a for loop to add elements of array nums1 to hashset set
+            set.add(nums1[i]); //add elements of array nums1 to hashset set
+        }
+        
+        for(int i = 0; i < nums2.length; i++){ //Again initialising a for loop to store the intersection of both the arrays 
+            //now hashset set already contains elements of array nums1 so if hashset set contains index i of nums2, it means that is the intersection point
+            // then add that element of nums2 in Hashset res
+            if(set.contains(nums2[i])) res.add(nums2[i]);
+        }
+        
+        int[] arr = new int[res.size()]; //initialise a new array that is of the size Hashset res to store the intersection      
+        int j = 0; //initialise a variable j 
+        for (int i : res)  //initialise a for loop to store the elements that are in hashset res to array arr
+            arr[j++] = i; //assign the values of indexes in array arr same as index values of hashset res
+        
+        return arr;//return the updated value of arr
+    }
+     public static void main(String[] args) {
+        //Initialize arrays nums1 and nums2 and call the function
+        int[] nums1 = {4,9,5};
+        int[] nums2 = {9,4,9,8,4};
+        Sol s = new Sol();
+        System.out.println( Arrays.toString(s.intersection(nums1, nums2)));
+    
+}}
