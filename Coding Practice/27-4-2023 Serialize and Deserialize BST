@@ -1,0 +1,77 @@
+import java.util.*;
+//function to initialize a binary tree
+class TreeNode {
+         int val;
+         TreeNode left;
+         TreeNode right;
+         TreeNode(int x) { val = x; }
+     }
+class Codec {
+    public String serialize(TreeNode root) {//function to serialize the binary tree
+        StringBuilder res = new StringBuilder(); // Initialize a StringBuilder res to build the serialized string
+        helpserialize(root,res); // Call the function helperserialize to serialize the binary tree
+        return res.toString(); // Return the final serialized string
+    }
+
+    private void helpserialize(TreeNode root, StringBuilder res){//helper function to serialize the binary tree
+        if(root == null){ // If the current node is null, add 'x,' to the StringBuilder res and return
+            res.append("x,");
+            return ;
+        }
+        res.append(root.val); // add the value of the current node to the StringBuilder res
+        res.append(','); // add a comma to separate values in the serialized string
+        helpserialize(root.left, res); // Use recursion and call the function helpserialize to serialize the left subtree
+        helpserialize(root.right, res); // Use recursion and call the function helpserialize to serialize the right subtree
+    }
+
+    public TreeNode deserialize(String data) {//fuction to deserialize the binary tree
+        Deque<String> q = new LinkedList<>(); // Initialize a deque to store the serialized data
+        q.addAll(Arrays.asList(data.split(","))); // Split the serialized data by ',' and add it to the deque
+        return helpdeserialize(q); // Use recursion and call the function helpdeserialize to deserialize the binary tree
+    }
+
+    private TreeNode helpdeserialize(Deque<String> q){ //helper function to deserialize the binary tree
+        String res = q.remove(); // Remove the first element from the deque
+        if(res.equals("x")){ // If the element is 'x', return null
+            return null;
+        }
+        TreeNode root = new TreeNode(Integer.parseInt(res)); // Create a new TreeNode with the element's value
+        root.left = helpdeserialize(q); // Use recursion and call the function helpdeserialize to deserialize the left subtree
+        root.right = helpdeserialize(q); // Use recursion and call the function helpdeserialize to deserialize the right subtree
+        return root; // Return the root node of the deserialized binary tree
+    }
+    private static void printTree(TreeNode node) {//function to print the binary tree
+        if (node == null) { //if node is equal to null return
+            return;
+        }
+    
+        System.out.print(node.val + " ");//print the current node value
+        printTree(node.left);//use recursion to print left nodes
+        printTree(node.right);//use recursion to print right nodes
+    }    
+    public static void main(String[] args) {
+        //Initialize a binary tree
+        TreeNode root = new TreeNode(1);
+        root.left = new TreeNode(2);
+        root.right = new TreeNode(3);
+        root.right.left = new TreeNode(4);
+        root.right.right = new TreeNode(5);
+    
+        // Create instances of Codec class
+        Codec ser = new Codec();
+        Codec deser = new Codec();
+    
+        // Serialize the binary tree
+        String tree = ser.serialize(root);
+    
+        // Deserialize the binary tree
+        TreeNode ans = deser.deserialize(tree);
+    
+        // Print the original and deserialized trees
+        System.out.println("Original tree: ");
+        printTree(root);
+        System.out.println();
+        System.out.println("Deserialized tree: ");
+        printTree(ans);
+    }
+}
