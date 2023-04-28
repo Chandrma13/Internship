@@ -1,0 +1,66 @@
+import java.util.*;
+class TreeNode {//Initialising tree node
+     int val;
+      TreeNode left;
+      TreeNode right;
+      TreeNode() {}
+      TreeNode(int val) { this.val = val; }
+      TreeNode(int val, TreeNode left, TreeNode right) {
+          this.val = val;
+          this.left = left;
+          this.right = right;
+      }
+  }
+ 
+class Solution {
+        public List<Integer> largestValues(TreeNode root) {
+        // Create a new LinkedList "list" that will be used to store the largest values for each level of the binary tree.
+        List <Integer> list =new LinkedList<>();
+        // If the root is null, return the empty list.
+        if(root==null) return list;
+        // Initialize a new Queue "q" 
+        Queue <TreeNode> q= new LinkedList<>();
+        q.add(root);//add the root node to the queue.
+        // Enter a while loop that continues until the queue is empty.
+        while(!q.isEmpty()){
+            // Initialize a variable size to store the size of q  because we only want to process the nodes at the current level of the binary tree.
+            int size=q.size();
+            // Initialize a variable max as Integer.MIN_VALUE. This variable will be used to store the largest value at the current level of the binary tree.
+            int max=Integer.MIN_VALUE;
+            // Initialize a for loop that will iterate in the current level of the binary tree
+            for (int i = 0; i < size; i++) {
+                //Initialize a variable node to store the retrieved valiue from queue q using poll method
+                TreeNode node= q.poll();
+                // If the left child of the current node is not null, add it to the queue.
+                if(node.left!=null) q.add(node.left);
+                // If the right child of the current node is not null, add it to the queue.
+                if(node.right!=null) q.add(node.right);
+                // Update the value of "max" to be the maximum of its current value and the value of the current node.
+                max= Math.max(max, node.val);
+            }
+            // Add the value of max to the list
+            list.add(max);
+        }
+        // Return the updated list containing the largest values at each level of the binary tree.
+        return list;
+    }
+    public static void main(String[] args) {
+        // Initialize a binary tree
+        TreeNode root = new TreeNode(1);
+        root.left = new TreeNode(3);
+        root.right = new TreeNode(2);
+        root.left.left = new TreeNode(5);
+        root.left.right = new TreeNode(3);
+        root.right.right = new TreeNode(9);
+    
+        Solution sol = new Solution();
+    
+        // Call the largestValues method and print 
+        List<Integer> largestValues = sol.largestValues(root);
+        System.out.println("The largest values at each level of the binary tree are:");
+        for (int i = 0; i < largestValues.size(); i++) {
+            System.out.println("Level " + i + ": " + largestValues.get(i));
+        }
+    }
+    
+}
