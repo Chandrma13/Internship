@@ -1,0 +1,40 @@
+import java.util.*;
+class Solution {
+    public String frequencySort(String s) {
+        //if the length of the input string is less than 3, it means there is nothing to sort
+        if (s.length() < 3) return s;//return the string as it is
+
+        //Initialize a StringBuilder sb to store the sorted string
+        StringBuilder sb = new StringBuilder();
+
+        // Initialize a HashMap map to store the frequency count of each character in the input string s
+        Map<Character, Integer> map = new HashMap<>();
+
+        // Iterate over each character in the input string s and update the frequency count in the HashMap
+        for (char c : s.toCharArray()) { //s.toCharArray converts the characters of string into an array of Characters
+            // If the key already exists in the map, update the value by adding 1
+            // If the key does not exist, add a new key-value pair with value 1
+            map.merge(c, 1, Integer::sum); //update the value of 1 every time a character repeats itself
+        }
+
+// Convert the entries in the Map object into a stream of Map.Entry objects
+map.entrySet().stream()
+// Sort the Map.Entry objects by value in descending order
+.sorted(Collections.reverseOrder(Map.Entry.comparingByValue()))
+//Iterate over each Map.Entry object in the stream
+.forEach(entry -> {
+    // add the key of the current Map.Entry object to the StringBuilder sb  as many times as its value (i.e., the frequency count)
+    for (int i = 0; i < entry.getValue(); i++) {
+        sb.append(entry.getKey());
+    }
+});
+    // Convert the updated StringBuilder sb to a string and return it
+        return sb.toString();
+    }
+    public static void main(String[] args) {
+        //Initialise string and call the function
+        String s = "Hello";
+        Solution sol = new Solution();
+        System.out.println(sol.frequencySort(s));
+    }
+}
