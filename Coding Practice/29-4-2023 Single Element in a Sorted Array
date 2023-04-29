@@ -1,0 +1,23 @@
+class Solution {
+    public int singleNonDuplicate(int[] nums) {
+        int left = 0, right = nums.length - 1; // Initialise variable left as the starting index of the array, and right variable as the ending index
+        while (left < right) { // whilethe left index is smaller than right index
+            int mid = (left + right) / 2; // initialise a variable mid that will store the middle index
+            if (mid % 2 == 1) { // if middle index is odd
+                mid--; // decrement it to make it even
+            }
+            if (nums[mid] != nums[mid + 1]) { // if middle element is not equal to the next element
+                right = mid; // the single element must be in the left half, so update the value of right index to mid
+            } else { // otherwise, the single element must be in the right half
+                left = mid + 2; // update the value of the left index to mid + 2 (since mid + 1 is a duplicate element)
+            }
+        }
+        return nums[left]; // return the single element
+    }
+    public static void main(String[] args) {
+        //Initialize the array and call the function
+        int[] nums = {1,1,2,3,3,4,4,8,8};
+        Solution s = new Solution();
+        System.out.println(s.singleNonDuplicate(nums));
+    }
+}
