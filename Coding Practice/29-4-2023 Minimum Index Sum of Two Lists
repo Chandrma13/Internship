@@ -1,0 +1,47 @@
+import java.util.*;
+class Solution {
+    public String[] findRestaurant(String[] list1, String[] list2) {
+        // If list1 is longer than list2,call the function and swap them so that we can iterate through the shorter array & improve efficiency.
+        if (list1.length > list2.length) {
+            return findRestaurant(list2, list1);
+        }
+        
+        // Create a HashMap map1  
+        Map<String, Integer> map1 = new HashMap<>();
+        for (int i = 0; i < list1.length; i++) {
+            map1.put(list1[i], i); //add all the elements and their respective indexes of each restaurant of list1 in map1 
+        }
+        
+        // Create a List to store the restaurants with the smallest sum of indexes.
+        List<String> mins = new ArrayList<>();
+        int minSum = Integer.MAX_VALUE;
+        // Iterate through list2 
+        for (int i = 0; i < list2.length; i++) {
+            String rest2 = list2[i];//Initialize a variable rest2 that will store the element at current index of list2 
+            if (map1.containsKey(rest2)) {//if map1 that have elements of list1 contains the current value of rest2
+                // If the above condition is true, calculate the sum of its indexes.
+                int sum = map1.get(rest2) + i;
+                if (sum < minSum) {
+                    // If the sum is smaller than the current smallest sum, update the list of restaurants
+                    // with the smallest sum and the smallest sum itself.
+                    mins = new ArrayList<>();
+                    mins.add(rest2);
+                    minSum = sum;
+                } else if (sum == minSum) {
+                    // If the sum is equal to the current smallest sum, add the restaurant to the list.
+                    mins.add(rest2);
+                }
+            }
+        }
+        
+        // Convert the list of restaurants with the smallest sum of indexes to an array and return it.
+        return mins.toArray(new String[mins.size()]);
+    }
+    public static void main(String[] args) {
+        //Initialize both strings and call the function
+      String[] list1 = {"Shogun","Tapioca Express","Burger King","KFC"};
+      String[] list2 = {"Piatti","The Grill at Torrey Pines","Hungry Hunter Steakhouse","Shogun"};
+      Solution s = new Solution();
+      System.out.println(Arrays.toString(s.findRestaurant(list1, list2)));
+    }
+}
