@@ -1,0 +1,71 @@
+import java.util.*;
+// Definition for a binary tree node.
+ class TreeNode {
+     int val;
+     TreeNode left;
+     TreeNode right;
+     TreeNode() {}
+     TreeNode(int val) { this.val = val; }
+     TreeNode(int val, TreeNode left, TreeNode right) {
+         this.val = val;
+        this.left = left;
+         this.right = right;
+     }
+ }
+
+ class Solution {
+    // create a map to store the string representation of subtrees and their count
+    Map<String,Integer> map=new HashMap<>();
+    // create a list to store the duplicate subtrees found
+    List<TreeNode> res=new ArrayList<>();
+    
+    // main function that calls the helper function and returns the list of duplicate subtrees
+    public List<TreeNode> findDuplicateSubtrees(TreeNode root) {
+        helper(root);
+        return res;
+    }
+    
+    // helper function that recursively traverses the tree and generates the string representation of subtrees
+    public String helper(TreeNode root){
+        // base case: if the current node is null, return an empty string
+        if(root==null) return "";
+        
+        // traverse the left and right subtrees recursively and generate their string representations
+        String left= helper(root.left);
+        String right= helper(root.right);
+        
+        // generate the string representation of the current subtree by combining the values of the root, left subtree and right subtree
+        String curr= root.val +" "+left +" "+ right;
+        
+        // store the string representation in the map and update the count
+        map.put(curr, map.getOrDefault(curr, 0)+ 1);
+        
+        // if the count of the current subtree is 2, it means it's a duplicate subtree, so add it to the result list
+        if(map.get(curr) == 2)
+            res.add(root);
+        
+        // return the string representation of the current subtree
+        return curr;
+    }
+
+    public static void main(String[] args) {
+        // create a binary tree
+        TreeNode root = new TreeNode(1);
+        root.left = new TreeNode(2);
+        root.right = new TreeNode(3);
+        root.left.left = new TreeNode(4);
+        root.right.left = new TreeNode(2);
+        root.right.left.left = new TreeNode(4);
+        root.right.right = new TreeNode(4);
+    
+        // Call the function
+        Solution solution = new Solution();
+        List<TreeNode> duplicates = solution.findDuplicateSubtrees(root);
+    
+        // print the results
+        System.out.println("Duplicate subtrees:");
+        for (TreeNode duplicate : duplicates) {
+            System.out.println(duplicate.val);
+        }
+     }
+}  
