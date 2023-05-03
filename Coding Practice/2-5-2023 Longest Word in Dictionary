@@ -1,0 +1,71 @@
+// Initialising a Trie node
+class TreeNode {
+	TreeNode[] children = new TreeNode[26]; // Array of child nodes, one for each letter of the alphabet
+	String word; // The word represented by this node, if any
+
+	// Constructor for TreeNode
+	TreeNode() {}
+}
+class Solution {
+	private TreeNode root; // Declare a private TreeNode called root
+	private String result = ""; // Declare a private String called result initialized to an empty string
+
+	// Method to find the longest word in a list of words
+	public String longestWord(String[] words) {
+		root = new TreeNode(); // Initialize the root node of the Trie
+
+		// Insert each word in the Trie
+		for (String w : words)
+			insert(w);
+
+		// Perform a depth-first search on the Trie
+		dfs(root);
+
+		return result; // Return the longest word found
+	}
+
+	// Recursive depth-first search on the Trie
+	private void dfs(TreeNode node) {
+		if (node == null)
+			return; // If the node is null, return
+
+		if (node.word != null) { // If the node represents the end of a word
+			// Check if the word at this node is longer than the current longest word
+			if (node.word.length() > result.length())
+				result = node.word; //update the value of result to current word
+			// If the word at this node is the same length as the current longest word,
+			// use compareTo method to choose the lexicographically smaller one
+			else if (node.word.length() == result.length() && node.word.compareTo(result) < 0)
+				result = node.word;//update the value of result
+		}
+
+		// Recursively visit each child node
+		for (TreeNode child : node.children)
+			if (child != null && child.word != null)
+				dfs(child);
+	}
+
+	// Method to insert a word into the Trie
+	private void insert(String word) {
+		TreeNode current = root; // Start at the root of the Trie
+		for (char c : word.toCharArray()) { // Loop through each character in the word
+			if (current.children[c - 'a'] == null) // If the child node for this character doesn't exist yet
+				current.children[c - 'a'] = new TreeNode(); // Create a new child node
+			current = current.children[c - 'a']; // Move to the child node for this character
+		}
+		current.word = word; // Set the word for the final node in the Trie
+	}
+    public static void main(String[] args) {
+        //Initialize string words and call the function
+        Solution solution = new Solution();
+    
+        String[] words = {"a","banana","app","appl","ap","apply","apple"};
+    
+        String longest = solution.longestWord(words);
+    
+        System.out.println("The longest word is: " + longest);
+    }
+    
+}
+
+
