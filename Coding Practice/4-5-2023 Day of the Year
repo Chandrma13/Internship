@@ -1,0 +1,48 @@
+class Solution {
+    public int dayOfYear(String date) {
+        // Initialize a variable to keep track of the total number of days
+        int days = 0;
+        // Create an array with the number of days in each month (for a non-leap year)
+        int[] arr = {31,28,31,30,31,30,31,31,30,31,30,31};
+        // Split the input string into year, month, and day using the "-" separator
+        String[] year = date.split("-");
+        // Convert the year, month, and day strings to integers
+        int y = Integer.valueOf(year[0]);
+        int month = Integer.valueOf(year[1]);
+        int day = Integer.valueOf(year[2]);
+        // Initialize a boolean variable to keep track of whether the year is a leap year or not
+        boolean leap = false;
+        // Calculate the total number of days that have passed in the year before the input date
+        for(int i = 0; i < month-1; i++){
+            days = days+arr[i];
+        }
+        // Add the input day to the total number of days calculated so far
+        days = days+day;
+        // Check if the input year is a leap year
+        /*conditions for a leap year
+           1. The year is exactly divisible by four (with no reminder);
+           2. If the year is divisible by 100 (years ending in two zeros), it is not a leap, except if It is also divisible by 400 (in this case it will be a leap year). 
+         */
+        if (y % 4 == 0 && (y % 100 != 0 || y % 400 == 0)) {
+            leap = true;
+        } else {
+            leap = false;
+        }
+        
+        // If the year is a leap year and the input month is greater than February, add one day to the total number of days
+        if(leap==true && month>2){
+            System.out.println(y + " is Leap Year");
+            days = days+1;
+        }
+        // Return the total number of days calculated so far
+        return days;
+    }
+    public static void main(String[] args) {
+        //Initialize String variable date and call the function
+        Solution solution = new Solution();
+        String date = "2004-03-01";
+        int dayOfYear = solution.dayOfYear(date);
+        System.out.println("Day of year for " + date + " is " + dayOfYear);
+    }
+    
+}
