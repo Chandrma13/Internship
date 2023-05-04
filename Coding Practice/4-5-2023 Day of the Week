@@ -1,0 +1,35 @@
+class Solution {
+    public String dayOfTheWeek(int day, int month, int year) {
+        // Initialize an array with the names of the days of the week
+        String[] week = {"Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"};
+        // Initialize an array with the number of days in each month, taking into account leap years
+        int[] days = {31, isLeapYear(year) ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+        // Initialize a variable to keep track of the number of days that have passed since January 1st, 1971 (a Thursday)
+        int count = 0;
+        // Loop over the years from 1971 to the given year, and add the number of days in each year to the count variable, taking leap years into account 
+        for(int i = 1971; i < year; i++) {
+            count += i % 4 == 0 ? 366 : 365; //add 366 if it is a leap year and 365 if it's not a leap year
+        }
+        // Loop over the months from January to the given month, and add the number of days in each month to the count variable
+        for(int i = 0; i < month - 1; i++) {
+            count += days[i];//update the value of count by adding the number of days of the current year 
+        }
+        // finally, Add the given day to the count variable
+        count += day;
+        // Return the name of the day of the week for the given date by indexing the week array using (count + 4) % 7, which is the number of days that have passed since January 1st, 1971, modulo 7 (the number of days in a week), with 4 added to account for the fact that January 1st, 1971 was a Thursday
+        return week[(count + 4) % 7];
+    }
+    
+    // A private helper method that takes a year and returns true if it is a leap year, false otherwise
+    private boolean isLeapYear(int year) {
+        return (year % 4 == 0 && year % 100 != 0) || year % 400 == 0;
+    }
+  public static void main(String[] args) {
+    //Initialize the variables day, month and year & call the function
+        int day = 4;
+        int month = 5;
+        int year = 2023;
+        Solution s = new Solution();
+        System.out.println(s.dayOfTheWeek(day, month, year));
+    }
+}
