@@ -1,0 +1,46 @@
+class Solution {
+    public int minInsertions(String s) {
+        // Initialize the count of opening parentheses to 0
+        int count = 0;
+        // Initialize the number of insertions needed to 0
+        int ans = 0;
+
+        // Loop through each character in the input string
+        for (int i = 0; i < s.length(); i++) {
+            // If an opening parenthesis is found, increment the count of opening parentheses
+            if (s.charAt(i) == '(') {
+                count++;
+            } else {
+                // If a closing parenthesis is found and it matches with the next closing parenthesis,
+                // decrement the count of opening parentheses and move the iterator two positions forward
+                if (i + 1 < s.length() && s.charAt(i + 1) == ')') {
+                    if (count > 0) {
+                        count--;
+                    } else {
+                        // If there is no matching opening parenthesis, an insertion is needed
+                        ans++;
+                    }
+                    i++;
+                } else {
+                    // If a closing parenthesis is found and it does not match with the next closing parenthesis,
+                    // decrement the count of opening parentheses and increment the number of insertions needed
+                    if (count > 0) {
+                        count--;
+                        ans++;
+                    } else {
+                        // If there is no matching opening parenthesis, two insertions are needed
+                        ans += 2;
+                    }
+                }
+            }
+        }
+        // Add the remaining closing parentheses needed to balance the string
+        return ans + count * 2;
+    }
+    public static void main(String[] args) {
+        String s = "(()))";
+        Solution sol = new Solution();
+        System.out.println(sol.minInsertions(s));
+
+    }
+}
