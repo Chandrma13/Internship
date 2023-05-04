@@ -1,0 +1,20 @@
+class Solution {
+    public int isPrefixOfWord(String sentence, String searchWord) {
+        //Initialise an array of string that will store all the words in the sentence that are splitted by " "
+        String[] s = sentence.split(" ");
+        int res = 0; //Initialise a variable res that will store the position of the word that has prefix as searchWord in the sentence  
+        //Iterate through the array s 
+        for(String word: s){ //Initialise a String variable word that will store the current value of s as we iterate through s 
+            res++; //increment the value of res 
+            if(word.startsWith(searchWord)) return res; //if the current value of word starts with searchWord, return res.
+        }
+        return -1; //Otherwise return -1
+    }
+    public static void main(String[] args) {
+        //Initialise variables sentence and searchWord and call the function
+        String sentence = "i love eating burger";
+        String searchWord = "burg";
+       Solution sol = new Solution();
+       System.out.println(sol.isPrefixOfWord(sentence, searchWord));
+    }
+}
