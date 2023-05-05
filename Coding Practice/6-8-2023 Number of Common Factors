@@ -1,0 +1,15 @@
+class Solution {
+    public int commonFactors(int a, int b) {
+        int count = 0; //Initialise a count variable that will increment whenever we find a common factor
+        for (int i = 1; i <= Math.min(a, b); i++) { //start a for loop that will iterate till the minimum value between a & b
+            if(a%i==0 && b%i==0){count++;} //if a & b both are fully divisible by the current value of i ,increment the count variable
+        }
+        return count;//return the updated value of count
+    }
+    public static void main(String[] args) {
+        //Initialise the variables and call the function
+        int a=25 ,b = 30 ;
+        Solution s = new Solution();
+        System.out.println(s.commonFactors(a, b));
+    }
+}
