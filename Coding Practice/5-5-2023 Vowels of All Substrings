@@ -1,0 +1,28 @@
+class Solution {
+    public long countVowels(String word) {
+        // Initialize two long variables res and prev to keep track of the sum of vowel positions
+        long res = 0, prev = 0;
+        
+        // Iterate through each character in the input string
+        for(int i=0; i<word.length(); i++) {
+            // Initialise a variable c that will store the current character
+            char c = word.charAt(i);
+            
+            // If the character is a vowel, add its position to the variable prev as we iterate through the string
+            if(c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u')
+                prev += i + 1;
+            
+            // update the value of res by adding previous value of res and prev to it
+            res += prev;
+        }
+        
+        // Return the updated value of res
+        return res;
+    }
+    public static void main(String[] args) {
+        //Initialise variable string and call the function
+        String word = "aba";
+        Solution s = new Solution();
+        System.out.println(s.countVowels(word));
+    }
+}
