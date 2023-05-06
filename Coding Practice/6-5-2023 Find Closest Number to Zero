@@ -1,0 +1,22 @@
+class Solution {
+    public int findClosestNumber(int[] nums) {
+        //Initialize two variables min(for storing the minimum num present in the array) and closest_num(to store the final answer)
+        //set the value of min as maximum Integer value and closest_num to 0
+        int min = Integer.MAX_VALUE, closest_num = 0;
+        for(int n : nums) { //Iterate through array nums 
+            if(min > Math.abs(n)) {//if min is greater than absolute value of n
+                min = Math.abs(n);//update the value of min to absolute value of n
+                closest_num = n; //update the value of closest_num to the real value of n
+            } else if(min == Math.abs(n) && closest_num < n) {//if during traversing we encounter another same value and the current value stored in closest_num is less than n
+                closest_num = n;//update the value of closest_num to n as it is the larger value as compared to the previous value stored in closest_num
+            }
+        }
+        return closest_num;//return the updated value of closest_num
+    }
+    public static void main(String[] args) {
+        //Initialise the array nums and call the function
+        int[] nums = {-4,-2,1,4,8};
+        Solution s = new Solution();
+        System.out.println(s.findClosestNumber(nums));
+    }
+}
