@@ -1,0 +1,32 @@
+class Solution {
+    public int subarrayLCM(int[] nums, int k) {
+        int count = 0, lcm = 1; // Initialize count to keep track of valid subarrays and lcm to 1
+        for (int i = 0; i < nums.length; i++) { // Iterate over each element in the nums array
+            lcm = 1; // Reset lcm to 1 for each new starting element
+            for (int j = i; j < nums.length; j++) { // Create subarrays starting from i
+                lcm = lcm(lcm, nums[j]); // Calculate the lcm of the current lcm and the next number in the subarray
+                if (lcm == k) count++; // If the lcm is equal to k, increment the count
+                else if (lcm > k) break; // If the lcm becomes greater than k, break the inner loop
+            }
+        }
+        return count; // Return the count of subarrays with lcm equal to k
+    }
+
+    // Calculate the greatest common divisor (gcd) of two numbers
+    public static int gcd(int a, int b) {
+        return a == 0 ? b : gcd(b % a, a); //If a=0 then return the value of b else recursively call the gcd function again by updating the parameters to b%a, a
+    }
+
+    // Calculate the least common multiple (lcm) of two numbers
+    public static int lcm(int a, int b) {
+        return (a * b) / gcd(a, b);//return the lcm by dividing the product of a and b by gcd of a and b
+    }
+public static void main(String[] args) {
+    //Initialise the array nums and the target LCM 
+    int[] nums ={3,6,2,7,1} ;
+    int k= 6 ;
+    //call the function and print the answer
+    Solution s = new Solution();
+    System.out.println(s.subarrayLCM(nums, k));
+}
+}
