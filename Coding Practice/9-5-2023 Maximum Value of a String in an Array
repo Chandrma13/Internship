@@ -1,0 +1,20 @@
+class Solution {
+    public int maximumValue(String[] strs) {
+        int max_len = 0;//Initialise a variable that will store the maximum length 
+        for(String word : strs) //Iterate over each word in the strs array
+        //update the value of max_len to whatever is greater the value of max_len or Integral value of current word(if it is a only numeric string) or the length of the current word(if it is an mixed string) 
+            max_len = Math.max(max_len, isNumeric(word) ? Integer.valueOf(word) : word.length());
+        return max_len;//return the updated value of variable max_len
+    }
+    private boolean isNumeric(String str){ //Initialse a boolean function that will retun false if the string is mixed and true if it is numeric
+        for(char c : str.toCharArray())//Traverse through the string
+            if(Character.isLetter(c))  return false;//return false if a letter is encountered
+        return true;//else retun true
+    }
+    public static void main(String[] args) {
+       //Initialise the string strs and call the function
+        String[] strs = {"alic3","bob","3","4","00000"};
+        Solution s = new Solution();
+        System.out.println(s.maximumValue(strs));
+    }
+}
