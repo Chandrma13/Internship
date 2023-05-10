@@ -1,0 +1,55 @@
+class Solution {
+    public int minOperations(int[] nums) {
+        int n = nums.length; // Initialise a variable that stores thhe Length of input array
+        int c = 0; // Initialise a variable c for Counting the elements with value 1
+        
+        for(int i = 0; i < n; i++) {//Initialise a for loop that will iterate through the array 
+            if(nums[i] == 1) {//if any index has value 1
+                c++; // Increment the c variable
+            }
+        }
+        
+        if(c > 0) {
+            return n - c; // If there are elements with value 1, return the difference between the total length and the count of 1s
+        }
+        
+        int ans = Integer.MAX_VALUE; // Initialize the answer as maximum possible value
+        
+        for(int i = 0; i < n; i++) {
+            int num = nums[i]; // Current element
+            
+            for(int j = i + 1; j < n; j++) {
+                num = gcd(num, nums[j]); // Calculate the GCD of current element and subsequent elements
+                
+                if(num == 1) {
+                    ans = Math.min(ans, j - i); // If GCD becomes 1, update the answer with the minimum difference
+                    break; // Break the loop since we have found the minimum difference
+                }
+            }
+            
+            if(num != 1) {
+                break; // If GCD is not 1 after considering all subsequent elements, break the loop
+            }
+        }
+        
+        if(ans == Integer.MAX_VALUE) {
+            return -1; // If no valid operations were found, return -1
+        }
+        
+        return n - 1 + ans; // Return the total number of operations required
+    }
+    
+    public int gcd(int a, int b) {//function to calculate gcb
+        if(a == 0) {
+            return b; // If a is 0, return b
+        }
+        
+        return gcd(b % a, a); // Recursively calculate GCD by updating the parameters as b%a and a
+    }
+    public static void main(String[] args) {
+        //Initialise the array nums and call the function
+        int[] nums = {2,6,3,4};
+        Solution s = new Solution();
+        System.out.println(s.minOperations(nums));
+    }
+}
