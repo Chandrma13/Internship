@@ -1,0 +1,19 @@
+class Solution {
+    public boolean sumOfNumberAndReverse(int num) {
+        for (int i = 1; i < num; i++) {//Initialise a for loop that will run until i reaches num-1
+            String numberString = String.valueOf(i);  // Convert integer i to string
+            String reversedString = new StringBuilder(numberString).reverse().toString();  // Reverse the string
+            int reversedNumber = Integer.parseInt(reversedString);  // Convert reversed string back to integer
+            if (i + reversedNumber==num) { //check if i + reversedNumber is equal to num
+                return true;//return true
+            }
+        }
+         return false;//else return false
+    }
+    public static void main(String[] args) {
+        //Initialise variable num and call the function
+        int num = 443;
+        Solution s = new Solution();
+        System.out.println(s.sumOfNumberAndReverse(num));
+    }
+}
