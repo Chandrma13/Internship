@@ -1,5 +1,6 @@
 class Solution {
     public boolean sumOfNumberAndReverse(int num) {
+        if(num==0){return true;}//if num is 0 return true
         for (int i = 1; i < num; i++) {//Initialise a for loop that will run until i reaches num-1
             String numberString = String.valueOf(i);  // Convert integer i to string
             String reversedString = new StringBuilder(numberString).reverse().toString();  // Reverse the string
