@@ -1,0 +1,76 @@
+import java.util.*;
+class Solution {
+    public boolean primeSubOperation(int[] nums) {
+        // Generate a list of prime numbers using the sieveOfEratosthenes method
+        List<Integer> primes = sieveOfEratosthenes(1000);
+        
+        // Iterate over the nums array in reverse order, starting from the second-to-last element
+        for (int i = nums.length; i >= 2; i--) {
+            // Check if the current element is greater than or equal to the next element
+            if (nums[i - 2] >= nums[i - 1]) {
+                int index = -1; // Initialize index variable to store the index of a prime number
+                
+                // Iterate over the primes list to find a suitable prime number
+                for (int primeIndex = 0; primeIndex < primes.size(); primeIndex++) {
+                    // If a prime number is greater than or equal to the current element
+                    if (primes.get(primeIndex) >= nums[i - 2]) {
+                        break;// break the loop
+                    }
+                    
+                    // If the difference between the current element and the prime number is less than the next element, store the index and break the loop
+                    if (nums[i - 2] - primes.get(primeIndex) < nums[i - 1]) {
+                        index = primeIndex;
+                        break;
+                    }
+                }
+                
+                // If no suitable prime number was found, return false
+                if (index == -1) {
+                    return false;
+                }
+                
+                // Subtract the found prime number from the current element
+                nums[i - 2] = nums[i - 2] - primes.get(index);
+            }
+        }
+        
+        // If all operations were successful, return true
+        return true;
+    }
+    
+    // Generate prime numbers up to the given count using the Sieve of Eratosthenes algorithm
+    public List<Integer> sieveOfEratosthenes(int count) {
+        List<Integer> result = new ArrayList<>();//Initialise a new array list
+        boolean[] primes = new boolean[count + 1];
+        
+        // Initialize all numbers as prime
+        for (int i = 0; i < primes.length; i++) {
+            primes[i] = true;
+        }
+        
+        // Mark multiples of each prime number as non-prime
+        for (int i = 2; i * i <= count; i++) {
+            if (primes[i]) {
+                for (int j = i * 2; j <= count; j = j + i) {
+                    primes[j] = false;
+                }
+            }
+        }
+        
+        // Collect all prime numbers into the result list
+        for (int i = 2; i <= count; i++) {
+            if (primes[i]) {
+                result.add(i);
+            }
+        }
+        
+        // Return the list of prime numbers
+        return result;
+    }
+    public static void main(String[] args) {
+        //Initialise array nums and call the function
+        int[] nums = {4,9,6,10};
+        Solution s = new Solution();
+        System.out.println(s.primeSubOperation(nums));
+    }
+}
