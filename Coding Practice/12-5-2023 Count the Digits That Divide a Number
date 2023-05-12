@@ -1,0 +1,20 @@
+class Solution {
+    public int countDigits(int n) {
+        //Initialise two variables a and c 
+        // Variable a will store the value of n and c will count the digits that can divide n
+        int a=n, c=0;
+        while(n>0)//while n is greater than 0
+        {
+            if(a%(n%10)==0)//if the unit digit of n divides 'a' completely
+                c++;//increment c
+            n/=10;//update the value of n by dividing it by 10
+        }
+        return c;//return the updated value of c
+    }
+    public static void main(String[] args) {
+        //Initialise n and call the function
+        int n = 121;
+        Solution s = new Solution();
+        System.out.println(s.countDigits(n));
+    }
+}
