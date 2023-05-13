@@ -1,0 +1,10 @@
+class Solution {
+    public String createHelloWorld(){//create a function that will return the string "Hello World"
+        return "Hello world";
+    }
+   public static void main(String[] args) {
+    //call the function and print , it will always return the function no matter what the argument is
+        Solution s = new Solution();
+        System.out.println(s.createHelloWorld());
+    }
+}
