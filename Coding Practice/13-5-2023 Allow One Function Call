@@ -1,0 +1,20 @@
+class Solution {
+    int count = 0;//Initialise a count variable that will store how many times the function is being called 
+    public Integer once(int a, int b, int c){//define the function
+         count++;//increment the count variable
+        if(count==1)//now this condition will only work when value of count is 1 which means the function is being called for the first time 
+        { return  a + b + c;}//return the first function call
+         return null;//return null if count is greater than 1, which means count has been called more than one time
+    }
+   public static void main(String[] args) {
+    //Initialise an object s that will help in calling the function
+        Solution s = new Solution();
+        int a = 1;
+        int b = 2;
+        int c = 3;
+        System.out.println(s.once(a, b, c));//calling the function first time that will print the actual output of the function
+        int d = 4;
+        int e = 5;
+        int f = 6;
+        System.out.println(s.once(d, e, f));//calling the function second time or more than one time that will print null
+}}
