@@ -1,0 +1,55 @@
+import java.util.*;
+class Solution {
+    public String getPermutation(int n, int k) {
+        // Create a list to store numbers from 1 to n
+        List<Integer> lr = new ArrayList<>();
+
+        // Initialize a variable to calculate factorial
+        int sum = 1;
+
+        // fill the list and calculate factorial
+        for (int i = 1; i <= n; i++) {
+            lr.add(i);//add values from 1 to n in the list
+            sum *= i; //calculate factorial
+        }
+
+        // Create a StringBuilder to build the resulting permutation string
+        StringBuilder sb = new StringBuilder();
+
+        // Continue until the list is empty or n becomes 0
+        while (lr.size() != 0 && n > 0) {
+            // Decrease the factorial value and decrement n
+            sum /= n--;
+
+            // Check if a new row of elements is starting
+            if (k % sum == 0) {
+                // Append the element at index k / sum - 1 to the StringBuilder
+                sb.append(lr.remove(k / sum - 1));
+
+                // Append the remaining elements in reverse order
+                for (int i = lr.size() - 1; i >= 0; i--) {
+                    sb.append(lr.get(i));
+                }
+
+                // Return the resulting string
+                return sb.toString();
+            }
+
+            // Calculate the index of the element to be appended
+            sb.append(lr.remove(k / sum));
+
+            // Update k by taking the remainder of k divided by sum
+            k = k % sum;
+        }
+
+        // Return the resulting string
+        return sb.toString();
+    }
+    public static void main(String[] args) {
+        //Initialise variable n and k and call the function
+        int n = 4;
+        int k = 9;
+        Solution s = new Solution();
+        System.out.println(s.getPermutation(n, k));
+    }
+}
