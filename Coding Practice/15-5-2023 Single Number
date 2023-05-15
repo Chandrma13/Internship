@@ -1,0 +1,26 @@
+import java.util.*;
+class Solution {
+    public int singleNumber(int[] nums) {
+        Arrays.sort(nums); // Sort the array nums so that all the digits that occurred twice in the array come together
+        int res = 0; // Initialize a variable res that will store the digit that only occurred once
+        
+        if (nums.length == 1) {
+            return nums[0]; // If the array contains only one element, return that element as the result
+        }
+        
+        for (int i = 0; i < nums.length; i += 2) {//iterate through the array nums, with updating the value by adding 2 to skip the elements that occured twice
+            if (i == nums.length - 1 || nums[i] != nums[i + 1]) {//if we have iterated till the last element or the current element is not equal to the next element
+                res = nums[i]; // Update the value of res as the current element
+                break; // Break the loop when the single number is found
+            }
+        }
+        
+        return res; // Return the updated value of res
+    }
+    public static void main(String[] args) {
+        //Initialise the array nums and call the function
+        int[] nums = {4,1,2,1,2};
+        Solution s = new Solution();
+        System.out.println(s.singleNumber(nums));
+    }
+}
