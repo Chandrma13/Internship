@@ -1,0 +1,29 @@
+import java.util.*;
+class Solution {
+    public List<String> generateParenthesis(int n) {
+        List<String> res = new ArrayList<String>(); // Create a list to store the generated combinations
+        recurse(res, 0, 0, "", n); // Call the recursive helper function to generate the combinations
+        return res; // Return the generated combinations
+    }
+    
+    public void recurse(List<String> res, int left, int right, String s, int n) {
+        if (s.length() == n * 2) { // Check if the generated combination has the desired length
+            res.add(s); // Add the combination to the result list
+            return; // Exit the current recursive call
+        }
+        
+        if (left < n) { // Check if there are available openings to add
+            recurse(res, left + 1, right, s + "(", n); // Recursively call with an added opening parenthesis
+        }
+        
+        if (right < left) { // Check if there are unclosed openings to close
+            recurse(res, left, right + 1, s + ")", n); // Recursively call with an added closing parenthesis
+        }
+    }
+    public static void main(String[] args) {
+        //Initialise n and call the fucntion
+        int n = 3;
+        Solution sol = new Solution();
+        System.out.println(sol.generateParenthesis(n));
+    }
+}
