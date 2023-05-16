@@ -1,0 +1,32 @@
+import java.util.*;
+class Solution {
+    public List<List<Integer>> combine(int n, int k) {
+	//declaring new list of list for storing results
+        List<List<Integer>> res = new ArrayList<>();
+		//calling the helper function
+        helper(n, k, 1,  res, new ArrayList<>());
+        return res; //return updated List
+    }
+    private void helper(int n, int k, int idex, List<List<Integer>> res, List<Integer> temp){
+	//when size of the temp list equals to k it is added to the final list 'res'
+        if(temp.size()==k){
+            res.add(new ArrayList<>(temp));
+			//after adding the temp to res just return 
+            return;
+        }
+		//for loop for iterating over the range [1,n]
+        for(int i = idex; i<=n;i++){
+            temp.add(i);
+            helper(n, k, i+1, res, temp);
+			//backtracking to the previous number
+            temp.remove(temp.size()-1);
+        }
+    }
+    public static void main(String[] args) {
+    //Initialise n and k and call the function
+     int n = 4;
+     int k = 2;
+     Solution s =  new Solution();
+     System.out.println(s.combine(n, k));
+    }
+}
