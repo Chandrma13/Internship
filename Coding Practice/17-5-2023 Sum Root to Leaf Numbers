@@ -1,0 +1,48 @@
+ import java.util.*;
+ class TreeNode {//Define a TreeNode
+     int val;
+     TreeNode left;
+     TreeNode right;
+     TreeNode() {};
+     TreeNode(int val) { this.val = val; }
+     TreeNode(int val, TreeNode left, TreeNode right) {
+         this.val = val;
+         this.left = left;
+         this.right = right;
+     }
+ }
+ class Solution {
+    public int sumNumbers(TreeNode root) {
+        List<String> list = new ArrayList<String>();  // Create a new ArrayList to store strings
+        list = inorder(root, list, "");  // Call the `inorder` method to traverse the tree and update the list
+        int sum = 0;  // Initialize the sum to 0
+        for (String a : list) {  // Iterate over each string in the list
+            sum += Integer.parseInt(a);  // Convert the string to an integer and add it to the sum
+        }
+        return sum;  // Return the sum of numbers formed by paths from the root to the leaf nodes
+    }
+
+    public List<String> inorder(TreeNode root, List<String> list, String str) {
+        if (root == null) {
+            return list;  // If the root is null, return the list
+        }
+        str = str + root.val;  // Append the value of the current node to the string
+        if (root.left == null && root.right == null) {
+            list.add(str);  // If the current node is a leaf node, add the string to the list
+        }
+        inorder(root.left, list, str);  // Recursively traverse the left subtree
+        inorder(root.right, list, str);  // Recursively traverse the right subtree
+        return list;  // Return the updated list
+    }
+    public static void main(String[] args) {
+        //Initialise a binary tree and call the function
+        TreeNode root = new TreeNode(4);
+        root.left = new TreeNode(9);
+        root.right = new TreeNode(0);
+        root.left.left = new TreeNode(5);
+        root.left.right = new TreeNode(1);
+
+        Solution s = new Solution();
+        System.out.println(s.sumNumbers(root));
+    }
+}
