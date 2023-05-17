@@ -1,0 +1,33 @@
+ import java.util.*;
+ class Solution {
+    public int evalRPN(String[] tokens) {
+        Stack<Integer> stack = new Stack(); // Create a stack to store intermediate results
+        String str = "+-*/"; // String containing the operators
+        
+        // Iterate through each token in the input array
+        for (String s : tokens) {
+            if (str.contains(s) && !stack.isEmpty()) { // Check if the token is an operator and the stack is not empty
+                int v1 = stack.pop(); // Pop the top element from the stack and assign it to v1
+                int v2 = stack.pop(); // Pop the second top element from the stack and assign it to v2
+                int ans = help(v2, s, v1); // Call the help method to perform the operation and get the result
+                stack.push(ans); // Push the result back onto the stack
+            } else {
+                stack.push(Integer.parseInt(s)); // If the token is not an operator, parse it as an integer and push it onto the stack
+            }
+        }
+        
+        return stack.pop(); // The final result is the only element left on the stack, so pop it and return
+    }
+    
+    public int help(int v2, String s, int v1) {
+        if (s.equals("+")) return v2 + v1; // Addition operation
+        else if (s.equals("-")) return v2 - v1; // Subtraction operation
+        else if (s.equals("/")) return v2 / v1; // Division operation
+        return v2 * v1; // Multiplication operation
+    }
+    public static void main(String[] args) {
+        String[] tokens = {"2","1","+","3","*"};
+        Solution s = new Solution();
+        System.out.println(s.evalRPN(tokens));
+    }
+}
