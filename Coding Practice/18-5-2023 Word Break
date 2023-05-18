@@ -1,0 +1,34 @@
+import java.util.*;
+class Solution {
+    public boolean wordBreak(String s, List<String> wordDict) {
+        int n = s.length();//Initialise n as length of String s
+        // Create a boolean array dp of size n+1 to track if the string up to index i can be divided
+        boolean[] dp = new boolean[n + 1];
+        dp[0] = true; // Empty string is always segmented correctly
+
+        // Convert wordDict list to a HashSet for efficient word lookup
+        Set<String> wordSet = new HashSet<>(wordDict);
+
+        for (int i = 1; i <= n; i++) {
+            for (int j = 0; j < i; j++) {
+                // Check if the substring from index j to i is a valid word and
+                // if the substring up to index j can be segmented
+                if (dp[j] && wordSet.contains(s.substring(j, i))) {
+                    dp[i] = true;
+                    break; // Move to the next i
+                }
+            }
+        }
+
+        return dp[n];//return the answer
+    }
+
+    public static void main(String[] args) {
+        //Initialise String s and Arraylist wordDict
+        String s = "leetcode";
+        List<String> wordDict = new ArrayList<>(Arrays.asList("leet", "code"));
+        //Call the function and print the result
+        Solution sol = new Solution();
+        System.out.println(sol.wordBreak(s, wordDict));
+    }
+}
