@@ -1,0 +1,52 @@
+import java.util.ArrayList;
+import java.util.HashSet;
+class Solution {
+    //Function that will return the list of valid numbers and will take Array of String num as parameter
+    public ArrayList<String> isValidNumber(String[] num) {
+        //Initialise a hashset set to store character from 0 to 9
+        HashSet<Character> set = new HashSet<>();
+        for (char c = '0'; c <= '9'; c++) {
+            set.add(c);
+        }
+        //Initialise an Arraylist that will store the results
+        ArrayList<String> list = new ArrayList<>();
+        for (String str : num) {//Iterate through the string num
+            str.trim();//remove any whitespaces in starting or ending of the string
+            //call the helper function isValidFormat with parameters str and set
+            if (isValidFormat(str, set)) {
+                list.add(str);//If the condition is true add the current value of str to the list
+            }
+        }
+        
+        return list;//return the updated value of list
+    }
+    //Initialise a helper function that will take string and set as a parameter and check if str has a valid format for a number
+    private boolean isValidFormat(String str, HashSet<Character> set) {
+        //condition 1 
+        if (str.charAt(0) == '(' && set.contains(str.charAt(1)) &&
+            set.contains(str.charAt(2)) && set.contains(str.charAt(3)) &&
+            str.charAt(4) == ')' && str.charAt(5) == ' ' && set.contains(str.charAt(6)) && 
+            set.contains(str.charAt(7)) && set.contains(str.charAt(8)) &&
+            str.charAt(9) == '-' && set.contains(str.charAt(10)) && 
+            set.contains(str.charAt(11)) && set.contains(str.charAt(12)) && 
+            set.contains(str.charAt(13)) && str.length() == 14) {
+            return true; //if above condition is satisfied return true
+        //condition 2    
+        } else if (set.contains(str.charAt(0)) && set.contains(str.charAt(1)) &&
+                   set.contains(str.charAt(2)) && str.charAt(3) == '-' &&
+                   set.contains(str.charAt(4)) && set.contains(str.charAt(5)) &&
+                   set.contains(str.charAt(6)) && str.charAt(7) == '-' &&
+                   set.contains(str.charAt(8)) && set.contains(str.charAt(9)) &&
+                   set.contains(str.charAt(10)) && set.contains(str.charAt(11)) && str.length() == 12) {
+            return true;//if above condition is satisfied return true
+        } else {
+            return false;//else return false 
+        }
+    }
+    public static void main(String[] args) {
+        //Initialise an Array of string num and call the function
+        String[] num = {"987-123-4567","123 456 7890","(123) 456-7890"};
+        Solution s = new Solution();
+        System.out.println(s.isValidNumber(num));
+         }
+        }
