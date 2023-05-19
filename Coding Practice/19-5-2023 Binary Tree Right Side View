@@ -1,0 +1,45 @@
+import java.util.*;
+class TreeNode {
+         int val;
+         TreeNode left;
+         TreeNode right;
+         TreeNode() {}
+         TreeNode(int val) { this.val = val; }
+         TreeNode(int val, TreeNode left, TreeNode right) {
+         this.val = val;
+         this.left = left;
+         this.right = right;
+         }
+     }
+class Solution {
+    int maxlevel = 0; // Variable to track the maximum level reached during traversal
+        public List<Integer> rightSideView(TreeNode root) {
+        List<Integer> list  = new ArrayList<>(); // List to store the right side view
+        right(root, 1, list); // Call the helper function to find the right side view
+        return list; // Return the resulting right side view list
+    }
+
+    void right(TreeNode root, int level, List<Integer> list) {
+        if (root == null) {
+            return; // If the current node is null, return as we've reached the end of a branch
+        }
+        if (maxlevel < level) {
+            list.add(root.val); // If the current level is greater than the max level, add the node value to the list
+            maxlevel = level; // Update the max level reached
+        }
+        right(root.right, level + 1, list); // Recursively call the function for the right child with an incremented level
+        right(root.left, level + 1, list); // Recursively call the function for the left child with an incremented level
+    }
+    public static void main(String[] args) {
+    //Initialise a binary tree and call the function
+     TreeNode root = new TreeNode(1);
+     root.left = new TreeNode(2);
+     root.right = new TreeNode(3);
+     root.left.right = new TreeNode(5);
+     root.right.right = new TreeNode(4);
+    
+     Solution s = new Solution();
+     System.out.println(s.rightSideView(root));
+
+    }
+}
