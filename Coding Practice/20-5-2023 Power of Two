@@ -1,0 +1,18 @@
+class Solution {
+    public boolean isPowerOfTwo(int n) {
+        while (n > 1) { //while n is greater than 1 
+            if (n % 2 != 0) {//check if n is not fully divisible by n
+                return false;//return false
+            }
+            n /= 2;//update the value of n as n/2
+        }
+      
+        return n == 1;// return if n eventually becomes 1 (power of two)
+    }
+    public static void main(String[] args) {
+        //Initialise n and call the function
+        int n = 64;
+        Solution s = new Solution();
+        System.out.println(s.isPowerOfTwo(n));
+    }
+}
