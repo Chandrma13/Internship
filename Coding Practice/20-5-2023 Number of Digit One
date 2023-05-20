@@ -1,0 +1,29 @@
+class Solution {
+    public int countDigitOne(int n) {
+        int res = 0; // Initialize a variable that will store the count of digit 1 occurrences
+        
+        for (long i = 1; i <= n; i *= 10) { // Iterate through each place value starting from the least significant digit
+            //using (int) to avoid a compilation error
+            // Calculate the prefix, which represents the part of the number before the current digit
+            int prefix = (int)(n / (i * 10));
+            // Calculate the current digit by dividing the number by the place value `i` and taking the remainder
+            int digit = (int)((n / i) % 10);
+            // Calculate the suffix, which represents the part of the number after the current digit
+            int suffix = (int)(n % i);
+            if (digit == 0) { // If the current digit is 0, the count of digit 1 occurrences is determined by the prefix
+                res += prefix * i;}
+            else if (digit == 1) {// If the current digit is 1, the count includes the prefix, suffix, and the digit itself
+                res += prefix * i + suffix + 1;}
+            else {
+                res += (prefix + 1) * i;// If the current digit is greater than 1, the count is determined by the prefix and the place value
+                 }
+        }
+        return res; // Return the total count of digit 1 occurrences
+    }
+    public static void main(String[] args) {
+        //Initialise the variable n and call the function
+        int n = 13;
+        Solution s = new Solution();
+        System.out.println(s.countDigitOne(n));
+    }
+}
