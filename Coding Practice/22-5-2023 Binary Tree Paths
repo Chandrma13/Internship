@@ -1,0 +1,65 @@
+import java.util.*;
+class TreeNode {//Definition of a BInary Tree
+    int val; 
+    TreeNode left; 
+    TreeNode right; 
+     TreeNode() {} 
+    TreeNode(int val) {this.val = val;}
+    TreeNode(int val, TreeNode left, TreeNode right) {
+        this.val = val; 
+        this.left = left;
+        this.right = right;
+    }
+}
+class Solution {
+    // Helper method to find all paths from root to leaf nodes
+    private void getAllPaths(TreeNode node, List<Integer> path, List<List<Integer>> allPaths) {
+        // If current node is a leaf node, add the path to allPaths
+        if (node.left == null && node.right == null) {
+            path.add(node.val); // Add the current node's value to the path
+            allPaths.add(new ArrayList<>(path)); // Add the current path to the list of all paths
+            path.remove(path.size() - 1); // Remove the current node's value from the path
+            return;
+        }
+        
+        path.add(node.val); // Add the current node's value to the path
+        // Recursively find paths for left and right children (if they exist)
+        if (node.left != null)
+            getAllPaths(node.left, path, allPaths);
+        if (node.right != null)
+            getAllPaths(node.right, path, allPaths);
+        path.remove(path.size() - 1); // Remove the current node's value from the path after exploring its children
+    }
+    
+    // Main method to find binary tree paths
+    public List<String> binaryTreePaths(TreeNode root) {
+        List<Integer> path = new ArrayList<>(); // Store the current path
+        List<List<Integer>> allPaths = new ArrayList<>(); // Store all paths from root to leaf nodes
+        List<String> ans = new ArrayList<>(); // Store the final paths as strings
+        
+        // Find all paths from root to leaf nodes
+        getAllPaths(root, path, allPaths);
+        
+        // Convert integer paths to string paths
+        for (List<Integer> arr : allPaths) {
+            StringBuffer str = new StringBuffer();
+            for (int i = 0; i < arr.size() - 1; i++) {
+                str.append(String.valueOf(arr.get(i)) + "->"); // Append the current node's value followed by "->"
+            }
+            str.append(String.valueOf(arr.get(arr.size() - 1))); // Append the value of the last node
+            ans.add(str.toString()); // Add the string representation of the path to the answer list
+        }
+        
+        return ans; // Return the final paths as strings
+    }
+       public static void main(String[] args) {
+        //Initialise a Binary Tree and call the function
+       TreeNode root = new TreeNode(1);
+       root.left = new TreeNode(2);
+       root.right = new TreeNode(3);
+       root.left.right = new TreeNode(5);
+
+       Solution s = new Solution();
+       System.out.println(s.binaryTreePaths(root));
+       }
+   }
