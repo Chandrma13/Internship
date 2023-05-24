@@ -1,0 +1,23 @@
+class Solution {
+        public boolean checkPerfectNumber(int num) {
+            int sum = 1; //Initialise a variable sum that will store the sum of all the factors
+            if(num==1) { //If num is 1 return false
+                return false;
+            }
+            for(int i=2; i*i<=num; i++) {//run a for loop until i^2 is less than equal to num
+                if(num%i==0) {//if remainder of num divided by current value of i is 0 
+                    sum += i + num/i; //add current value of i and num/i as both are factors of num
+                }
+            }
+            if(sum==num) {//If final value of sum is equal to num
+                return true;//return true
+            }
+            return false;//else return false
+        }
+    public static void main(String[] args) {
+        //Initialise the value of num and call the function
+        int num = 28;
+        Solution s = new Solution();
+        System.out.println(s.checkPerfectNumber(num));
+    }
+}
