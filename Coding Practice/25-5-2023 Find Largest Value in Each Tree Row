@@ -1,0 +1,59 @@
+ import java.util.*;
+ class TreeNode {//Definition of a binary tree
+     int val;
+     TreeNode left;
+     TreeNode right;
+     TreeNode() {}
+     TreeNode(int val) { this.val = val; }
+     TreeNode(int val, TreeNode left, TreeNode right) {
+         this.val = val;
+         this.left = left;
+         this.right = right;
+     }
+ }
+ class Solution {
+    LinkedList<TreeNode> q = new LinkedList<TreeNode>(); // Queue to perform level order traversal
+    List<Integer> l = new ArrayList<>(); // List to store the largest values in each level
+    List<Integer> b = new ArrayList<>(); // List to store temporary values
+    
+    public List<Integer> largestValues(TreeNode root) {
+        if (root == null) return new ArrayList<>(); // If the root is null, return an empty list
+        level(root); // Perform level order traversal
+        return l; // Return the list of largest values
+    }
+    
+    public void level(TreeNode root) {//helper method for level order traversal
+        TreeNode p = root; // Start from the root node
+        
+        if (p == null) return; // If the root is null, return
+        
+        q.addLast(p); // Add the root node to the queue
+        
+        while (q.isEmpty() == false) { // Continue the loop until the queue is empty
+            int n = q.size(); // Get the number of nodes in the current level
+            
+            for (int i = 0; i < n; i++) { // Iterate each node in the current level
+                p = q.removeFirst(); // Remove a node from the front of the queue
+                b.add(p.val); // Add the value of the removed node to the temporary list
+                
+                if (p.left != null) q.addLast(p.left); // Add the left child to the queue if it exists
+                if (p.right != null) q.addLast(p.right); // Add the right child to the queue if it exists
+            }
+            
+            l.add(Collections.max(b)); // Find the maximum value in the temporary list and add it to the result list
+            b = new ArrayList<>(); // Reinitialize the temporary list for the next level
+        }
+    }
+    public static void main(String[] args) {
+        //Initialise a binary tree and call the function
+        TreeNode root = new TreeNode(1);
+        root.left = new TreeNode(3);
+        root.right= new TreeNode(2);
+        root.left.left = new TreeNode(5);
+        root.left.right = new TreeNode(3);
+        root.right.right = new TreeNode(9);
+
+        Solution sol = new Solution();
+        System.out.println(sol.largestValues(root));
+    }
+}
