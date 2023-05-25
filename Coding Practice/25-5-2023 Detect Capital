@@ -1,0 +1,23 @@
+class Solution {
+    public boolean detectCapitalUse(String word) {
+        int countUpper = 0; //Variable to Store count of Upper/capital characters in the String
+        int countLower =0; //Variable to Store count of Lower characters in the String
+        for (int i = 0; i < word.length(); i++) { //Iterate through the whole string
+            if (Character.isUpperCase(word.charAt(i))) { //If the current value of i is a Upper character increment variable countUpper
+               countUpper++;}else countLower++; //else increment variable countLower
+        } 
+        //Conditions:  
+       //If character at index 0 is a upper character and the remaining characters are lower or
+       //If count of lower characters is equal to the length of the String, that means every character is a lower character or
+      //If count of upper characters is equal to the length of the String, that means every character is upper character 
+        if (Character.isUpperCase(word.charAt(0)) && countLower == word.length()-1 || countLower==word.length() || countUpper==word.length() ){
+            return true; //If any of the above conditions are right, return true
+      } return false;//else  return false
+    }
+    public static void main(String[] args) {
+        //Initialise Variable String word and call the function
+        String word = "USA"; 
+        Solution s = new Solution();
+        System.out.println(s.detectCapitalUse(word));
+    }
+}
