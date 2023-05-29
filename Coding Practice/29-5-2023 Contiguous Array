@@ -1,0 +1,33 @@
+import java.util.*;
+class Solution {
+    public int findMaxLength(int[] nums) {
+        if (nums == null || nums.length == 0) { //  if the array is null or empty return 0
+            return 0;
+        }
+        // Converting all 0 to -1
+        for(int i = 0; i < nums.length; i++){
+            if(nums[i] == 0) nums[i] = -1; // Convert 0 to -1 for simplifying calculations
+        }
+        int sum = 0; // current cumulative sum
+        int max = 0; // final answer representing maximum length
+        Map<Integer, Integer> map = new HashMap<>(); // HashMap to store cumulative sum and its index
+        map.put(0, -1); // put reference in the starting of 0 & -1
+        for(int i = 0; i < nums.length; i++){
+            sum += nums[i]; // calculate the cumulative sum
+            if(map.containsKey(sum)){ // if cumulative sum key: 0, -1, 1 already present
+                int last = map.get(sum); // get the last index associated with the cumulative sum
+                max = Math.max(max, i - last); // update max with the maximum length found so far
+            }
+            else{ // if it's not present, then create a key-value pair for the current cumulative sum
+                map.put(sum, i);
+            }
+        }
+        return max; // return the maximum length of the contiguous subarray with equal 0s and 1s
+    }
+    public static void main(String[] args) {
+        //Initialise array nums and call the function 
+        int[] nums = {0,1,0};
+        Solution s = new Solution();
+        System.out.println(s.findMaxLength(nums));
+    }
+}
