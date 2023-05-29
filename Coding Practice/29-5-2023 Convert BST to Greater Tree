@@ -1,0 +1,56 @@
+import java.util.*;
+class TreeNode {//Definition of a Binary Tree
+     int val;
+     TreeNode left;
+     TreeNode right;
+     TreeNode() {}
+     TreeNode(int val) { this.val = val; }
+     TreeNode(int val, TreeNode left, TreeNode right) {
+         this.val = val;
+         this.left = left;
+         this.right = right;
+         }
+    }
+    class Solution {
+        int sum = 0; // Variable to keep track of the sum of greater nodes
+        
+        public TreeNode convertBST(TreeNode root) {
+            if (root == null) return null; // If root is null, return null (base case)
+    
+            convertBST(root.right); // Recursively convert the right subtree
+            
+            sum += root.val; // Add the current root value to the sum
+            root.val = sum; // Update the current root value with the sum
+            
+            convertBST(root.left); // Recursively convert the left subtree
+    
+            return root; // Return the modified root
+        }
+    
+        public void printTree(TreeNode root) {
+            if (root == null) return; // If root is null, return (base case)
+    
+            printTree(root.left); // Recursively print the left subtree
+            System.out.print(root.val + " "); // Print the current root value
+            printTree(root.right); // Recursively print the right subtree
+        }
+     public static void main(String[] args) {
+            // Initialize a binary tree and call the function
+            TreeNode root = new TreeNode(4);
+            root.left = new TreeNode(1);
+            root.right = new TreeNode(6);
+            root.left.left = new TreeNode(0);
+            root.left.right = new TreeNode(2);
+            root.right.left = new TreeNode(5);
+            root.right.right = new TreeNode(7);
+            root.left.right.right = new TreeNode(3);
+            root.right.right.right = new TreeNode(8);
+    
+            Solution s = new Solution();
+            TreeNode modifiedTree = s.convertBST(root);
+            System.out.print("[");
+            s.printTree(modifiedTree);
+            System.out.println("]");
+        }
+    }
+    
