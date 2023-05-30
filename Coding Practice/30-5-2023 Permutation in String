@@ -1,0 +1,58 @@
+class Solution {
+    public boolean checkInclusion(String s1, String s2) {
+        
+        // Check if s1 is longer than s2, return false
+        if (s1.length() > s2.length()) {
+            return false;
+        }
+        
+        // Arrays to store character frequencies of s1 and current substring of s2
+        int[] data = new int[26];
+        int[] test = new int[26];
+        
+        // Count character frequencies in s1 and store in data array
+        for (char c : s1.toCharArray()) {
+            data[c - 'a']++;
+        }
+        
+        // Count character frequencies in the substring of s2 with the same length as s1
+        for (int i = 0; i < s1.length(); i++) {
+            test[s2.charAt(i) - 'a']++;
+        }
+        
+        // Length of s1
+        int n = s1.length(); 
+
+        // Iterate through all possible substrings of s2 with the same length as s1
+        for (int i = 0; i < s2.length() - n; i++) {
+            // Check if the test array is equal to the data array (permutation found)
+            if (equalsString(test, data)) {
+                return true;
+            }
+            
+            // Update test array for the next substring by sliding the window
+            test[s2.charAt(i + n) - 'a']++;     
+            test[s2.charAt(i) - 'a']--;            
+        }
+        
+        // Check the final substring
+        return equalsString(test, data);
+    }
+    
+    // Helper method to compare two integer arrays for equality
+    private boolean equalsString(int[] s1, int[] s2) {
+        for (int i = 0; i < 26; i++) {
+            if (s1[i] != s2[i]) {
+                return false;
+            }
+        }
+        return true;
+    }
+    public static void main(String[] args) {
+        //initialise s1 and s2 and call the function
+        String s1 = "ab";
+        String s2 = "eidbaooo";
+        Solution s = new Solution();
+        System.out.println(s.checkInclusion(s1, s2));
+    }
+}
