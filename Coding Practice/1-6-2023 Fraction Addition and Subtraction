@@ -1,0 +1,54 @@
+class Solution {
+    public String fractionAddition(String expression) {
+        // Remove any whitespace from the expression
+        expression = expression.replaceAll("\\s+", "");
+
+        // Initialize variables to hold the accumulated numerator and denominator
+        int A = 0, B = 1;
+        
+        // Extract individual fractions from the expression
+        String[] fractions = expression.split("(?=[-+])");
+
+        // Iterate over the fractions
+        for (String fraction : fractions) {
+            // Split the fraction into numerator and denominator
+            String[] parts = fraction.split("/");
+            int a = Integer.parseInt(parts[0]);
+            int b = Integer.parseInt(parts[1]);
+
+            // Update the accumulated numerator using the formula A = A * b + a * B
+            A = A * b + a * B;
+
+            // Update the accumulated denominator by multiplying it with the current denominator
+            B *= b;
+
+            // Calculate the greatest common divisor (GCD) of A and B
+            int g = gcd(A, B);
+
+            // Simplify the fraction by dividing both A and B by their GCD
+            A /= g;
+            B /= g;
+        }
+
+        // Return the simplified fraction as a string in the form A/B
+        return A + "/" + B;
+    }
+
+    // Recursive function to calculate the greatest common divisor (GCD)
+    private int gcd(int a, int b) {
+        // Base case: if a is zero, return the absolute value of b
+        if (a == 0) {
+            return Math.abs(b);
+        }
+        // Recursive case: recursively call gcd with b % a and a
+        else {
+            return gcd(b % a, a);
+        }
+    }
+    public static void main(String[] args) {
+        //Initialise String and call the function
+        String expression = "-1/2+1/2";
+        Solution s = new Solution();
+        System.out.println(s.fractionAddition(expression));
+    }
+}
