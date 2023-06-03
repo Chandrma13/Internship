@@ -1,0 +1,66 @@
+import java.util.*;
+class Solution {
+    public List<List<String>> findDuplicate(String[] paths) {
+        // Create a map to store contents as keys and file paths as values
+        Map<String, List<String>> map = new HashMap<>();
+
+        // Iterate over each path in the input array
+        for(String path : paths) {
+            // Split the path string by spaces to separate directory, file names, and contents
+            String[] parts = path.split("\\s+");
+            // Extract the root directory from parts
+            String root = parts[0];
+
+            // Iterate over the files in parts array starting from index 1
+            for(int i = 1; i < parts.length; ++i) {
+                // Create a StringBuilder to build the file path
+                StringBuilder sb = new StringBuilder();
+                // Append root and '/' to the StringBuilder
+                sb.append(root);
+                sb.append('/');
+
+                // Initialize an empty string to store the file path
+                String file = "";
+
+                // Iterate over the characters in parts[i] until encountering a ')' character
+                for(int j = 0; parts[i].charAt(j) != ')'; ++j) {
+                    // If the current character is '(', set the file variable to the current value of StringBuilder and reset StringBuilder
+                    if(parts[i].charAt(j) == '(') {
+                        file = sb.toString();
+                        sb.setLength(0);
+                    } else {
+                        // Otherwise, append the current character to StringBuilder
+                        sb.append(parts[i].charAt(j));
+                    }
+                }
+
+                // Extract the content by converting StringBuilder to a string
+                String content = sb.toString();
+
+                // Check if the content key is already present in the map. If not, add it with an empty ArrayList as the value.
+                map.putIfAbsent(content, new ArrayList<>());
+                // Retrieve the list of file paths for the current content key and add the current file to it.
+                map.get(content).add(file);
+            }
+        }
+
+        // Create a new ArrayList to store the lists of duplicate file paths
+        List<List<String>> result = new ArrayList<>();
+
+        // Iterate over each content key in the map
+        for(String content : map.keySet())
+            // Check if the list of file paths for the current content key has a size greater than 1 (indicating duplicates)
+            if(map.get(content).size() > 1)
+                // Add the list of file paths to the result list
+                result.add(map.get(content));
+
+        // Return the result list containing the lists of duplicate file paths
+        return result;
+    }
+    public static void main(String[] args) {
+        //Initialise the string and call the function
+      String[] paths = {"root/a 1.txt(abcd) 2.txt(efgh)","root/c 3.txt(abcd)","root/c/d 4.txt(efgh)","root 4.txt(efgh)"};
+      Solution s= new Solution();
+      System.out.println(s.findDuplicate(paths));
+    }
+}
