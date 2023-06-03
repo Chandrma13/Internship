@@ -1,0 +1,62 @@
+class TreeNode {//Definition of a binary tree
+      int val;
+      TreeNode left;
+      TreeNode right;
+      TreeNode() {}
+      TreeNode(int val) { this.val = val; }
+     TreeNode(int val, TreeNode left, TreeNode right) {
+          this.val = val;
+         this.left = left;
+        this.right = right;
+      }
+   }
+class Solution {
+    StringBuilder sb; // Declare a StringBuilder variable to store the string representation of the tree.
+
+    // Recursive method to convert the tree to a string.
+    private void doEv(TreeNode root) {
+        if (root == null) return; // If the current node is null, return.
+
+        // If the current node is a leaf node (no left or right child), append its value to the StringBuilder and return.
+        if (root.left == null && root.right == null) {
+            sb.append(root.val);
+            return;
+        }
+
+        sb.append(root.val); // Append the value of the current node to the StringBuilder.
+        sb.append('('); // Append an opening parenthesis '('.
+
+        doEv(root.left); // Recursively call the method on the left child of the current node.
+
+        sb.append(')'); // Append a closing parenthesis ')' after processing the left child.
+
+        // If the current node has a right child, append an opening parenthesis '(',
+        // recursively call the method on the right child, and append a closing parenthesis ')' after processing it.
+        if (root.right != null) {
+            sb.append('(');
+            doEv(root.right);
+            sb.append(')');
+        }
+
+        return; // Return from the method.
+    }
+
+    // Method to convert the binary tree to a string.
+    public String tree2str(TreeNode t) {
+        sb = new StringBuilder(); // Initialize the StringBuilder.
+
+        doEv(t); // Call the recursive method to convert the tree to a string.
+
+        return sb.toString(); // Return the string representation of the tree.
+    }
+    public static void main(String[] args) {
+        //Initialise binary tree and call the function
+        TreeNode root = new TreeNode(1);
+        root.left = new TreeNode(2);
+        root.left.left = new TreeNode(3);
+        root.right = new TreeNode(4);
+        Solution s = new Solution();
+        System.out.println(s.tree2str(root));
+       
+    }
+}
