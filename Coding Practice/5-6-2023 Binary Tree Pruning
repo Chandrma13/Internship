@@ -1,0 +1,62 @@
+class TreeNode {//Definition of a Binary Tree
+     int val;
+     TreeNode left;
+     TreeNode right;
+     TreeNode() {}
+     TreeNode(int val) { this.val = val; }
+     TreeNode(int val, TreeNode left, TreeNode right) {
+     this.val = val;
+     this.left = left;
+     this.right = right;
+       }
+    }
+    class Solution {
+        public TreeNode pruneTree(TreeNode root) {
+            // Base case: if the root is null, return null
+            if(root==null){return null;}
+            
+            // Recursively prune the left subtree
+            root.left= pruneTree(root.left);
+            
+            // Recursively prune the right subtree
+            root.right=pruneTree(root.right);
+            
+            // Check if the current node has a value of 0 and both left and right children are null
+            if(root.val==0 && root.left==null && root.right==null) {
+                // If the condition is true, return null to remove the subtree
+                return null;
+            }
+            
+            // If the condition is not met, return the modified root node
+            return root;
+        }    
+        //Helper function to print prune tree 
+        public void printTree(TreeNode root) {
+            if (root == null) {//if the root is null
+                System.out.print("null");//print null and return
+                return;
+            }
+            
+           
+            System.out.print(root.val);//print the value of root
+            
+            if (root.left != null || root.right != null) { //if left node of root or right node of root is not null
+                System.out.print(",");//add comma 
+                printTree(root.left);//print the value of left node of root
+                System.out.print(",");//add comma
+                printTree(root.right);//print the value of right node of root
+            }
+             }
+        public static void main(String[] args) {
+            //Initialise the binary tree and call the function
+            TreeNode root = new TreeNode(1);
+            root.right = new TreeNode(0);
+            root.right.left = new TreeNode(0);
+            root.right.right = new TreeNode(1);
+            Solution s = new Solution();
+            System.out.print("[");
+            s.printTree(s.pruneTree(root));
+            System.out.print("]");
+              }
+    }
+    
