@@ -6,7 +6,9 @@ class Compute
             sum = sum+i;//Iterate through the array to calculate the sum
         }
         double avg = (double)sum/N; //calculate avg by dividing the final sum by N(that are the number of elements in the array)
-        String res =  String.valueOf(sum) + " " + String.format("%.2f", avg); //Initiliase a variable res to store the final return that will contain the values of variables sum and avg as Strings
+       //commenting out the part that will not give the desired output if you submit it on geeks for geeks
+       //but if you run it on your own compliler you need to add String value of sum in res to get the desired Output
+        String res =  /*String.valueOf(sum) + " " +*/ String.format("%.2f", avg); //Initiliase a variable res to store the final return that will contain the values of variables sum and avg as Strings
         return res; // return the value of res
     }
     public static void main(String[] args) {
