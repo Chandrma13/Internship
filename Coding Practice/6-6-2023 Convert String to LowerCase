@@ -1,0 +1,15 @@
+class Solution {
+    static String toLower(String S) {
+        //Initialise a StringBuilder to store the lowercase String
+        StringBuilder lowerCase = new StringBuilder();
+       for (int i = 0; i < S.length(); i++) {//Iterate through the string
+        lowerCase.append(Character.toLowerCase(S.charAt(i)));//convert add the lower case characters to the stringbuilder
+       }
+       return lowerCase.toString();//convert the Stringbuilder to string and return its updated value 
+    }
+    public static void main(String[] args) {
+        //Initilaise String S and call the function
+       String S = "ABCddE";
+       System.out.println(toLower(S));
+    }
+}
