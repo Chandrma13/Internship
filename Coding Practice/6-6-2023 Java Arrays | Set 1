@@ -1,0 +1,19 @@
+class Compute
+{
+    String average(int A[], int N)
+    { int sum = 0;//Initialise a variable to store the sum of the array
+        for (int i : A) {
+            sum = sum+i;//Iterate through the array to calculate the sum
+        }
+        double avg = (double)sum/N; //calculate avg by dividing the final sum by N(that are the number of elements in the array)
+        String res =  String.valueOf(sum) + " " + String.format("%.2f", avg); //Initiliase a variable res to store the final return that will contain the values of variables sum and avg as Strings
+        return res; // return the value of res
+    }
+    public static void main(String[] args) {
+        //Initailise Array and variable N and call the function 
+        int A[] = {2,55,85,656,52,554,545,5,2};
+        int N = 9;
+        Compute sol = new Compute();
+        System.out.println(sol.average(A, N));
+    }
+}
