@@ -1,0 +1,17 @@
+class Solution {
+    static String delAlternate(String S) {
+        StringBuilder res = new StringBuilder();//Initialise a Stringbuilder to store the resulted string
+        for (int i = 0; i < S.length(); i++) {//Iterate through the Original String S
+            if (i%2==0) { //If i divided by 2 is giving 0 as a remainder it means it is an even indice
+                res.append(S.charAt(i)); //at the character present at the current value of i to the Stringbuilder
+            }
+        }
+        return res.toString(); //return the updated Stringbuilder by converting it into String
+    }
+    public static void main(String[] args) {
+        //Initialise the String and call the function
+        String S = "Geeks";
+        System.out.println(delAlternate(S));
+
+    }
+}
