@@ -1,0 +1,22 @@
+class Solution{
+    String isVowel(char c){
+        c = Character.toLowerCase(c);//Convert the c in lowercase
+        switch (c) { //apply switch condition to check if "c" is a vowel
+        //If the lowercase value of "c" is a,e,i,o or u
+            case 'a':
+            case 'e':
+            case 'i':
+            case 'o':
+            case 'u':
+                return "YES";//return Yes
+            default:
+                return "NO";//Otherwise retun No
+        }
+    }
+    public static void main(String[] args) {
+        //Initialise "c" and call the function
+        Character c = 'a';
+        Solution s = new Solution();
+        System.out.println(s.isVowel(c));
+    }
+}
