@@ -1,0 +1,18 @@
+import java.util.*;
+class Solution {
+    static ArrayList<Integer> javaIterator(int n, int k, int[] arr) {
+        ArrayList<Integer> res = new ArrayList<>();//Initialise an Array list to store the final array
+        for (int i = 0; i < arr.length; i++) {//Iterate through the array arr
+            if (arr[i]>k) {//if the current indice value of i is greater than k
+                res.add(arr[i]);//add that indice value to res
+            }
+        }
+        return res;//return updated value of res
+    }
+    public static void main(String[] args) {
+    //Initialise n and k and call the function
+      int  n = 5, k = 8;
+      int  arr[] = {1, 6, 9, 2, 11};
+      System.out.println(javaIterator(n, k, arr));
+    }
+}
