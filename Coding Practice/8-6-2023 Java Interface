@@ -1,0 +1,60 @@
+import java.util.*;
+// Define the interface in1
+interface in1 {
+    // Declare the display method with an integer parameter
+    void display(int p);
+}
+/*If you are running the code in GFG, run from here do not include interface snippet */
+// Implement the in1 interface in the testClass
+class testClass implements in1 {
+    // Implement the display method
+    public void display(int k) {
+        // Initialize a count variable to keep track of the prime numbers
+        int count = 0;
+        // Iterate from 2 to k (inclusive)
+        for (int i = 2; i <= k; i++) {
+       // Check if the current number i is prime using the helper method isPrime
+            if (isPrime(i)) {
+                // If the number is prime, increment the count variable
+                count++;
+            }
+        }
+        // Print the count of prime numbers
+        System.out.println(count);
+    }
+
+    // Helper method to check if a number is prime
+    private boolean isPrime(int num) {
+        // Check for numbers less than or equal to 1
+        if (num <= 1) {
+            return false;
+        }
+
+        // Iterate from 2 to the square root of the number
+        for (int i = 2; i <= Math.sqrt(num); i++) {
+            // If the number is divisible by any i, it is not prime
+            if (num % i == 0) {
+                return false;
+            }
+        }
+
+        // If the number is not divisible by any i, it is prime
+        return true;
+    }
+    public static void main(String[] args) {
+        // Create a Scanner object to read input
+        Scanner sc = new Scanner(System.in);
+        // Read the number of test cases
+        int T = sc.nextInt();
+        // Create an instance of testClass
+        testClass obj = new testClass();
+        // Iterate over each test case
+        for (int i = 0; i < T; i++) {
+        // Read the input integer for the current test case
+            int n = sc.nextInt();
+        // Call the display method of the testClass object to count the prime numbers
+            obj.display(n);
+        }
+    }
+}
+
