@@ -1,0 +1,69 @@
+import java.util.Arrays;
+
+class Solution {
+    // arr[]: Input Array
+    // N: Size of the Array arr[]
+    // Function to count inversions in the array.
+    static long inversionCount(long arr[], long N) {
+        // Using merge sort algorithm to count inversions
+        return mergeSort(arr, new long[(int) N], 0, N - 1);
+    }
+
+    // Helper function to perform merge sort and count inversions
+    static long mergeSort(long arr[], long temp[], long left, long right) {
+        long inversionCount = 0; // Initialize inversion count to 0
+        if (left < right) {
+            long mid = (left + right) / 2; // Calculate the middle index
+            inversionCount += mergeSort(arr, temp, left, mid); // Recursively sort and count inversions in the left subarray
+            inversionCount += mergeSort(arr, temp, mid + 1, right); // Recursively sort and count inversions in the right subarray
+            inversionCount += merge(arr, temp, left, mid, right); // Merge the sorted subarrays and count inversions
+        }
+        return inversionCount; // Return the total inversion count
+    }
+
+    // Helper function to merge two sorted subarrays and count inversions
+    static long merge(long arr[], long temp[], long left, long mid, long right) {
+        long i = left; // Index for the left subarray
+        long j = mid + 1; // Index for the right subarray
+        long k = left; // Index for the merged subarray
+        long inversionCount = 0; // Initialize inversion count to 0
+
+        while (i <= mid && j <= right) { // Merge the subarrays until one of them is exhausted
+            if (arr[(int) i] <= arr[(int) j]) { // If element in the left subarray is smaller or equal, copy it to temp array
+                temp[(int) k] = arr[(int) i];
+                i++;
+            } else { // If element in the right subarray is smaller, copy it to temp array and count inversions
+                temp[(int) k] = arr[(int) j];
+                j++;
+                inversionCount += (mid - i + 1); // Count inversions in the left subarray (all elements from i to mid are inversions)
+            }
+            k++;
+        }
+
+        while (i <= mid) { // Copy remaining elements from the left subarray to temp array
+            temp[(int) k] = arr[(int) i];
+            i++;
+            k++;
+        }
+
+        while (j <= right) { // Copy remaining elements from the right subarray to temp array
+            temp[(int) k] = arr[(int) j];
+            j++;
+            k++;
+        }
+
+        System.arraycopy(temp, (int) left, arr, (int) left, (int) (right - left + 1)); // Copy the merged subarray from temp back to arr
+
+        return inversionCount; // Return the inversion count
+    }
+
+    // Main function to test the inversionCount function
+    public static void main(String[] args) {
+        long[] arr = { 2, 4, 1, 3, 5 }; // Example array
+        long N = arr.length; // Calculate the length of the array
+
+        long inversionCount = inversionCount(arr, N); // Call the inversionCount method
+
+        System.out.println("Inversion Count: " + inversionCount); // Print the inversion count
+    }
+}
