@@ -1,0 +1,41 @@
+class Solution {
+    static int majorityElement(int a[], int size) {
+        int count = 0;  // Counter to keep track of the frequency of the potential majority element
+        int major = -1;  // Variable to store the majority element
+        
+        // Iterate through the array to find the majority element
+        for (int i = 0; i < size; i++) {
+            if (count == 0) {
+                major = a[i];  // Set a new potential element
+                count = 1;  // Start counting from 1
+            } else if (major == a[i]) {
+                count++;  // Increment the count if the current element matches the current value of major
+            } else {
+                count--;  // Decrement the count if the current element is different from the current value of major
+            }
+        }
+        
+        // Verifying if the value of major is the majority element
+        count = 0;  // Reset the count
+        
+        // Counting the occurrences of the major element in the array
+        for (int i = 0; i < size; i++) {
+            if (major == a[i]) {
+                count++;  // Increment the count if the current element matches the value of major
+            }
+        }
+        
+        // Returning the majority element if it exists, otherwise -1
+        if (count > size / 2) {
+            return major;  // major is the majority element
+        } else {
+            return -1;  // No majority element exists
+        }
+    }
+    public static void main(String[] args) {
+        //Initilaise the array and call the function
+        int[] a = {1,2,3};
+        int size = a.length;
+        System.out.println(majorityElement(a, size));
+    }
+}
