@@ -7,7 +7,7 @@ class Solution {
         list.add(max); //add the current value of max as Last element is always a leader
 
         for (int i = n - 2; i >= 0; i--) {
-            if (arr[i] > max) { // If current element is greater than max
+            if (arr[i] >= max) { // If current element is greater or equal to max
                 max = arr[i]; // Update max
                 list.add(max); // Add it to the list
             }
