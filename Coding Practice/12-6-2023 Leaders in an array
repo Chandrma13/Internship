@@ -1,0 +1,25 @@
+import java.util.*;
+class Solution {
+    // Function to find the leaders in the array.
+    static ArrayList<Integer> leaders(int arr[], int n) {
+        ArrayList<Integer> list = new ArrayList<>();//Initialise an Arraylist to store the leaders
+        int max = arr[n - 1]; // Initialize max as the last element
+        list.add(max); //add the current value of max as Last element is always a leader
+
+        for (int i = n - 2; i >= 0; i--) {
+            if (arr[i] > max) { // If current element is greater than max
+                max = arr[i]; // Update max
+                list.add(max); // Add it to the list
+            }
+        }
+        Collections.reverse(list); // Reverse the list to get the leaders in the original order
+        return list;//return the updated list that have all the leaders
+    }
+    public static void main(String[] args) {
+        //Initialise n and the array A[]
+       int n = 6;
+       int A[] = {16,17,4,3,5,2};
+       //Call the function and print the list 
+       System.out.println(leaders(A, n));
+    }
+}
