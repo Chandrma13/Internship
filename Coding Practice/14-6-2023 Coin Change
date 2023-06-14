@@ -1,0 +1,22 @@
+class Solution {
+    public long count(int coins[], int N, int sum) {
+        long[] dp = new long[sum + 1];
+        dp[0] = 1; // There is one way to make sum 0, i.e., by not selecting any coin.
+
+        for (int i = 0; i < N; i++) { // Iterate through each coin denomination
+            for (int j = coins[i]; j <= sum; j++) { // Iterate through each sum value from coins[i] to sum
+                dp[j] += dp[j - coins[i]]; // Update dp[j] by adding the number of ways to make sum j - coins[i]
+            }
+        }
+
+        return dp[sum]; // Return the number of ways to make the target sum
+    }
+    public static void main(String[] args) {
+        //Initialise the array coins , N and sum
+        int coins[] = {1,2,3};
+        int N = coins.length ,sum = 4;
+        //call the function and print
+        Solution s = new Solution();
+        System.out.println(s.count(coins, N, sum));
+    }
+}
