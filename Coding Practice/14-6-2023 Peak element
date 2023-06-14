@@ -1,0 +1,40 @@
+ Solution {
+    // Function to find the peak element
+    // arr[]: input array
+    // n: size of array a[]
+    public int peakElement(int[] arr, int n) {
+        if (n == 1)
+            return 0; // Only one element, so no peak element exists
+        
+        if (n < 3 && n > 0) {
+            if (arr[0] > arr[1] || arr[1] > arr[0]) {
+                return 1; // Peak element found (only two elements in the array)
+            } else {
+                return 0; // No peak element found (only two elements in the array)
+            }
+        }
+        
+        int count = 0;//Initialise a variable count that will increment if we encounter a peak element
+        for (int i = 1; i < n - 1; i++) {//Iterate through the array
+            if ((arr[i] > arr[i + 1]) && (arr[i] > arr[i - 1])) { //if the current indice of array is greater than its previous and next indice
+                count++;//increment count
+                break;//break after incrementing
+            }
+        }
+        //if count's updated value becomes 1 or indice 0 of arr is greater than indice 1 of array or last indice of arr is greater than second last indice of arr
+        if (count == 1 || arr[0] > arr[1] || arr[n - 1] > arr[n - 2]) { 
+            return 1; // return 1 if Peak element found
+        } else {
+            return 0; // return 0 if peak element not found
+        }
+    }
+
+    public static void main(String[] args) {
+        //Initialise array and n 
+        int[] arr = {1, 2, 3};
+        int n = arr.length;
+        //call the fucntion and print
+        Solution s = new Solution();
+        System.out.println(s.peakElement(arr, n));
+    }
+}
