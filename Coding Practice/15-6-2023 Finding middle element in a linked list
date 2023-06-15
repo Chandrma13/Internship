@@ -1,0 +1,38 @@
+class Node {//Definition of Node
+    int data;
+     Node next;
+     Node(int d)  { data = d;  next = null; }
+ }
+class Solution {
+    int getMiddle(Node head) {
+        if (head == null)
+            return -1; // Return -1 if the list is empty
+
+        Node slowPtr = head; // Initialize slow pointer at the head
+        Node fastPtr = head; // Initialize fast pointer at the head
+
+        // Move slow pointer one node at a time and fast pointer two nodes at a time
+        // This helps in finding the middle node efficiently
+        while (fastPtr != null && fastPtr.next != null) {
+            slowPtr = slowPtr.next; // Move slow pointer one node ahead
+            fastPtr = fastPtr.next.next; // Move fast pointer two nodes ahead
+        }
+
+        return slowPtr.data; // Return the data value of the middle node
+    }
+    public static void main(String[] args) {
+        // Create the linked list
+        Node head = new Node(1);
+        head.next = new Node(2);
+        head.next.next = new Node(3);
+        head.next.next.next = new Node(4);
+        head.next.next.next.next = new Node(5);
+
+        // Call the function 
+        Solution solution = new Solution();
+        int middle = solution.getMiddle(head);
+
+        // Print the result
+        System.out.println("Middle node data: " + middle);
+    }
+}
