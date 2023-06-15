@@ -1,0 +1,52 @@
+class Node {//Definition of a Node
+    int data;
+    Node next;
+    Node(int d) { data = d; next = null; }
+}
+class Solution {
+    // Function to check if the linked list has a loop.
+    public static boolean detectLoop(Node head) {
+        // Initialize slow and fast pointers
+        Node slow = head;
+        Node fast = head;
+        
+        // Traverse the linked list using slow and fast pointers
+        while (fast != null && fast.next != null) {
+            // Move slow pointer one node at a time
+            slow = slow.next;
+            
+            // Move fast pointer two nodes at a time
+            fast = fast.next.next;
+            
+            // Check if slow and fast pointers meet at the same node
+            if (slow == fast) {
+                return true; // Loop found
+            }
+        }
+        
+        return false; // No loop found
+    }
+       public static void main(String[] args) {
+            // Create a linked list
+            Node head = new Node(1);
+            head.next = new Node(3);
+            head.next.next = new Node(4);
+            
+            // Create a loop by connecting the tail to the xth node
+            int x = 2;
+            Node tail = head.next.next;
+            for (int i = 1; i <= x; i++) {
+                if (i == x) {
+                    tail.next = head.next;
+                    break;
+                }
+                tail = tail.next;
+            }
+            
+            // Check if the linked list contains a loop
+            boolean hasLoop = Solution.detectLoop(head);
+            
+            // Print the result
+            System.out.println(hasLoop);
+        }
+    }
