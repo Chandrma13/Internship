@@ -1,0 +1,79 @@
+class Node {//Definition of a node
+    int data;
+    Node next;
+
+    Node(int x) {
+        data = x;
+        next = null;
+    }
+}
+
+class Solution {
+    public static Node addOne(Node head) {
+        // Reverse the linked list
+        Node reversedHead = reverse(head);
+
+        // Add 1 to the number
+        int carry = 1; // Initialize the carry to 1 since we want to add 1
+        Node curr = reversedHead;
+        Node prev = null;
+
+        while (curr != null) {
+            int sum = curr.data + carry; // Add the current digit with the carry
+            carry = sum / 10; // Calculate the new carry
+            curr.data = sum % 10; // Update the current digit with the remainder after dividing by 10
+            prev = curr; // Store the current node as the previous node
+            curr = curr.next; // Move to the next node
+        }
+
+        // If there is a remaining carry
+        if (carry > 0) {
+            Node newNode = new Node(carry); // Create a new node with the carry value
+            prev.next = newNode; // Append the new node to the end of the linked list
+        }
+
+        // Reverse the modified linked list again
+        Node result = reverse(reversedHead);
+
+        return result;
+    }
+
+    // Helper method to reverse a linked list
+    private static Node reverse(Node head) {
+        Node prev = null;
+        Node curr = head;
+        Node next = null;
+
+        while (curr != null) {
+            next = curr.next; // Store the next node
+            curr.next = prev; // Reverse the link to the previous node
+            prev = curr; // Move prev and curr one step forward
+            curr = next;
+        }
+
+        return prev; // Return the new head of the reversed linked list
+    }
+    // Helper method to print the linked list
+private static void printLinkedList(Node head) {
+    Node curr = head;
+    while (curr != null) {
+        System.out.print(curr.data + "->");
+        curr = curr.next;
+    }
+    System.out.println("null");
+}
+
+public static void main(String[] args) {
+    // Create the linked list
+    Node head = new Node(4);
+    head.next = new Node(5);
+    head.next.next = new Node(6);
+
+    // Call the addOne method
+    head = Solution.addOne(head);
+
+    // Print the modified linked list
+    printLinkedList(head);
+}
+}
+
