@@ -1,0 +1,48 @@
+class Node {//Definition of a Node
+    int data;
+    Node left, right;
+
+    Node(int item) {
+        data = item;
+        left = right = null;
+    }
+}
+class Solution {
+    boolean isIsomorphic(Node root1, Node root2) {
+        // If both trees are empty, they are isomorphic
+        if (root1 == null && root2 == null) {
+            return true;//Hence return true
+        }
+       // If one of the trees is empty, they are not isomorphic
+        if (root1 == null || root2 == null) {
+            return false;//Hence return false 
+        }
+
+        // If the root values are different, they are not isomorphic
+        if (root1.data != root2.data) {
+            return false;////Hence return false 
+        }
+        // Check for isomorphism recursively
+        // Case 1: Corresponding subtrees are isomorphic (root1.left, root2.left) && (root1.right, root2.right)
+        // Case 2: Corresponding subtrees are isomorphic (root1.left, root2.right) && (root1.right, root2.left)
+        return (isIsomorphic(root1.left, root2.left) && isIsomorphic(root1.right, root2.right))
+                || (isIsomorphic(root1.left, root2.right) && isIsomorphic(root1.right, root2.left));
+    }
+    public static void main(String[] args) {
+        // Create tree T1
+        Node root1 = new Node(1);
+        root1.left = new Node(2);
+        root1.left.left = new Node(4);
+        root1.right = new Node(3);
+
+        // Create tree T2
+        Node root2 = new Node(1);
+        root2.left = new Node(3);
+        root2.right = new Node(2);
+        root2.left.left = new Node(4);
+
+        // Call the function and print
+        Solution solution = new Solution();
+        System.out.println(solution.isIsomorphic(root1, root2));
+    }
+}
