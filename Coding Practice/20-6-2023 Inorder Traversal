@@ -1,0 +1,51 @@
+import java.util.ArrayList;
+class Node {//Definition of a Node
+    int data;
+    Node left, right;
+
+    Node(int item) {
+        data = item;
+        left = right = null;
+    }
+}
+class Solution {
+    ArrayList<Integer> inOrder(Node root) {
+        ArrayList<Integer> result = new ArrayList<>();//Initialise a Arraylist to store the result
+        inOrderTraversal(root, result);//call the helper function for Inorder traversal
+        return result;//return updated array list
+    }
+     // Recursive helper function to perform in-order traversal
+    private void inOrderTraversal(Node node, ArrayList<Integer> result) {
+        if (node == null)//If node is null 
+            return;//return
+
+        // Traverse the left subtree
+        inOrderTraversal(node.left, result);
+
+        // Add the current node's data to the result
+        result.add(node.data);
+
+        // Traverse the right subtree
+        inOrderTraversal(node.right, result);
+    }
+    public static void main(String[] args) {
+        // Create the binary tree
+        Node root = new Node(10);
+        root.left = new Node(20);
+        root.right = new Node(30);
+        root.left.left = new Node(40);
+        root.left.right = new Node(60);
+        root.right.left = new Node(50);
+
+        // Create an instance of the Solution class
+        Solution solution = new Solution();
+
+        // Obtain the in-order traversal of the binary tree
+        ArrayList<Integer> inorderTraversal = solution.inOrder(root);
+
+        // Print the result
+        for (int i = 0; i < inorderTraversal.size(); i++) {
+            System.out.print(inorderTraversal.get(i) + " ");
+        }
+    }
+}
