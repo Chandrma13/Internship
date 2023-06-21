@@ -1,0 +1,80 @@
+class Node {//Definition of a Node
+    int data;
+    Node next;
+
+    Node(int d) {
+        data = d;
+        next = null;
+    }
+}
+
+class Solution {
+    void reorderlist(Node head) {
+        if (head == null || head.next == null) //If the Linked List is empty or there's only one Item in the list 
+            return;//return
+
+        // Step 1: Find the middle of the linked list
+        Node slow = head;  // Initialize slow pointer to head
+        Node fast = head;  // Initialize fast pointer to head
+
+        // Move the fast pointer twice as fast as the slow pointer
+        while (fast.next != null && fast.next.next != null) {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        // Step 2: Reverse the second half of the linked list
+        Node prev = null;   // Initialize a pointer to track the previous node
+        Node curr = slow.next;  // Start from the node next to the middle node
+
+        // Reverse the second half of the linked list
+        while (curr != null) {
+            Node nextNode = curr.next;  // Store the next node temporarily
+            curr.next = prev;  // Reverse the next pointer to the previous node
+            prev = curr;  // Move the previous pointer forward
+            curr = nextNode;  // Move the current pointer forward
+        }
+
+        slow.next = null;  // Break the link between the two halves
+
+        // Step 3: Merge the first and reversed second half alternately
+        Node first = head;  // Pointer to the first half of the linked list
+        Node second = prev;  // Pointer to the reversed second half of the linked list
+
+        // Merge the first and second halves alternately
+        while (second != null) {
+            Node firstNext = first.next;  // Store the next node of the first half temporarily
+            Node secondNext = second.next;  // Store the next node of the reversed second half temporarily
+
+            first.next = second;  // Set the next pointer of the first half to the second half
+            second.next = firstNext;  // Set the next pointer of the second half to the next node of the first half
+
+            first = firstNext;  // Move the first pointer forward
+            second = secondNext;  // Move the second pointer forward
+        }
+    }
+     // Helper method to print the linked list
+     private static void printLinkedList(Node head) {
+        Node current = head;
+        while (current != null) {
+            System.out.print(current.data + " ");
+            current = current.next;
+        }
+        System.out.println();
+    }
+    public static void main(String[] args) {
+        // Create a linked list
+        Node head = new Node(1);
+        head.next = new Node(2);
+        head.next.next = new Node(3);
+
+        // Create an instance of the Solution class
+        Solution solution = new Solution();
+
+        // Reorder the linked list
+        solution.reorderlist(head);
+
+        // Print the reordered linked list
+        printLinkedList(head);
+    }
+}
