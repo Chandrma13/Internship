@@ -1,0 +1,76 @@
+class Node {//Definition of a Node
+    int data;
+    Node next;
+
+    Node(int d) {
+        data = d;
+        next = null;
+    }
+}
+
+class Solution {
+    public static Node reverseBetween(Node head, int m, int n) {
+        // Check for edge cases: empty list, single node, or m equals n
+        if (head == null || head.next == null || m == n)
+            return head;
+
+        // Create a dummy node and set its next pointer to the head of the list
+        Node dummy = new Node(0);
+        dummy.next = head;
+        Node prev = dummy; // Store the predecessor node
+
+        // Traverse to the node at position m - 1
+        for (int i = 1; i < m; i++) {
+            prev = prev.next;
+        }
+
+        Node current = prev.next; // Start reversing from position m
+        Node nextNode = null;
+        Node tail = current; // Store the tail node of the reversed sublist
+
+        // Reverse the nodes from position m to n
+        for (int i = m; i <= n; i++) {
+            nextNode = current.next; // Store the next node to be processed
+            current.next = prev.next; // Reverse the next pointer of the current node
+            prev.next = current; // Update the next pointer of the predecessor node
+            current = nextNode; // Move to the next node
+        }
+
+        tail.next = current; // Update the next pointer of the tail node
+
+        // Return the modified linked list
+        return dummy.next;
+    }
+    // Helper function to print the linked list
+    public static void printLinkedList(Node head) {
+        Node current = head;
+        while (current != null) {
+            System.out.print(current.data + " ");
+            current = current.next;
+        }
+        System.out.println();
+    }
+     public static void main(String[] args) {
+        // Create the linked list
+        Node head = new Node(1);
+        head.next = new Node(7);
+        head.next.next = new Node(5);
+        head.next.next.next = new Node(3);
+        head.next.next.next.next = new Node(9);
+        head.next.next.next.next.next = new Node(8);
+        head.next.next.next.next.next.next = new Node(10);
+        head.next.next.next.next.next.next.next = new Node(2);
+        head.next.next.next.next.next.next.next.next = new Node(2);
+        head.next.next.next.next.next.next.next.next.next = new Node(5);
+
+       //Initialise m and n
+        int m = 1;
+        int n = 8;
+
+        // Reverse the linked list from position m to n
+        head = Solution.reverseBetween(head, m, n);
+
+        // Print the modified linked list
+        printLinkedList(head);
+    }
+}
