@@ -1,0 +1,58 @@
+class Solution {
+    int atoi(String str) {
+        // Check if the input string is empty or null
+        if (str == null || str.length() == 0) {
+            return -1;//return -1
+        }
+        
+        int sign = 1; // Sign of the number, default is positive
+        int result = 0; // Final integer value
+        
+        int i = 0;
+        
+        // Ignore leading white spaces
+        while (i < str.length() && str.charAt(i) == ' ') {
+            i++;
+        }
+        
+        // Check if the number is negative
+        if (i < str.length() && str.charAt(i) == '-') {
+            sign = -1;
+            i++;
+        }
+        
+        // Process each character of the string
+        while (i < str.length()) {
+            char c = str.charAt(i);
+            
+            // Check if the character is a digit
+            if (c >= '0' && c <= '9') {
+                // Convert the character to an integer digit
+                int digit = c - '0';
+                
+                // Check for overflow
+                if (result > Integer.MAX_VALUE / 10 || (result == Integer.MAX_VALUE / 10 && digit > Integer.MAX_VALUE % 10)) {
+                    return -1;
+                }
+                
+                // Update the result by multiplying by 10 and adding the digit
+                result = result * 10 + digit;
+            } else {
+                // If the character is not a digit, return -1
+                return -1;
+            }
+            
+            i++;
+        }
+        
+        // Apply the sign to the final result
+        return sign * result;
+    }
+    public static void main(String[] args) {
+        //Initialise the String
+        String str = "123";
+        //Call the function and print
+        Solution s = new Solution();
+        System.out.println(s.atoi(str));
+    }
+}
