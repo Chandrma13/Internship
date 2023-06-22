@@ -1,0 +1,40 @@
+class Solution {
+    public int editDistance(String s, String t) {
+        int m = s.length(); // Intitialise an Integer m as length of string s
+        int n = t.length();// Intitialise an Integer n as length of string t
+        
+        // Create a 2D array to store the minimum number of operations required to convert substrings of s and t
+        int[][] dp = new int[m + 1][n + 1];
+        
+        // Initialize the first row and column
+        for (int i = 0; i <= m; i++) {
+            dp[i][0] = i; // Number of operations to convert s to an empty string
+        }
+        for (int j = 0; j <= n; j++) {
+            dp[0][j] = j; // Number of operations to convert an empty string to t
+        }
+        
+        // Calculate the minimum number of operations using dynamic programming
+        for (int i = 1; i <= m; i++) {
+            for (int j = 1; j <= n; j++) {
+                if (s.charAt(i - 1) == t.charAt(j - 1)) {
+                    // Characters match, no operation needed
+                    dp[i][j] = dp[i - 1][j - 1];
+                } else {
+                    // Choose the minimum of insert, delete, or replace operations
+                    dp[i][j] = 1 + Math.min(dp[i - 1][j - 1], Math.min(dp[i][j - 1], dp[i - 1][j]));
+                }
+            }
+        }
+        
+        // Return the minimum number of operations to convert s to t
+        return dp[m][n];
+    }
+    public static void main(String[] args) {
+      //Initialise String s and t
+      String s = "geek", t = "gesek";
+      //Call the function and print
+      Solution solution = new Solution();
+      System.out.println(solution.editDistance(s, t));
+    }
+}
