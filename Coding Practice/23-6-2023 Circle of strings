@@ -1,0 +1,68 @@
+import java.util.*;
+class Solution {
+    static int isCircle (int N, String A[]) {
+        // Check if the strings can be chained
+        if (canBeChained(A, N))
+            return 1;
+        return 0;
+    }
+    private static boolean canBeChained (String[] arr, int n) {
+        // Create an adjacency list to represent the graph
+        List<List<Integer>> adj = new ArrayList<>();
+        // Initialize the adjacency list with empty lists
+        for (int i = 0; i < 26; i++)
+            adj.add(new ArrayList<>());
+        // Arrays to store in-degree and out-degree of each character
+        int[] in = new int[26];
+        int[] out = new int[26];
+
+        // Iterate over the input strings
+        for (int i = 0; i < n; i++) {
+            String str = arr[i];
+            // Add the last character of the string as an adjacent character
+            // to the first character in the adjacency list
+            adj.get(str.charAt(0) - 'a').add(str.charAt(str.length() - 1) - 'a');
+            // Increment the out-degree of the first character
+            out[str.charAt(0) - 'a']++;
+            // Increment the in-degree of the last character
+            in[str.charAt(str.length() - 1) - 'a']++;
+        }
+
+        // Check if the in-degree and out-degree of each character are equal
+        // If not equal, the strings cannot form a circular chain
+        for (int i = 0; i < 26; i++) {
+            if (in[i] != out[i])
+                return false;
+        }
+
+        // Array to track visited characters during DFS
+        boolean[] visited = new boolean[26];
+        // Perform DFS starting from the first character of the first string
+        dfs(adj, arr[0].charAt(0) - 'a', visited);
+        // Check if all characters have been visited
+        // If any unvisited character has non-zero in-degree or out-degree,
+        // the strings cannot form a circular chain
+        for (int i = 0; i < 26; i++) {
+            if (!visited[i] && (in[i] != 0 || out[i] != 0))
+                return false;
+        }
+        // All conditions satisfied, strings can form a circular chain
+        return true;
+    }
+    private static void dfs (List<List<Integer>> adj, int index, boolean[] visited) {
+        // Mark the current character as visited
+        visited[index] = true;
+        // Explore all adjacent characters
+        for (int i : adj.get(index)) {
+            // If the adjacent character is unvisited, recursively perform DFS on it
+            if (!visited[i])
+                dfs(adj, i, visited);
+        }
+    }
+    public static void main(String[] args) {
+        //Initialise N and String Array 
+        int N = 3;
+        String A[] = { "abc", "bcd", "cdf" };
+        //Call the function and print
+        System.out.println(isCircle(N, A));
+     }}
