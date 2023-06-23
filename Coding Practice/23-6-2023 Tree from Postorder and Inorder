@@ -1,0 +1,63 @@
+class Node {//Definition of a Node
+    int data;
+    Node left;
+    Node right;
+
+    Node(int value) {
+        data = value;
+        left = null;
+        right = null;
+    }
+}
+class GfG {
+    // Function to return a tree created from postorder and inorder traversals.
+    Node buildTree(int in[], int post[], int n) {
+        // Create a helper function to build the tree recursively
+        return buildTreeHelper(in, post, 0, n - 1, 0, n - 1);
+    }
+
+    // Helper function to build the tree recursively
+    Node buildTreeHelper(int in[], int post[], int inStart, int inEnd, int postStart, int postEnd) {
+        if (inStart > inEnd)
+            return null;
+
+        // The last element in the postorder traversal is the root
+        int rootValue = post[postEnd];
+        Node root = new Node(rootValue);
+
+        // Find the index of the root in the inorder traversal
+        int rootIndex = -1;
+        for (int i = inStart; i <= inEnd; i++) {
+            if (in[i] == rootValue) {
+                rootIndex = i;
+                break;
+            }
+        }
+
+        // Recursively build the left and right subtrees
+        root.left = buildTreeHelper(in, post, inStart, rootIndex - 1, postStart, postStart + rootIndex - inStart - 1);
+        root.right = buildTreeHelper(in, post, rootIndex + 1, inEnd, postStart + rootIndex - inStart, postEnd - 1);
+
+        return root;//return root
+    }
+ // Function to print the preorder traversal of a binary tree
+ static void printPreorder(Node node) {
+    if (node == null)//If node is null 
+        return;//return
+
+    System.out.print(node.data + " ");//Print node data 
+    printPreorder(node.left);//recursively print left nodes
+    printPreorder(node.right);//recursively print right nodes
+}
+ public static void main(String[] args) {
+    //Initialise N, Inorder array and postorder array 
+        int N = 5;
+        int[] in = { 9, 5, 2, 3, 4 };
+        int[] post = { 5, 9, 3, 4, 2 };
+        
+    //Call the function and print
+        GfG solution = new GfG();
+        Node root = solution.buildTree(in, post, N);
+        printPreorder(root);
+    }
+}
