@@ -1,0 +1,89 @@
+import java.util.*;
+class Node {//Definition of a Node
+    int data;
+    Node left;
+    Node right;
+
+    Node(int value) {
+        data = value;
+        left = null;
+        right = null;
+    }
+}
+class Solution {
+    static class QueueNode {
+        Node node;//Initialise a new node
+        int hd; // horizontal distance
+
+        QueueNode(Node node, int hd) {
+            this.node = node;
+            this.hd = hd;
+        }
+    }
+   // Function to find the vertical order traversal of Binary Tree.
+    static ArrayList<Integer> verticalOrder(Node root) {
+        ArrayList<Integer> result = new ArrayList<>();//Initialise an ArrayList to store result 
+        if (root == null)//if root is null 
+            return result;//return result
+
+        // Using a TreeMap to store the nodes according to their horizontal distance
+        TreeMap<Integer, ArrayList<Integer>> map = new TreeMap<>();
+
+        // Using a queue for level order traversal
+        Queue<QueueNode> queue = new LinkedList<>();
+        queue.offer(new QueueNode(root, 0));
+
+        while (!queue.isEmpty()) {
+            QueueNode node = queue.poll();
+            int hd = node.hd;
+            Node currNode = node.node;
+
+            // Adding the current node's value to the corresponding horizontal distance in the map
+            if (map.containsKey(hd)) {
+                map.get(hd).add(currNode.data);
+            } else {
+                ArrayList<Integer> list = new ArrayList<>();
+                list.add(currNode.data);
+                map.put(hd, list);
+            }
+
+            // Enqueue the left and right child of the current node with updated horizontal distance
+            if (currNode.left != null) {
+                queue.offer(new QueueNode(currNode.left, hd - 1));
+            }
+            if (currNode.right != null) {
+                queue.offer(new QueueNode(currNode.right, hd + 1));
+            }
+        }
+
+        // Traverse the TreeMap and add the values to the result list in the order of horizontal distances
+        for (Map.Entry<Integer, ArrayList<Integer>> entry : map.entrySet()) {
+            ArrayList<Integer> list = entry.getValue();
+            for (int val : list) {
+                result.add(val);
+            }
+        }
+
+        return result;//return the updated result list
+    }
+    public static void main(String[] args) {
+        // Initialise a binary tree
+        Node root = new Node(1);
+        root.left = new Node(2);
+        root.right = new Node(3);
+        root.left.left = new Node(4);
+        root.left.right = new Node(5);
+        root.right.left = new Node(6);
+        root.right.right = new Node(7);
+        root.right.left.right = new Node(8);
+        root.right.right.right = new Node(9);
+
+        // call the function
+        ArrayList<Integer> result = verticalOrder(root);
+
+        // Print the vertical traversal
+        for (int val : result) {
+            System.out.print(val + " ");
+        }
+    }
+}
