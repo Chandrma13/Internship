@@ -1,0 +1,73 @@
+class Node {//Definition of a Node
+    int data;
+    Node next;
+
+    Node(int d) {
+        data = d;
+        next = null;
+    }
+}
+class Solution {
+    // Function to find the length of a loop in the linked list.
+    static int countNodesinLoop(Node head) {
+        Node slow = head; // Initialize a Node variable slow and set its current value to head
+        Node fast = head; // Initialize a Node variable fast and set its current value to head
+        boolean loopExists = false; // Initialize a boolean variable loopExists and set it to false
+
+        // Detect if a loop exists in the linked list
+        while (fast != null && fast.next != null) { // Iterate until fast reaches the end or the next of fast is null
+            slow = slow.next; // Move slow one step forward
+            fast = fast.next.next; // Move fast two steps forward
+            if (slow == fast) { // Check if slow and fast are pointing to the same node
+                loopExists = true; // Set loopExists to true as a loop is detected
+                break; // Exit the loop
+            }
+        }
+
+        // If a loop exists, count the number of nodes in the loop
+        if (loopExists) {
+            int count = 1; // Initialize count to 1 as we have already found one node in the loop
+            slow = slow.next; // Move slow one step ahead
+            while (slow != fast) { // Iterate until slow and fast are pointing to the same node again
+                count++; // Increment count
+                slow = slow.next; // Move slow one step ahead
+            }
+            return count; // Return the count of nodes in the loop
+        } else {
+            return 0; // No loop found, so return 0
+        }
+    }
+    public static void main(String[] args) {
+        //Initialise a Linked list
+        Node head = new Node(25);
+        head.next = new Node(14);
+       head.next.next = new Node(19);
+       head.next.next.next = new Node(33);
+       head.next.next.next.next = new Node(10);
+       head.next.next.next.next.next = new Node(21);
+       head.next.next.next.next.next.next = new Node(39);
+       head.next.next.next.next.next.next.next = new Node(90);
+       head.next.next.next.next.next.next.next.next = new Node(58);
+       head.next.next.next.next.next.next.next.next.next = new Node(45);
+
+       
+// Connect the last node to the node at position C (4th node)
+int C = 4;// Set the value of C as 4 (position of the last node to be connected)
+Node temp = head;  // Create a temporary node and initialize it with the head
+while (C > 1) {   // Traverse to the node at position C
+    temp = temp.next;
+    C--;
+}
+Node lastNode = temp;   // Store the node at position C as the lastNode
+while (temp.next != null) {  // Traverse to the last node in the linked list
+    temp = temp.next;
+}
+temp.next = lastNode;    // Connect the last node to the node at position C
+
+// Calculate the length of the loop
+int loopLength = countNodesinLoop(head); // Call the countNodesinLoop function to get the length of the loop
+
+// Print the result
+System.out.println(loopLength);// Print the length of the loop
+    }
+}
