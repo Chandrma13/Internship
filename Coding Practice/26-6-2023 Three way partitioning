@@ -1,0 +1,67 @@
+import java.util.*;
+class Solution {
+    public void threeWayPartition(int array[], int a, int b) {
+        int n = array.length;//Initialise a variable n and set its value to length of the array
+        int low = 0; // Pointer for elements smaller than 'a'
+        int high = n - 1; // Pointer for elements greater than 'b'
+        int i = 0; // Current pointer
+
+        while (i <= high) {
+            if (array[i] < a) {
+                swap(array, i, low); // Swap current element with the element at 'low' pointer
+                low++; // Increment 'low' pointer
+                i++; // Increment current pointer
+            } else if (array[i] > b) {
+                swap(array, i, high); // Swap current element with the element at 'high' pointer
+                high--; // Decrement 'high' pointer
+            } else {
+                i++; // Current element is within the range [a, b], so move to the next element
+            }
+        }
+    }
+
+    private void swap(int[] array, int i, int j) {
+        int temp = array[i]; // Store the value of the element at index 'i'
+        array[i] = array[j]; // Assign the value of the element at index 'j' to index 'i'
+        array[j] = temp; // Assign the stored value to index 'j', completing the swap
+    }
+    private static boolean checkValidity(int[] array, int a, int b) {
+        boolean valid = true; // Flag indicating if the array is valid
+
+        int i = 0; // Index pointer
+
+        // Iterate until we find the first element that is not smaller than 'a'
+        while (i < array.length && array[i] < a) {
+            i++;
+        }
+
+        // Iterate until we find the first element that is not within the range [a, b]
+        while (i < array.length && array[i] >= a && array[i] <= b) {
+            i++;
+        }
+
+        // Iterate until the end of the array to check if all remaining elements are greater than 'b'
+        while (i < array.length && array[i] > b) {
+            i++;
+        }
+
+        // If there are remaining elements after the expected partitions, the array is not valid
+        if (i != array.length) {
+            valid = false;
+        }
+        return valid; // Return true if the array is valid, otherwise false
+    }
+    public static void main(String[] args) {
+        //Initialise the array and other variables
+        int n = 5;
+        int[] array = {1, 2, 3, 3, 4};
+        int a = 1;
+        int b = 2;
+        //Call the function and Print the result
+        Solution solution = new Solution();
+        solution.threeWayPartition(array, a, b);
+       boolean isValid = checkValidity(array, a, b);
+        System.out.println((isValid ? 1 : 0));
+    }
+    }
+
