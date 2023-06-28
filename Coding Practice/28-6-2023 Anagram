@@ -1,0 +1,34 @@
+import java.util.Arrays;
+class Solution {
+    // Function is to check whether two strings are anagram of each other or not.
+    public static boolean isAnagram(String a, String b) {
+        // Check if the lengths of the two strings are different
+        if (a.length() != b.length()) {
+            return false;
+        }
+
+        // Convert the strings to character arrays
+        char[] arrA = a.toCharArray();
+        char[] arrB = b.toCharArray();
+
+        // Sort the character arrays
+        Arrays.sort(arrA);
+        Arrays.sort(arrB);
+
+        // Compare the sorted arrays
+        for (int i = 0; i < arrA.length; i++) {
+            if (arrA[i] != arrB[i]) {
+                return false;//return false
+            }
+        }
+
+        // The strings are anagrams
+        return true;//return true
+    }
+    public static void main(String[] args) {
+        //Initialise the Variables and call the function
+       String a = "geeksforgeeks", b = "forgeeksgeeks";
+       Solution s = new Solution();
+       System.out.println(s.isAnagram(a, b));//Print the result
+    }
+}
