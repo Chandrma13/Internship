@@ -1,0 +1,30 @@
+class Solution {
+    public static void convertToWave(int n, int[] arr) {
+        for (int i = 0; i < n - 1; i += 2) {
+            // Swap adjacent elements to create wave-like pattern
+            swap(arr, i, i + 1);
+        }
+    }
+    //helper function to create a wave array
+    private static void swap(int[] arr, int i, int j) {
+        int temp = arr[i]; //Initialise a variable temp that will store the current value of indice 
+        arr[i] = arr[j]; //store current value of j in current indice
+        arr[j] = temp;//update the value of j to temp 
+    }
+    //Helper Function to print the array
+    private static void printArray(int[] arr) {
+        for (int i = 0; i < arr.length; i++) {
+            System.out.print(arr[i] + " ");
+        }
+        System.out.println();
+    }
+    public static void main(String[] args) {
+        //Initialise n and arr[]
+        int n = 5;
+        int[] arr = {1, 2, 3, 4, 5};
+       //Call the function and print the array
+        Solution.convertToWave(n, arr);
+        printArray(arr);
+    }
+    }
+
