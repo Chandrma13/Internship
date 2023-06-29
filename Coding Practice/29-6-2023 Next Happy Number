@@ -1,0 +1,43 @@
+import java.util.HashSet;
+class Solution {
+    // Method to find the next smallest happy number after N
+    static int nextHappy(int N) {
+        while (true) {
+            N++;
+            if (isHappy(N))
+                return N;
+        }
+    }
+    // Method to check if a number is happy
+    static boolean isHappy(int num) {
+        // Set to store seen numbers to detect cycles
+        HashSet<Integer> seen = new HashSet<>();
+        // Continue the process until the number becomes 1 (happy) or enters a cycle (not happy)
+        while (num != 1 && !seen.contains(num)) {
+            seen.add(num);
+            num = getNextNumber(num);
+        }
+        // Return true if the number is 1 (happy), false otherwise
+        return num == 1;
+    }
+    // Method to calculate the sum of squares of the digits of a number
+    static int getNextNumber(int num) {
+        int sum = 0;
+        
+        // Iterate over each digit of the number
+        while (num > 0) {
+            int digit = num % 10; // Extract the last digit
+            sum += digit * digit; // Add the square of the digit to the sum
+            num /= 10; // Remove the last digit from the number
+        }
+        // Return the sum of squares of the digits
+        return sum;
+    }
+    public static void main(String[] args) {
+        //Initialise N and call the function
+        int N = 8;
+        Solution s = new Solution();
+        //Print the result
+        System.out.println(s.nextHappy(N));
+    }
+}
