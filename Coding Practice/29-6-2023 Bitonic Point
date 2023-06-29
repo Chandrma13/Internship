@@ -1,0 +1,15 @@
+import java.util.Arrays;
+class Solution {
+    int findMaximum(int[] arr, int n) {
+    Arrays.sort(arr);//Sort the array
+    return arr[n-1];//return the last element
+    }
+    public static void main(String[] args) {
+    //Initialise n and arr[]
+      int  n = 5;
+      int  arr[] = {1, 45, 47, 50, 5};
+      //Call the function and print the Solution
+      Solution s = new Solution();
+      System.out.println(s.findMaximum(arr, n));
+    }
+}
