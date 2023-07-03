@@ -1,0 +1,34 @@
+class Solution {
+    String equilibrium(int arr[], int n) {
+        int totalSum = 0;
+        int leftSum = 0;
+        
+        // Calculate the total sum of the array
+        for (int i = 0; i < n; i++) {
+            totalSum += arr[i];
+        }
+        
+        // Traverse the array and check for equilibrium index
+        for (int i = 0; i < n; i++) {
+            totalSum -= arr[i]; // Reduce the total sum by the current element
+            
+            // If the left sum is equal to the reduced total sum, return "YES"
+            if (leftSum == totalSum) {
+                return "YES";
+            }
+            
+            leftSum += arr[i]; // Add the current element to the left sum
+        }
+        
+        // If no equilibrium index is found, return "NO"
+        return "NO";
+    }
+    public static void main(String[] args) {
+        //Initialise the variables and call the function
+       int N = 4;
+      int Arr[] = {1, 2, 3, 3};
+      Solution s = new Solution();
+      //Print the result
+      System.out.println(s.equilibrium(Arr, N));
+    }
+}
