@@ -1,0 +1,46 @@
+import java.util.*;
+class Solution {
+    static ArrayList<Integer> max_of_subarrays(int arr[], int n, int k) {
+        ArrayList<Integer> list = new ArrayList<>(); // Create an ArrayList to store the maximum elements
+        
+        // Check if the array has no subarrays or only one element
+        if (n == k || n < 2) {
+            Arrays.sort(arr); // Sort the array in ascending order
+            list.add(arr[n - 1]); // Add the maximum element (last element after sorting) to the list
+        } else {
+            int max = Integer.MIN_VALUE; // Initialize max with the minimum possible integer value
+            
+            // Find the maximum element in the first k elements of the array
+            for (int i = 0; i < k; i++) {
+                max = Math.max(max, arr[i]); // Update max if the current element is greater
+            }
+            
+            list.add(max); // Add the maximum element to the list
+            
+            // Iterate over the remaining elements of the array
+            for (int i = k; i < n; i++) {
+                // Check if the element going out of the subarray is equal to the current maximum
+                if (arr[i - k] == max) {
+                    max = Integer.MIN_VALUE; // Reset max to the minimum possible integer value
+                    
+                    // Find the new maximum element in the subarray from i - k + 1 to i
+                    for (int j = i - k + 1; j <= i; j++) {
+                        max = Math.max(max, arr[j]); // Update max if the current element is greater
+                    }
+                } else {
+                    max = Math.max(max, arr[i]); // Update max if the current element is greater
+                }
+                
+                list.add(max); // Add the maximum element to the list
+            }
+        }
+        
+        return list; // Return the list of maximum elements
+    }
+    public static void main(String[] args) {
+        //Initialise the Variables and call the function
+       int N = 9, K = 3;
+      int arr[] = {1,2,3,1,4,5,2,3,6};
+      System.out.println(max_of_subarrays(arr, N, K)); //Print the result
+    }
+}
