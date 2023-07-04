@@ -1,0 +1,116 @@
+class Node {
+    int data;
+    Node next;
+
+    Node(int data) {
+        this.data = data;
+        next = null;
+    }
+}
+
+class Solution {
+    // Function to sort a linked list of 0s, 1s, and 2s.
+    static Node segregate(Node head) {
+        if (head == null || head.next == null) {
+            return head; // No need to sort if the list is empty or contains only one node
+        }
+
+        // Pointers for three sections: 0s, 1s, and 2s
+        Node zeroHead = null;
+        Node zeroTail = null;
+        Node oneHead = null;
+        Node oneTail = null;
+        Node twoHead = null;
+        Node twoTail = null;
+
+        Node curr = head;
+
+        // Traverse the linked list and append each node to its respective section
+        while (curr != null) {
+            if (curr.data == 0) {
+                if (zeroHead == null) {
+                    zeroHead = curr;
+                    zeroTail = curr;
+                } else {
+                    zeroTail.next = curr;
+                    zeroTail = zeroTail.next;
+                }
+            } else if (curr.data == 1) {
+                if (oneHead == null) {
+                    oneHead = curr;
+                    oneTail = curr;
+                } else {
+                    oneTail.next = curr;
+                    oneTail = oneTail.next;
+                }
+            } else if (curr.data == 2) {
+                if (twoHead == null) {
+                    twoHead = curr;
+                    twoTail = curr;
+                } else {
+                    twoTail.next = curr;
+                    twoTail = twoTail.next;
+                }
+            }
+
+            curr = curr.next;
+        }
+
+        // Connect the three sections together to form the segregated linked list
+
+        // If there are 0s in the list, update the head and connect the 0s section to the remaining sections
+        if (zeroHead != null) {
+            head = zeroHead;
+            zeroTail.next = (oneHead != null) ? oneHead : twoHead;
+        }
+
+        // If there are 1s in the list, connect the 1s section to the remaining sections
+        if (oneHead != null) {
+            // Update the head if there were no 0s in the list
+            if (zeroHead == null) {
+                head = oneHead;
+            }
+            oneTail.next = twoHead;
+        }
+
+        // If there are 2s in the list, connect the 2s section to the remaining sections
+        if (twoHead != null) {
+            // Update the head if there were no 0s and 1s in the list
+            if (zeroHead == null && oneHead == null) {
+                head = twoHead;
+            }
+            twoTail.next = null;
+        }
+
+        // Return the head of the segregated linked list
+        return head;
+    }
+    public static void main(String[] args) {
+        // Creating the linked list based on the given input values
+        int[] values = {1, 2, 2, 1, 2, 0, 2, 2};
+        Node head = null;
+        Node tail = null;
+
+        for (int i = 0; i < values.length; i++) {
+            Node newNode = new Node(values[i]);
+
+            if (head == null) {
+                head = newNode;
+                tail = newNode;
+            } else {
+                tail.next = newNode;
+                tail = tail.next;
+            }
+        }
+
+        // Calling the segregate function to sort the linked list
+        head = Solution.segregate(head);
+
+        // Printing the sorted linked list
+        Node curr = head;
+        while (curr != null) {
+            System.out.print(curr.data + " ");
+            curr = curr.next;
+        }
+    }
+}
