@@ -1,0 +1,41 @@
+class Solution {
+    int rowWithMax1s(int arr[][], int n, int m) {
+        int maxOnesRow = -1; // Variable to store the index of the row with maximum 1's
+        int maxOnesCount = 0; // Variable to store the count of maximum 1's found so far
+
+        // Start from the top-right corner of the matrix
+        int row = 0;
+        int col = m - 1;
+
+        while (row < n && col >= 0) {
+            // If the current element is 1, move to the left
+            if (arr[row][col] == 1) {
+                col--;
+                maxOnesRow = row;
+                maxOnesCount++;
+            }
+            // If the current element is 0, move to the next row
+            else {
+                row++;
+            }
+        }
+
+        // If no row contains 1, return -1
+        if (maxOnesCount == 0) {
+            return -1;
+        }
+
+        return maxOnesRow;//return the row that has maximum number of 1s.
+    }
+    public static void main(String[] args) {
+       //Initialise N,M and Arr[][] 
+       int N = 4 , M = 4;
+       int Arr[][] = {{0, 1, 1, 1},
+                      {0, 0, 1, 1},
+                      {1, 1, 1, 1},
+                      {0, 0, 0, 0}};
+        //Call the function and Print the values
+        Solution s = new Solution();                      
+        System.out.println(s.rowWithMax1s(Arr, N, M));              
+    }
+}
