@@ -1,0 +1,52 @@
+import java.util.Arrays;
+class Solution {
+  public static long maximizeSum(long a[], int n, int k) {
+        // Sort the array in ascending order
+        Arrays.sort(a);
+
+        // Iterate over the array
+        for (int i = 0; i < n && k > 0; i++) {
+            // If the current element is negative
+            if (a[i] < 0) {
+                // Change the sign of the element
+                a[i] = -a[i];
+                k--; // Decrement the count of remaining modifications
+            } else {
+                // If the current element is positive or zero, break the loop
+                break;
+            }
+        }
+
+        // If there are remaining modifications left and 'k' is odd
+        if (k % 2 != 0) {
+            // Find the minimum element in the array
+            long min = a[0];
+            for (int i = 1; i < n; i++) {
+                min = Math.min(min, a[i]);
+            }
+
+            // Subtract twice the minimum element from the sum
+            return sumArray(a) - 2 * min;
+        }
+
+        // Otherwise, return the sum of the modified array
+        return sumArray(a);
+    }
+
+    // Helper method to calculate the sum of an array
+    private static long sumArray(long[] arr) {
+        long sum = 0;
+        for (long num : arr) {
+            sum += num;
+        }
+        return sum;
+    }
+    public static void main(String[] args) {
+     //Initialise the variables
+      int  N = 5, K = 1;
+      long arr[] = {1, 2, -3, 4, 5};
+      //Print the result
+      System.out.println(maximizeSum(arr, N, K));
+
+    }
+}
