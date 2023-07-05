@@ -1,0 +1,90 @@
+import java.util.*;
+class Solution {
+    // Function to find the maximum difference between two elements in an array
+    int findMaxDiff(int a[], int n) {
+        
+        // Arrays to store the smaller elements on the left side and larger elements on the right side
+        int[] ls = new int[n];
+        int[] rs = new int[n];
+        
+        // Stack to store elements
+        Stack<Integer> s = new Stack<>();
+        
+        // Initialize the first element of the ls array as 0
+        ls[0] = 0;
+        
+        // Initialize the last element of the rs array as 0
+        rs[n-1] = 0;
+        
+        // Push the first element onto the stack
+        s.push(a[0]);
+        
+        // Loop to find the smaller elements on the left side for each element
+        for(int i = 1; i < n; i++) {
+            
+            // Pop elements from the stack that are greater than or equal to the current element
+            while(!s.isEmpty() && s.peek() >= a[i]) {
+                s.pop();
+            }
+            
+            // If the stack is not empty, assign the top element as the smaller element on the left side
+            if(!s.isEmpty()) {
+                ls[i] = s.peek();
+            }
+            else {
+                // If the stack is empty, there are no smaller elements on the left side, so assign 0
+                ls[i] = 0;  
+            }
+            
+            // Push the current element onto the stack
+            s.push(a[i]);
+        }
+        
+        // Clear the stack for reuse
+        s.clear();
+        
+        // Push the last element onto the stack
+        s.push(a[n-1]);
+        
+        // Loop to find the larger elements on the right side for each element
+        for(int i = n-2; i >= 0; i--) {
+            
+            // Pop elements from the stack that are greater than or equal to the current element
+            while(!s.isEmpty() && s.peek() >= a[i]) {
+                s.pop();
+            }
+            
+            // If the stack is not empty, assign the top element as the larger element on the right side
+            if(!s.isEmpty()) {
+                rs[i] = s.peek();
+            }
+            else {
+                // If the stack is empty, there are no larger elements on the right side, so assign 0
+                rs[i] = 0;  
+            }
+            
+            // Push the current element onto the stack
+            s.push(a[i]);
+        }
+  
+        // Variable to store the maximum difference
+        int max = 0;
+        
+        // Loop to find the maximum difference between ls[i] and rs[i]
+        for(int i = 0; i < n; i++) {
+            // Compute the difference and update the max variable using Math.abs and Math.max functions
+            max = Math.max(max, Math.abs(ls[i] - rs[i]));
+        }
+        
+        // Return the maximum difference
+        return max;
+    }
+    public static void main(String[] args) {
+        //Initialise variables and call the function
+        int  arr[] = {2, 1, 8};
+        int n = arr.length;
+        Solution s = new Solution();
+        //Print the result
+        System.out.println(s.findMaxDiff(arr, n));
+    }
+}
