@@ -1,0 +1,66 @@
+import java.util.Stack;
+class Solution {
+    public static String reduced_String(int k, String s) {
+        // Create a stack to store pairs of characters and their counts
+        Stack<Pair> result = new Stack<>();
+
+        // Iterate over each character in the string
+        for (int i = 0; i < s.length(); i++) {
+            // If the stack is not empty and the current character matches the character at the top of the stack
+            if (!result.isEmpty() && result.peek().c == s.charAt(i)) {
+                // Get the counter for the character at the top of the stack
+                int counter = result.peek().counter;
+                // Remove the pair from the stack
+                result.pop();
+                // Create a new pair with the current character and an incremented counter
+                result.push(new Pair(s.charAt(i), counter + 1));
+            } else {
+                // If the stack is empty or the current character doesn't match the character at the top of the stack,
+                // create a new pair with the current character and a counter of 1
+                result.push(new Pair(s.charAt(i), 1));
+            }
+
+            // If the counter for the character at the top of the stack reaches k,
+            // remove that pair from the stack
+            if (result.peek().counter == k) {
+                result.pop();
+            }
+        }
+
+        // Create a StringBuilder to build the reduced string
+        StringBuilder res = new StringBuilder();
+
+        // While the stack is not empty, append the characters to the StringBuilder
+        while (!result.isEmpty()) {
+            int ctr = result.peek().counter;
+            char c = result.peek().c;
+            // Append the character to the StringBuilder ctr times
+            while (ctr-- > 0) {
+                res.append(c);
+            }
+            // Remove the pair from the stack
+            result.pop();
+        }
+
+        // Reverse the StringBuilder and convert it to a string
+        return res.reverse().toString();
+    }
+
+    static class Pair {
+        private Character c;
+        private Integer counter;
+
+        // Constructor for the Pair class
+        Pair(Character c, Integer counter) {
+            this.c = c;
+            this.counter = counter;
+        }
+    }
+    public static void main(String[] args) {
+        //Initialise variables k and s
+       int k = 2;
+       String s = "geeksforgeeks";
+       //Call the function and Print
+       System.out.println(reduced_String(k, s));
+    }
+}
