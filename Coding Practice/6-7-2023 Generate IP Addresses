@@ -1,0 +1,56 @@
+import java.util.ArrayList;
+class Solution {
+    public ArrayList<String> genIp(String s) {
+        ArrayList<String> result = new ArrayList<>();
+        
+        // Check if the length of the input string is within the valid range
+        if (s.length() < 4 || s.length() > 12) {
+            result.add("-1"); // Return -1 if the length is not within the valid range
+            return result;
+        }
+        
+        // Start backtracking to generate all possible IP addresses
+        backtrack(s, result, new ArrayList<>(), 0);
+        
+        return result;
+    }
+    
+    private void backtrack(String s, ArrayList<String> result, ArrayList<String> current, int startIndex) {
+        // Base case: If we have found a valid IP address with 4 segments and reached the end of the input string
+        if (current.size() == 4 && startIndex == s.length()) {
+            result.add(String.join(".", current)); // Add the IP address to the result
+            return;
+        }
+        
+        // Backtracking logic
+        for (int i = startIndex; i < startIndex + 3 && i < s.length(); i++) {
+            String segment = s.substring(startIndex, i + 1); // Get the segment from startIndex to i (inclusive)
+            if (isValidSegment(segment)) { // Check if the segment is valid
+                current.add(segment); // Add the segment to the current list of segments
+                backtrack(s, result, current, i + 1); // Recursively explore the remaining segments
+                current.remove(current.size() - 1); // Remove the segment for backtracking
+            }
+        }
+    }
+    
+    private boolean isValidSegment(String segment) {
+        int length = segment.length();
+        
+        // The segment cannot have leading zeros except for 0 itself
+        if (segment.charAt(0) == '0' && length > 1)
+            return false;
+        
+        int value = Integer.parseInt(segment);
+        
+        // The segment value must be between 0 and 255
+        return value >= 0 && value <= 255;
+    }
+    public static void main(String[] args) {
+        //Initialise the String S 
+       String S = "1111";
+       //Call the function 
+       Solution solution = new Solution();
+       //Print the Solution
+       System.out.println(solution.genIp(S));
+    }
+}
