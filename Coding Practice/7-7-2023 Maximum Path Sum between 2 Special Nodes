@@ -1,0 +1,57 @@
+class Node {
+    int data;
+    Node left, right;
+
+    Node(int item) {
+        data = item;
+        left = right = null;
+    }
+} 
+
+class Solution {
+    int maxPathSum(Node root) {
+        // Base case: if the root is null, return 0
+        if (root == null) {
+            return 0;
+        }
+
+        // Get the maximum path sum in the left subtree
+        int leftMaxSum = maxPathSum(root.left);
+
+        // Get the maximum path sum in the right subtree
+        int rightMaxSum = maxPathSum(root.right);
+
+        // Calculate the maximum sum considering three cases:
+        // 1. The maximum path sum goes through the root node
+        // 2. The maximum path sum is in the left subtree
+        // 3. The maximum path sum is in the right subtree
+        int maxSum = Math.max(root.data, Math.max(leftMaxSum, rightMaxSum) + root.data);
+
+        // Calculate the maximum path sum considering all four cases:
+        // 1. The maximum path sum goes through the root node
+        // 2. The maximum path sum is in the left subtree
+        // 3. The maximum path sum is in the right subtree
+        // 4. The maximum path sum goes through both the left and right subtrees
+        int maxPath = Math.max(maxSum, Math.max(leftMaxSum + rightMaxSum + root.data, Math.max(leftMaxSum, rightMaxSum)));
+
+        // Return the maximum path sum
+        return maxPath;
+    }
+    public static void main(String[] args) {
+        // Create the binary tree
+        Node root = new Node(3);
+        root.left = new Node(4);
+        root.right = new Node(5);
+        root.left.left = new Node(-10);
+        root.left.right = new Node(4);
+
+        // Create an instance of the Solution class
+        Solution solution = new Solution();
+
+        // Calculate the maximum path sum
+        int maxPathSum = solution.maxPathSum(root);
+
+        // Print the result
+        System.out.println(maxPathSum);
+    }
+}
