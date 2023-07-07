@@ -9,33 +9,39 @@ class Node {
 } 
 
 class Solution {
+    int res = Integer.MIN_VALUE;  // Initialize the result variable with the minimum possible value of an integer
+
     int maxPathSum(Node root) {
-        // Base case: if the root is null, return 0
-        if (root == null) {
-            return 0;
+        // Main method to find the maximum path sum in the binary tree
+        int h = maxPathSumUtil(root);  // Call the helper method to calculate the maximum path sum recursively
+        if (root.left == null || root.right == null) {
+            // If the root node has either a left child or a right child (not both), update the result if necessary
+            res = Math.max(res, h);
+        }
+        return res;  // Return the final result
+    }
+
+    int maxPathSumUtil(Node root) {
+        // Recursive helper method to calculate the maximum path sum
+        if (root == null)
+            return 0;  // If the current node is null, return 0
+
+        if (root.left == null && root.right == null)
+            return root.data;  // If the current node is a leaf node (no children), return the data value of the node
+
+        int ls = maxPathSumUtil(root.left);    // Recursively calculate the maximum path sum of the left subtree
+        int rs = maxPathSumUtil(root.right);   // Recursively calculate the maximum path sum of the right subtree
+
+        if (root.left != null && root.right != null) {
+            // If the node has both left and right children, calculate the sum of left subtree, right subtree, and the current node's data value
+            res = Math.max(res, (ls + rs + root.data));  // Update the result if the sum is greater than the current result
+            return Math.max(ls, rs) + root.data;         // Return the maximum sum between the left subtree and the right subtree plus the current node's data value
         }
 
-        // Get the maximum path sum in the left subtree
-        int leftMaxSum = maxPathSum(root.left);
-
-        // Get the maximum path sum in the right subtree
-        int rightMaxSum = maxPathSum(root.right);
-
-        // Calculate the maximum sum considering three cases:
-        // 1. The maximum path sum goes through the root node
-        // 2. The maximum path sum is in the left subtree
-        // 3. The maximum path sum is in the right subtree
-        int maxSum = Math.max(root.data, Math.max(leftMaxSum, rightMaxSum) + root.data);
-
-        // Calculate the maximum path sum considering all four cases:
-        // 1. The maximum path sum goes through the root node
-        // 2. The maximum path sum is in the left subtree
-        // 3. The maximum path sum is in the right subtree
-        // 4. The maximum path sum goes through both the left and right subtrees
-        int maxPath = Math.max(maxSum, Math.max(leftMaxSum + rightMaxSum + root.data, Math.max(leftMaxSum, rightMaxSum)));
-
-        // Return the maximum path sum
-        return maxPath;
+        if (root.left == null)
+            return rs + root.data;  // If the node has no left child, return the sum of the right subtree plus the current node's data value
+        else
+            return ls + root.data;  // If the node has no right child, return the sum of the left subtree plus the current node's data value
     }
     public static void main(String[] args) {
         // Create the binary tree
