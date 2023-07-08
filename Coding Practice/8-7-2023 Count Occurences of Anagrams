@@ -1,0 +1,51 @@
+import java.util.Arrays;
+class Solution {
+    int search(String pat, String txt) {
+        // Get the lengths of the pattern and the text
+        int patLength = pat.length();
+        int txtLength = txt.length();
+        
+        // If the text length is smaller than the pattern length, pattern cannot be present
+        if (txtLength < patLength)
+            return 0;
+        
+        // Create count arrays for pattern and text characters
+        int[] patCount = new int[26];  // stores the count of each character in the pattern
+        int[] txtCount = new int[26];  // stores the count of each character in the text
+        
+        // Count occurrences of characters in the initial window
+        for (int i = 0; i < patLength; i++) {
+            patCount[pat.charAt(i) - 'a']++;  // increment count of the corresponding character in pattern
+            txtCount[txt.charAt(i) - 'a']++;  // increment count of the corresponding character in text
+        }
+        
+        // Initialize count variable to store the occurrences of the pattern in the text
+        int count = 0;
+        
+        // Loop from pattern length to text length
+        for (int i = patLength; i < txtLength; i++) {
+            // If pattern and text character counts are equal, pattern is found in the current window
+            if (Arrays.equals(patCount, txtCount))
+                count++;  // increment count
+            
+            // Update text count array for the sliding window
+            txtCount[txt.charAt(i - patLength) - 'a']--;  // decrement count of character going out of the window
+            txtCount[txt.charAt(i) - 'a']++;  // increment count of character coming into the window
+        }
+        
+        // Perform one more comparison outside the loop for the last window
+        if (Arrays.equals(patCount, txtCount))
+            count++;
+        
+        // Return the count of occurrences of the pattern in the text
+        return count;
+    }
+    public static void main(String[] args) {
+    //Initialise String txt and pat
+     String txt = "forxxorfxdofr",pat = "for" ;
+     //Call the function
+     Solution s = new Solution();
+     //Print the result
+     System.out.println(s.search(pat, txt));
+    }
+}
