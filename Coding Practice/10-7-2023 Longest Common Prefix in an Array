@@ -1,0 +1,34 @@
+class Solution {
+    String longestCommonPrefix(String arr[], int n) {
+        if (n == 0) {
+            return "-1"; // Return -1 if the array is empty
+        }
+        
+        String prefix = arr[0]; // Initialize the prefix with the first string
+        //Iterate through the array 
+        for (int i = 1; i < n; i++) { 
+            // Iterate through the array starting from the second element (index 1)
+            
+            while (arr[i].indexOf(prefix) != 0) {
+                // Check if the prefix is not found at the beginning of the i-th element of the array
+                
+                prefix = prefix.substring(0, prefix.length() - 1);
+                // Remove the last character from the prefix
+                
+                if (prefix.isEmpty()) {
+                    return "-1"; // Return -1 if there is no common prefix
+                }
+            }
+        }
+         return prefix;//return updated value of String Prefix
+    }
+    public static void main(String[] args) {
+       //Initialise variables 
+       int N = 4;
+       String arr[] = {"geeksforgeeks","geeks","geek","geezer"};
+       //Create an Instance and call the function 
+       Solution s = new Solution();
+       System.out.println(s.longestCommonPrefix(arr, N));//Print the Longest common Prefix
+
+    }
+}
