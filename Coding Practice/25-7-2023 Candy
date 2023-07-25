@@ -1,0 +1,43 @@
+import java.util.*;
+class Solution {
+    static int minCandy(int N, int ratings[]) {
+        // Create an array 'candy' of size N to store the number of candies for each child.
+        int candy[]=new int[N];
+
+        // Initialize all elements in the 'candy' array to 1.
+        Arrays.fill(candy,1);
+
+        // Traverse the 'ratings' array from left to right.
+        for(int i=1;i<N;i++){
+
+            // If the current child's rating is higher than the previous child's rating,
+            // update the number of candies for the current child to be one more than the previous child's candies.
+            candy[i]=ratings[i]>ratings[i-1] ? candy[i-1]+1 : candy[i]; 
+        }
+
+        // Traverse the 'ratings' array from right to left.
+        for(int j=N-2;j>=0;j--){
+
+            // If the current child's rating is higher than the next child's rating,
+            // update the number of candies for the current child to be the maximum value between its current candies
+            // and one more than the next child's candies.
+            candy[j]=ratings[j]>ratings[j+1] ? Math.max(candy[j],candy[j+1]+1) : candy[j];
+        }
+
+        // Calculate the total number of candies required by summing up all the elements in the 'candy' array.
+        int ans=0;
+        for(int k: candy){
+            ans+=k;
+        }
+
+        // Return the total number of candies.
+        return ans;
+    }
+    public static void main(String[] args) {
+    //Initialise N and array ratings
+      int N = 3;
+      int ratings [] = {1, 0, 2};
+      //Call the function and print
+      System.out.println(minCandy(N, ratings));
+    }
+}
