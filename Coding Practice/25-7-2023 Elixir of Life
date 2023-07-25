@@ -1,0 +1,67 @@
+class Sol
+{
+    // Function to find the maximum frequency of a repeating substring in the given string.
+    int maxFrequency(String S)
+    {
+        // Initialize variable to store the maximum frequency.
+        int ans = 0;
+        
+        // Initialize variables to store the current candidate prefix and suffix substrings.
+        String prefix = "";
+        String sufix = "";
+        
+        // Get the first character of the input string.
+        char ch = S.charAt(0);
+        
+        // Initialize a variable to keep track of the last index in the string.
+        int last_index = S.length();
+
+        // Loop to find a possible prefix substring by traversing the input string from the end.
+        while (last_index > 0) {
+            // Find the last occurrence of the character 'ch' before the last_index.
+            last_index = S.lastIndexOf(ch, last_index - 1);
+            
+            // If the last occurrence is at the beginning of the string, it means the whole string is a repeating substring.
+            // In that case, return 1 as the maximum frequency.
+            if (last_index == 0) return 1;
+            
+            // Calculate the length of the prefix substring.
+            int len = S.length() - last_index;
+            
+            // Extract the current prefix and suffix substrings.
+            prefix = S.substring(0, len);
+            sufix = S.substring(last_index, S.length());
+            
+            // If the current prefix is equal to the corresponding suffix, it means we found a valid repeating substring.
+            // Break out of the loop as we only need to find one valid repeating substring.
+            if (prefix.equals(sufix)) {
+                break;
+            }
+        }
+
+        // Initialize a variable to keep track of the current index while searching for occurrences of the prefix.
+        int myIndex = 0;
+        
+        // Loop to find all occurrences of the prefix substring.
+        while (myIndex != -1) {
+            // Find the next occurrence of the prefix starting from the current index.
+            myIndex = S.indexOf(prefix, myIndex + 1);
+            
+            // If the prefix is found, increment the frequency count.
+            ans++;
+        }
+
+        // Return the maximum frequency of the repeating substring.
+        return ans;
+    }
+    public static void main(String[] args) {
+        // Initialise String S
+        String S = "ababaaaab";
+        
+        // Create an instance of Sol class
+        Sol sol = new Sol();
+      
+        // Print the result of the maxFrequency method for the input string S
+        System.out.println(sol.maxFrequency(S));
+    }
+}
