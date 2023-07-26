@@ -1,0 +1,30 @@
+import java.util.Scanner;
+class cls1 { //Class 1
+    void add(int p, int q) { //takes p & q as parameters
+        System.out.println(p + q); //print addition of both variables
+    }
+}
+class cls2 extends cls1 { //class 2 extends class 1
+    void mul(int p, int q) {
+        System.out.println(p * q); //print multiplication of p & q
+    }
+
+    void task(int a, int b) { //new function of class 2
+        int sumOfSquares = (a * a) + (b * b); //calculate sum of squares of a & b and store it in a new variable sumOfSquares
+        System.out.println(sumOfSquares); //Print sumOfSquares
+    }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in); //Introduce scanner class to take input from user
+        int T = sc.nextInt(); // Number of test cases
+
+        for (int t = 0; t < T; t++) {
+            int a = sc.nextInt();
+            int b = sc.nextInt();
+        //Create an instance of class 2 & Print
+            cls2 obj = new cls2();
+            obj.add(a, b);
+            obj.mul(a, b);
+            obj.task(a, b);
+        }
+    }
+}
