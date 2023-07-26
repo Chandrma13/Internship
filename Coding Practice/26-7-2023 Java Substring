@@ -1,0 +1,17 @@
+class Solution {
+    static String javaSub(String S, int L, int R) {
+        String result; //Initialise a Variable string
+        if (R==S.length()) { // If R is equal to the length of string
+         result = S.substring(L); //Store the required substring in variable result
+        }
+        else{ result = S.substring(L, R+1);} //else store the substring from L(Inclusive) to R+1(Exclusive) in variable result
+        return result; //return updated value of result
+    }
+    public static void main(String[] args) {
+    //Initialise variables
+      String S = "cdbkdub";
+      int L = 0 , R = 5;
+      //call the function and print the value
+     System.out.println(javaSub(S, L, R)); 
+    }
+}
