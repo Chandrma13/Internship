@@ -1,0 +1,42 @@
+import java.util.Scanner;
+
+interface in1 { 
+    void display(int p); //display function
+}
+
+class testClass implements in1 {
+    public void display(int k) {
+        int count = 0;//initialise a variable count
+        for (int i = 2; i <= k; i++) {
+            if (isPrime(i)) {//call isPrime to check if current value of i is a prime number
+                count++;//Increment count if above is true
+            }
+        }
+        System.out.println(count);//print the udated value of count
+    }
+
+    private boolean isPrime(int num) {//helper function to check prime number
+        if (num <= 1) {//If num is less than equals to 1
+            return false;//return false
+        }
+        for (int i = 2; i <= Math.sqrt(num); i++) {
+            if (num % i == 0) {//check if i divides num fully
+                return false;//return false
+            }
+        }
+        return true;//return true
+    }
+    public static void main(String[] args) {
+        //Initialise scanner class and print the result
+        Scanner scanner = new Scanner(System.in);
+        int T = scanner.nextInt();
+
+        testClass obj = new testClass();
+
+        for (int t = 0; t < T; t++) {
+            int n = scanner.nextInt();
+            obj.display(n);
+        }
+        scanner.close();
+    }
+}
