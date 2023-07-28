@@ -1,0 +1,12 @@
+class Solution{
+    static void printIntString(String S,int N){
+       System.out.println("The input string :"+ S);//Print String
+       System.out.println("The input integer :"+ N);//Print Integer
+        }   
+    public static void main(String[] args) {
+        //Initialise variables and call the function
+       String S = "GeeksforGeeks" ;
+       int N = 20;
+       printIntString(S, N);
+        } 
+}
