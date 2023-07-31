@@ -1,0 +1,28 @@
+import java.util.Calendar;
+
+ class Solution {
+    static String findDay(int day, int month, int year) {
+        // Create a Calendar instance
+        Calendar calendar = Calendar.getInstance();
+
+        // Set the given year, month, and day to the Calendar instance
+        calendar.set(year, month - 1, day);
+
+        // Get the day of the week as an integer (Sunday = 1, Monday = 2, ..., Saturday = 7)
+        int dayOfWeek = calendar.get(Calendar.DAY_OF_WEEK);
+
+        // Convert the day of the week integer to a string representation in uppercase
+        String[] weekdays = {"", "SUNDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY"};
+        return weekdays[dayOfWeek];//return weekday
+    }
+    public static void main(String[] args) {
+        //Initialise date, month & Year
+        int date = 17;
+        int month = 3;
+        int year = 2017;
+        
+        //Call the function & print the result
+        String dayOfWeek = Solution.findDay(date, month, year);
+         System.out.println(dayOfWeek);
+        }
+}
