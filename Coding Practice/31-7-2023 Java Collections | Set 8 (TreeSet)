@@ -1,0 +1,50 @@
+import java.util.TreeSet;
+class gfg1 {
+    // Method to perform three tasks on a TreeSet of strings based on given characters a, b, c, and d.
+    void task(TreeSet<String> ts, char a, char b, char c, char d) {
+
+        // Task 1: Print all the strings which are less than 'a'
+        TreeSet<String> lessThanA = new TreeSet<>();
+        for (String str : ts) {
+            // Add the string to the 'lessThanA' set if its compareTo value is less than 0 (i.e., str < a).
+            if (str.compareTo(String.valueOf(a)) < 0) {
+                lessThanA.add(str);
+            }
+        }
+        System.out.println(lessThanA);
+
+        // Task 2: Print all the strings which are greater than or equal to 'b'
+        TreeSet<String> greaterThanOrEqualToB = new TreeSet<>();
+        for (String str : ts) {
+            // Add the string to the 'greaterThanOrEqualToB' set if its compareTo value is greater than or equal to 0 (i.e., str >= b).
+            if (str.compareTo(String.valueOf(b)) >= 0) {
+                greaterThanOrEqualToB.add(str);
+            }
+        }
+        System.out.println(greaterThanOrEqualToB);
+
+        // Task 3: Print all the strings which are greater than or equal to 'c' and less than 'd'
+        // Create a new TreeSet using subSet method to get all strings between c and d (exclusive).
+        TreeSet<String> betweenCAndD = new TreeSet<>(ts.subSet(String.valueOf(c), String.valueOf(d)));
+        System.out.println(betweenCAndD);
+    }
+
+    public static void main(String[] args) {
+        // Create an object of gfg1 class
+        gfg1 obj = new gfg1();
+
+        // Test case 1
+        // Create a TreeSet and add some strings to it.
+        TreeSet<String> ts1 = new TreeSet<>();
+        ts1.add("sa");
+        ts1.add("ka");
+        ts1.add("da");
+        // Define characters a, b, c, and d for the task method.
+        char a1 = 's';
+        char b1 = 'k';
+        char c1 = 'c';
+        char d1 = 's';
+        // Call the task method with the given TreeSet and characters.
+        obj.task(ts1, a1, b1, c1, d1);
+    }
+}
