@@ -1,0 +1,60 @@
+class Solution {
+    // Function to find the maximum contiguous subarray sum using Kadane's algorithm.
+    static int kadane(int a[], int n) {
+        int maxSum = a[0]; // Initialize maxSum with the first element of the array.
+        int currentMax = a[0]; // Initialize currentMax with the first element of the array.
+
+        // Iterate through the array from the second element.
+        for (int i = 1; i < n; i++) {
+            // Update currentMax to be the maximum of the current element and the currentMax + current element.
+            currentMax = Math.max(a[i], currentMax + a[i]);
+            // Update maxSum to be the maximum of maxSum and currentMax.
+            maxSum = Math.max(maxSum, currentMax);
+        }
+
+        // Return the maximum contiguous subarray sum.
+        return maxSum;
+    }
+
+    // Function to find the maximum circular subarray sum.
+    static int circularSubarraySum(int a[], int n) {
+        // Check if all elements are negative, return the maximum element itself.
+        boolean allNegative = true; // Flag to check if all elements are negative.
+        int maxElement = a[0]; // Initialize maxElement with the first element of the array.
+        for (int i = 1; i < n; i++) {
+            // Find the maximum element in the array.
+            maxElement = Math.max(maxElement, a[i]);
+            // If any element is greater than 0, it means not all elements are negative.
+            if (a[i] > 0) {
+                allNegative = false;
+                break;
+            }
+        }
+        if (allNegative) {
+            return maxElement; // If all elements are negative, return the maximum element itself.
+        }
+
+        int maxSum1 = kadane(a, n); // Case 1: Maximum subarray sum using Kadane's algorithm.
+
+        int totalSum = 0; // Variable to store the sum of all elements of the array.
+        for (int i = 0; i < n; i++) {
+            totalSum += a[i]; // Calculate the totalSum by summing all elements of the array.
+            a[i] = -a[i]; // Invert the signs of elements to create the inverted array.
+        }
+        int maxSum2 = totalSum + kadane(a, n); // Case 2: Maximum subarray sum of the inverted array.
+
+        // Getting the maximum of Case 1 and Case 2 to find the circular subarray sum.
+        int maxCircularSum = Math.max(maxSum1, maxSum2);
+
+        // Return the maximum circular subarray sum.
+        return maxCircularSum;
+    }
+
+    public static void main(String[] args) {
+        //Initialise array a and n
+        int[] a = {8, -8, 9, -9, 10, -11, 12}; 
+        int n = a.length; 
+        //Call the function and print the result
+        System.out.println(circularSubarraySum(a, n)); 
+    }
+}
