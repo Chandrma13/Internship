@@ -1,0 +1,54 @@
+import java.util.*;
+class Solution {
+    // Function to return a list containing the DFS traversal of the graph.
+    public ArrayList<Integer> dfsOfGraph(int V, ArrayList<ArrayList<Integer>> adj) {
+        // Create an array to keep track of visited vertices.
+        boolean[] visited = new boolean[V];
+
+        // Create an ArrayList to store the DFS traversal result.
+        ArrayList<Integer> dfsTraversal = new ArrayList<>();
+
+        // Start DFS from vertex 0.
+        dfsUtil(0, adj, visited, dfsTraversal);
+
+        // Return the DFS traversal result.
+        return dfsTraversal;
+    }
+
+    // Recursive utility function to perform DFS.
+    private void dfsUtil(int vertex, ArrayList<ArrayList<Integer>> adj, boolean[] visited, ArrayList<Integer> dfsTraversal) {
+        // Mark the current vertex as visited.
+        visited[vertex] = true;
+
+        // Add the current vertex to the DFS traversal result.
+        dfsTraversal.add(vertex);
+
+        // Explore all adjacent vertices that are not visited.
+        for (int neighbor : adj.get(vertex)) {
+            // Check if the neighbor vertex has not been visited.
+            if (!visited[neighbor]) {
+                // Recursive call to visit the neighbor vertex and its connected vertices.
+                dfsUtil(neighbor, adj, visited, dfsTraversal);
+            }
+        }
+    }
+    public static void main(String[] args) {
+        //Initialise variables
+        int V = 5;
+        ArrayList<ArrayList<Integer>> adj = new ArrayList<>();
+        adj.add(new ArrayList<>(Arrays.asList(2, 3, 1))); // Vertex 0 is connected to vertices 2, 3, and 1
+        adj.add(new ArrayList<>(Arrays.asList(0))); // Vertex 1 is connected to vertex 0
+        adj.add(new ArrayList<>(Arrays.asList(0, 4))); // Vertex 2 is connected to vertices 0 and 4
+        adj.add(new ArrayList<>(Arrays.asList(0))); // Vertex 3 is connected to vertex 0
+        adj.add(new ArrayList<>(Arrays.asList(2))); // Vertex 4 is connected to vertex 2
+
+        // Create an instance of the Solution class.
+        Solution solution = new Solution();
+
+        // Perform DFS traversal on the graph.
+        ArrayList<Integer> dfsTraversal = solution.dfsOfGraph(V, adj);
+
+        // Print the DFS traversal result.
+        System.out.println(dfsTraversal);
+    }
+}
