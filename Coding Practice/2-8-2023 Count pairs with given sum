@@ -1,0 +1,30 @@
+import java.util.HashMap;
+class Solution {
+    int getPairsCount(int[] arr, int n, int k) {
+        int count = 0; // Variable to store the count of pairs with sum equals 'k'
+        HashMap<Integer, Integer> map = new HashMap<>(); // Hashmap to store the frequency of elements in the array
+
+        // Iterate through the array to find pairs with sum equals 'k'
+        for (int i = 0; i < n; i++) {
+            int complement = k - arr[i]; // Calculate the complement needed to form a pair with sum 'k'
+
+            // Check if the complement exists in the hashmap.
+            // If yes, it means there is a pair with sum 'k', and we add its frequency to the count.
+            count += map.getOrDefault(complement, 0);
+
+            // Update the frequency of the current element in the hashmap.
+            // If it doesn't exist in the hashmap, its default frequency is 0, so we increment it to 1.
+            map.put(arr[i], map.getOrDefault(arr[i], 0) + 1);
+        }
+
+        return count; // Return the final count of pairs with sum equals 'k'
+    }
+    public static void main(String[] args) {
+    //Initialise the variables 
+      int arr[] = {1, 5, 7, 1};
+      int N = arr.length, K = 6;
+      //call the function and Print
+       Solution s = new Solution();
+       System.out.println(s.getPairsCount(arr, N, K));
+    }
+}
