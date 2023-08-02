@@ -1,0 +1,50 @@
+class Node {//Definition of a node class
+    int data;
+    Node next;
+
+    Node(int d) {
+        data = d;
+        next = null;
+    }
+}
+class Solution
+{
+    int getMiddle(Node head)
+    {
+        // Initialize two pointers, slow and fast
+        Node slow = head;
+        Node fast = head;
+        Node prevSlow = null; // To keep track of the previous slow pointer
+        
+        // Traverse the list with two pointers
+        while (fast != null && fast.next != null)
+        {
+            // Move slow pointer by one step
+            prevSlow = slow;
+            slow = slow.next;
+            
+            // Move fast pointer by two steps
+            fast = fast.next.next;
+        }
+        
+        // If the number of nodes in the linked list is even,
+        // return the second middle node (prevSlow.next).
+        // Otherwise, return the middle node (slow).
+        return (fast == null) ? prevSlow.next.data : slow.data;
+    }
+    public static void main(String[] args) {
+        // Create a sample linked list
+        Node head = new Node(1);
+        head.next = new Node(2);
+        head.next.next = new Node(3);
+        head.next.next.next = new Node(4);
+        head.next.next.next.next = new Node(5);
+
+        // Create a solution object
+        Solution solution = new Solution();
+
+        // Find the middle element and print the result
+        int middleElement = solution.getMiddle(head);
+        System.out.println(middleElement);
+    }
+}
