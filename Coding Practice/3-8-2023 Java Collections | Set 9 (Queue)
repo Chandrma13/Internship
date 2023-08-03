@@ -1,0 +1,62 @@
+// Importing the necessary Queue and LinkedList classes from the java.util package
+import java.util.*;
+
+class Solution
+{
+    // Declaring a Queue data structure to store the elements of the queue
+    Queue<Integer> q;
+    
+    // Constructor of the Solution class, initializing the queue using a LinkedList
+    Solution(){
+        q = new LinkedList<>();
+    }
+
+    // Method to add an element to the end (rear) of the queue
+    public void addElement(int key)
+    {
+        // Using the add() method of the Queue interface to add the 'key' to the queue
+        q.add(key);
+    }
+
+    // Method to remove and print the front element from the queue
+    // If the queue is empty, it prints "-1"
+    public void RemoveElement()
+    {
+        // Checking if the queue size is greater than 0 (i.e., the queue is not empty)
+        if(q.size() > 0)
+            // Using the remove() method of the Queue interface to remove and print the front element
+            System.out.print(q.remove() + " ");
+        else
+            // If the queue is empty, print "-1"
+            System.out.print("-1 ");
+    }
+
+    // Method to print the front element of the queue without removing it
+    // If the queue is empty, it prints "-1"
+    public void peekElement()
+    {
+        // Checking if the queue size is greater than 0 (i.e., the queue is not empty)
+        if(q.size() > 0)
+            // Using the peek() method of the Queue interface to get the front element and print it
+            System.out.print(q.peek() + " ");
+        else
+            // If the queue is empty, print "-1"
+            System.out.print("-1 ");
+    }
+
+    // Method to print the size of the queue
+    public void Size()
+    {
+        // Using the size() method of the Queue interface to get the current size of the queue and print it
+        System.out.print(q.size() + " ");
+    }
+    public static void main(String[] args) {
+        //Create an Instance of class Solution and Initialise queue
+        Solution queue = new Solution();
+        queue.addElement(10);
+        queue.addElement(20);
+        queue.Size(); 
+        queue.peekElement();
+        queue.RemoveElement(); 
+        queue.Size();
+}}
