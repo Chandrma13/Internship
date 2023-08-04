@@ -1,0 +1,28 @@
+class Solution {
+    long maxSubarraySum(int arr[], int n) {
+        // Initialize variables to keep track of maximum subarray sum so far and the sum of the current subarray.
+        long maxSumSoFar = arr[0];
+        long currentSum = arr[0];
+
+        // Loop through the array starting from the second element since the first element is already considered.
+        for (int i = 1; i < n; i++) {
+            // Update the current sum by either adding the current element or starting a new subarray.
+            currentSum = Math.max(arr[i], currentSum + arr[i]);
+
+            // Update the maximum subarray sum seen so far.
+            maxSumSoFar = Math.max(maxSumSoFar, currentSum);
+        }
+
+        // Return the maximum subarray sum.
+        return maxSumSoFar;
+    }
+    public static void main(String[] args) {
+        //Initialise array and n 
+        Solution solution = new Solution();//create instance 
+        int[] arr = { 1, 2, 3, -2, 5 };
+        int n = arr.length;
+        //call the function and print
+        long maxSum1 = solution.maxSubarraySum(arr, n);
+        System.out.println(maxSum1); 
+    }
+}
