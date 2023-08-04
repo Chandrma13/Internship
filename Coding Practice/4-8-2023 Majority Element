@@ -1,0 +1,48 @@
+class Solution {   
+    // The function to find the majority element in the array
+    static int majorityElement(int a[], int size) {
+        // Initialize variables to keep track of the potential majority element
+        int candidate = -1;  // Initialize as -1, assuming no majority element
+        int count = 0;       // Count of the current potential majority element
+
+        // Find the potential majority element using the Boyer-Moore Voting Algorithm
+        for (int i = 0; i < size; i++) {
+            // If count is 0, set the current element as the new candidate and reset count to 1
+            if (count == 0) {
+                candidate = a[i];
+                count = 1;
+            }
+            // If the current element is the same as the candidate, increment count
+            else if (a[i] == candidate) {
+                count++;
+            }
+            // If the current element is different from the candidate, decrement count
+            else {
+                count--;
+            }
+        }
+
+        // Verify if the candidate is the actual majority element by counting its occurrences
+        int occurrences = 0;
+        for (int i = 0; i < size; i++) {
+            // Count how many times the candidate element appears in the array
+            if (a[i] == candidate) {
+                occurrences++;
+            }
+        }
+
+        // If the occurrences of the candidate element are greater than size/2, it's the majority element
+        if (occurrences > size / 2)
+            return candidate;
+        else
+            return -1; // If there is no majority element, return -1
+    }
+    public static void main(String[] args) {
+        //Initialise variables array and size
+        int[] arr = {1,2,3};
+        int size = arr.length;
+        //call the function & Print majority element
+        int majorityElement = Solution.majorityElement(arr, size);
+        System.out.println(majorityElement);
+    }
+}
