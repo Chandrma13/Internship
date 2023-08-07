@@ -1,0 +1,23 @@
+import java.util.Arrays;
+
+class Solution {
+    void immediateSmaller(int arr[], int n) {
+        for (int i = 0; i < n-1; i++) {//Iterate till the second last element of the array
+            if(arr[i] > arr[i+1]){//If current indice is greater than the next indice 
+                arr[i] = arr[i+1];//Update the value of current indice as the next indice
+            } else {
+                arr[i] = -1;//If the above condition is false update the value of current indice as -1
+            }
+        }
+        arr[n-1] = -1; // The last element has no smaller element on its right, so set it to -1.
+    }
+    public static void main(String[] args) {
+      //Initialise arr[] & n
+      int arr[] = {4, 2, 1, 5, 3};
+       int  n = arr.length;
+       //create an Instance of Solution class & call the function
+      Solution s = new Solution();
+      s.immediateSmaller(arr, n);
+      System.out.println(Arrays.toString(arr));//Print the updated array
+    }
+}
