@@ -1,0 +1,79 @@
+import java.util.*;
+
+class Solution {
+    public String findOrder(String[] dict, int N, int K) {
+        // Create an adjacency list to represent relationships between characters.
+        ArrayList<ArrayList<Integer>> adjList = new ArrayList<>();
+        for (int i = 0; i < K; i++) {
+            adjList.add(new ArrayList<>());
+        }
+
+        // Initialize an array to keep track of incoming edges for each character.
+        int[] inDegree = new int[K];
+
+        // Construct the adjacency list and inDegree array based on dictionary words.
+        for (int i = 1; i < N; i++) {
+            String word1 = dict[i - 1];
+            String word2 = dict[i];
+            for (int j = 0; j < Math.min(word1.length(), word2.length()); j++) {
+                // Compare consecutive characters of words to find the first mismatch.
+                if (word1.charAt(j) != word2.charAt(j)) {
+                    int char1Index = word1.charAt(j) - 'a';
+                    int char2Index = word2.charAt(j) - 'a';
+                    // Add an edge from character1 to character2 in the adjacency list.
+                    adjList.get(char1Index).add(char2Index);
+                    // Increase the incoming edge count for character2 in the inDegree array.
+                    inDegree[char2Index]++;
+                    // Stop comparing characters as we have found the first mismatch.
+                    break;
+                }
+            }
+        }
+
+        // Use a queue for topological sort and a StringBuilder for the final result.
+        Queue<Integer> queue = new LinkedList<>();
+        StringBuilder result = new StringBuilder();
+
+        // Add characters with no incoming edges to the queue (characters that come first).
+        for (int i = 0; i < K; i++) {
+            if (inDegree[i] == 0) {
+                queue.add(i);
+            }
+        }
+
+        // Perform topological sort by processing characters in the queue.
+        while (!queue.isEmpty()) {
+            int current = queue.poll();
+            // Append the current character to the result string.
+            result.append((char) ('a' + current));
+            // Process neighbors (characters that come after the current character).
+            for (int neighbor : adjList.get(current)) {
+                // Decrease the incoming edge count for the neighbor.
+                inDegree[neighbor]--;
+                // If the neighbor has no more incoming edges, add it to the queue.
+                if (inDegree[neighbor] == 0) {
+                    queue.add(neighbor);
+                }
+            }
+        }
+
+        // Check if all characters have been included in the result.
+        if (result.length() != K) {
+            return "0"; // Incorrect order, return "0".
+        }
+
+        // Return the correct character order as a string.
+        return result.toString();
+    }
+     public static void main(String[] args) {
+        //Initialise K & N  & dict[]
+        int N = 5;
+        int K = 4;
+        String[] dict = {"baa", "abcd", "abca", "cab", "cad"};
+       //Call the function and print the value
+        Solution solution = new Solution();
+        String result = solution.findOrder(dict, N, K);
+        
+        System.out.println(result);
+    }
+}
