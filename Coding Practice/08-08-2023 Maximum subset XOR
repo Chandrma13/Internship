@@ -1,0 +1,79 @@
+class Solution
+{
+    public static int maxSubsetXOR(int arr[], int n)
+    { 
+        // Initialize the index to 0
+        int index = 0;
+        
+        // Iterate over each bit position from 31 to 0
+        for(int i=31; i>=0; i--){
+            
+            // Initialize the maximum element with the current bit set to 1 to the smallest possible value
+            int maxele = Integer.MIN_VALUE;
+            // Initialize the index of the maximum element to the current index
+            int maxindex = index;
+            
+            // Find the maximum element with the current bit set to 1 in the remaining portion of the array
+            for(int j=index; j<arr.length;j++){
+                
+                // Check if the current bit (at position i) of the element is set to 1
+                int setbit = (arr[j]>>i) & 1;
+                
+                // If the current bit is set to 1 and the element is greater than the current maximum element, update maxele and maxindex
+                if(setbit!=0 && maxele<arr[j]){
+                    maxele = arr[j];
+                    maxindex = j;
+                }
+            }
+            
+            // If no element with the current bit set to 1 is found, continue to the next bit position
+            if(maxele == Integer.MIN_VALUE){
+                continue;
+            }
+            
+            // Swap the maximum element found with the element at the current index position in the array
+            int temp = arr[index];
+            arr[index] = arr[maxindex];
+            arr[maxindex] = temp;
+            
+            // Update maxindex to the current index
+            maxindex = index;
+            
+            // Perform XOR operations with the maximum element (maxele) and other elements with the same bit set to 1
+            for(int j=0; j<n;j++){
+                
+                // Check if the current bit (at position i) of the element is set to 1
+                int setbit = (arr[j]>>i) & 1;
+                
+                // If the current bit is set to 1 and the element index is not the same as maxindex, XOR the element with maxele
+                if(setbit!=0 && j!=maxindex){
+                    arr[j] = arr[j]^arr[maxindex];
+                }
+            }
+            
+            // Increment the index to move to the next bit position
+            index++;
+            
+        }
+        
+        // Calculate the maximum XOR value by taking the XOR of all elements in the modified array
+        int ans = 0;
+        for(int ele: arr){
+            ans = ans^ele;
+        }
+        
+        // Return the computed maximum XOR value
+        return ans;
+    }
+ public static void main(String[] args) {
+        // Input array and size
+        int N = 3;
+        int[] arr = {2, 4, 5};
+
+        // Call the maxSubsetXOR function
+        int result = Solution.maxSubsetXOR(arr, N);
+
+        // Print the result
+        System.out.println("Maximum XOR subset value is: " + result);
+    }
+}
