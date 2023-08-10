@@ -1,0 +1,61 @@
+import java.util.*;
+
+class GfG {
+    /* Inserts an entry with key x and value y in the map */
+    void add_Value(TreeMap<Integer, Integer> hm, int x, int y) {
+        hm.put(x, y);
+    }
+
+    /* Returns the value with key x from the map */
+    int find_value(TreeMap<Integer, Integer> hm, int x) {
+        return hm.containsKey(x) ? hm.get(x) : -1;
+    }
+
+    /* Returns the size of the map */
+    int getSize(TreeMap<Integer, Integer> hm) {
+        return hm.size();
+    }
+
+    /* Removes the entry with key x from the map */
+    void removeKey(TreeMap<Integer, Integer> hm, int x) {
+        hm.remove(x);
+    }
+
+    /* Print map sorted by key */
+    void sorted_By_Key(TreeMap<Integer, Integer> hm) {
+        for (Map.Entry<Integer, Integer> entry : hm.entrySet()) {
+            System.out.print(entry.getKey() + " ");
+        }
+    }
+
+    public static void main(String[] args) {
+        GfG gfg = new GfG();
+        Scanner sc = new Scanner(System.in);
+        int Q = sc.nextInt(); // Number of queries
+        sc.nextLine(); // Consume the newline after reading the integer
+
+        // Create a TreeMap to store the key-value pairs
+        TreeMap<Integer, Integer> hm = new TreeMap<>();
+
+        for (int i = 0; i < Q; i++) {
+            char queryType = sc.next().charAt(0);
+            if (queryType == 'a') {
+                int x = sc.nextInt();
+                int y = sc.nextInt();
+                gfg.add_Value(hm, x, y);
+            } else if (queryType == 'b') {
+                int x = sc.nextInt();
+                int result = gfg.find_value(hm, x);
+                System.out.print(result + " ");
+            } else if (queryType == 'c') {
+                int result = gfg.getSize(hm);
+                System.out.print(result + " ");
+            } else if (queryType == 'd') {
+                int x = sc.nextInt();
+                gfg.removeKey(hm, x);
+            } else if (queryType == 'e') {
+                gfg.sorted_By_Key(hm);
+            }
+        }
+    }
+}
