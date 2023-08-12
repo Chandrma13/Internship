@@ -1,0 +1,20 @@
+import java.util.Arrays;
+class Compute {
+    public void rotate(int arr[], int n)
+    {     //Initialise a variable temp to store the last element of the array
+         int temp = arr[n-1];
+   for (int i = n - 1; i > 0; i--) {//Iterate through the array
+            arr[i] = arr[i-1];//set new positions of the old indices in the array
+        }
+    arr[0] = temp;//Place the temp variable at the Start of the array
+    System.out.println(Arrays.toString(arr));//Print the rotated array
+    }
+    public static void main(String[] args) {
+      //Initialise array and n
+        int A[] = {1, 2, 3, 4, 5}, N = A.length;
+        //Create an Instance of the function
+        Compute s = new Compute();
+        //Call the function
+       s.rotate(A, N);
+    }
+}
