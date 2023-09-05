@@ -1,0 +1,50 @@
+class Solution
+{
+    // Define a method named greaterLesser that takes an integer array A and an integer N as inputs
+    public int[] greaterLesser(int[] A, int N) {
+        // Create a copy of the input array A with the same length N
+        int[] arr = Arrays.copyOfRange(A, 0, N);
+        // Sort the copied array in ascending order
+        Arrays.sort(arr);
+        
+        // Create a HashMap named map with Integer keys and Queue<Integer> values
+        Map<Integer, Queue<Integer>> map = new HashMap<>();
+        
+        // Iterate through the sorted array arr to populate the map
+        for (int i = 0; i < N; i++) {
+            // Check if the map already contains the element arr[i] as a key
+            if (map.get(arr[i]) == null)
+                // If not, create a new LinkedList and associate it with the key arr[i]
+                map.put(arr[i], new LinkedList<>());
+            
+            // Add the current index i to the queue associated with the key arr[i]
+            map.get(arr[i]).add(i);
+        }
+        
+        // Initialize an integer array res with the same length as the input array
+        int[] res = new int[N];
+        
+        // Iterate through the original array A
+        for (int i = 0; i < N; i++) {
+            // Calculate the absolute difference between the current index i
+            // and the index of the same element in the sorted array (polling from the queue)
+            res[i] = Math.abs(i - map.get(A[i]).poll());
+        }
+        
+        // Return the resulting integer array res as the output of the method
+        return res;
+    }
+public static void main(String[] args) {
+        int N = 5;
+        int[] A = {5, 4, 3, 2, 1};
+
+        // Create an instance of the Solution class
+        Solution solution = new Solution();
+
+        // Call the greaterLesser method to calculate the result
+        int[] result = solution.greaterLesser(A, N);
+
+        // Print the result
+        System.out.println(Arrays.toString(result));
+    }
+}
