@@ -1,0 +1,68 @@
+class Solution {
+    
+    // Define a nested static class for TrieNode
+    static class TrieNode {
+        TrieNode zero, one; // TrieNode has two children, representing '0' and '1' bits.
+    }
+
+    // Insert a number 'n' into the Trie
+    static void insert(TrieNode root, int n) {
+        TrieNode curRoot = root; // Start from the root of the Trie
+        for (int i = 31; i >= 0; i--) { // Iterate through each bit of 'n' from left to right (from most significant to least significant)
+            int bit = (n >> i) & 1; // Extract the current bit of 'n'
+            if (bit == 1) { // If the bit is 1
+                if (curRoot.one == null) // If the '1' child node does not exist, create it
+                    curRoot.one = new TrieNode();
+                curRoot = curRoot.one; // Move to the '1' child
+            } else { // If the bit is 0
+                if (curRoot.zero == null) // If the '0' child node does not exist, create it
+                    curRoot.zero = new TrieNode();
+                curRoot = curRoot.zero; // Move to the '0' child
+            }
+        }
+    }
+
+    // Find the minimum XOR with a number 'n' in the Trie
+    static int findMinXOR(TrieNode root, int n) {
+        TrieNode curRoot = root; // Start from the root of the Trie
+        int ans = 0; // Initialize the result
+        for (int i = 31; i >= 0; i--) { // Iterate through each bit of 'n' from left to right
+            int bit = (n >> i) & 1; // Extract the current bit of 'n'
+            if (bit == 0) { // If the bit is 0
+                if (curRoot.zero != null) {
+                    curRoot = curRoot.zero; // If '0' child node exists, move to the '0' child
+                } else {
+                    curRoot = curRoot.one; // If '0' child node does not exist, move to the '1' child
+                    ans += (1 << i); // Flip the current bit by adding 2^i to the result
+                }
+            } else { // If the bit is 1
+                if (curRoot.one != null) {
+                    curRoot = curRoot.one; // If '1' child node exists, move to the '1' child
+                } else {
+                    curRoot = curRoot.zero; // If '1' child node does not exist, move to the '0' child
+                    ans += (1 << i); // Flip the current bit by adding 2^i to the result
+                }
+            }
+        }
+        return ans; // Return the minimum XOR result
+    }
+
+    // Find the minimum XOR value among all pairs of elements in the array
+    static int minxorpair(int N, int arr[]) {
+        TrieNode root = new TrieNode(); // Create an empty Trie
+        int ans = Integer.MAX_VALUE; // Initialize the answer with the maximum possible value
+        for (int i = 0; i < N - 1; i++) { // Iterate through the array
+            insert(root, arr[i]); // Insert the current element into the Trie
+            ans = Math.min(ans, findMinXOR(root, arr[i + 1])); // Find the minimum XOR with the next element and update the answer
+        }
+        return ans; // Return the final minimum XOR result
+    }
+ public static void main(String[] args) {
+        int N = 3;
+        int[] arr = {9, 5, 3};
+        
+        int result = Solution.minxorpair(N, arr);
+        
+        System.out.println("Minimum XOR value among all pairs of elements in the array: " + result);
+    }
+}
