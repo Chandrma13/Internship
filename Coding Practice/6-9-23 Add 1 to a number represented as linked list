@@ -1,0 +1,47 @@
+class Node {
+    int data;          // Create an integer field to store data.
+    Node next;         // Create a reference to the next Node in the list.
+
+    Node(int x) {      // Constructor: Initialize a Node with data value x.
+        data = x;
+        next = null;   // Initially, there is no next Node, so set it to null.
+    }
+}
+
+class Solution {
+    public static Node reverse(Node head) {
+        Node curr = head;   // Initialize a pointer 'curr' to the head of the list.
+        Node prev = null;   // Initialize a pointer 'prev' to null, as there is no previous node initially.
+        
+        while (curr != null) {     // Iterate through the list.
+            Node next = curr.next; // Store the next node in 'next'.
+            curr.next = prev;      // Reverse the 'next' reference to point to the 'prev' node.
+            prev = curr;           // Move 'prev' to the current node.
+            curr = next;           // Move 'curr' to the next node.
+        }
+        
+        return prev;  // 'prev' now points to the new head of the reversed list.
+    }
+
+    public static Node addOne(Node head) {
+        Node newhead = reverse(head);  // Reverse the linked list and store the new head in 'newhead'.
+        int carry = 1;                // Initialize a carry to 1 (to add 1 to the number).
+        Node temp = newhead;          // Initialize a temporary pointer 'temp' to 'newhead'.
+        Node prev = null;             // Initialize a pointer 'prev' to null.
+
+        while (temp != null) {        // Iterate through the reversed list.
+            int d = temp.data + carry;  // Add the carry to the current node's data.
+            int val = d % 10;          // Calculate the new value for the current node.
+            carry = d / 10;            // Update the carry for the next node.
+            temp.data = val;           // Update the data of the current node.
+            prev = temp;               // Move 'prev' to the current node.
+            temp = temp.next;          // Move 'temp' to the next node.
+        }
+
+        if (carry != 0) {              // If there's a remaining carry, create a new node.
+            prev.next = new Node(carry);  // Append a new node with the carry value.
+        }
+
+        return reverse(newhead);  // Reverse 'newhead' again to get the final result and return it.
+    }
+}
