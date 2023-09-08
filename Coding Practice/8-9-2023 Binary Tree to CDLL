@@ -1,0 +1,47 @@
+class Node {
+    int data;
+    Node left, right;
+    
+    Node(int d) {
+        data = d;
+        left = right = null;
+    }
+}
+
+class Solution {
+    Node prev; // A reference to keep track of the previously processed node.
+
+    // Function to convert binary tree into circular doubly linked list.
+    Node bTreeToClist(Node root) {
+        // Convert to DLL
+        prev = null; // Initialize the prev reference as null.
+        Node head = convert(root); // Call the convert method to convert to DLL.
+
+        // Link first and last nodes to make it circular
+        Node cur = head;
+        while (cur.right != null) {
+            cur = cur.right; // Move to the rightmost node.
+        }
+        cur.right = head; // Connect the last node's right to the head.
+        head.left = cur; // Connect the head's left to the last node.
+
+        return head; // Return the head of the circular doubly linked list.
+    }
+
+    Node convert(Node root) {
+        if (root == null) return null; // If the current node is null, return null.
+        Node head = convert(root.left); // Recursively convert the left subtree.
+        
+        if (prev == null) {
+            head = root; // If prev is null, set head to the leftmost node.
+        } else {
+            prev.right = root; // Set the right pointer of the previous node to the current node.
+        }
+        root.left = prev; // Set the left pointer of the current node to the previous node.
+        prev = root; // Update prev to the current node.
+        
+        convert(root.right); // Recursively convert the right subtree.
+        
+        return head; // Return the head of the doubly linked list.
+    }
+}
