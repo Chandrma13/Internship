@@ -1,0 +1,56 @@
+import java.util.*;
+// Define a class for a binary tree node.
+class Node {
+    int data;           // An integer value stored in the node.
+    Node left, right;   // References to the left and right child nodes.
+
+    // Constructor to initialize a node with the given integer value.
+    Node(int item) {
+        data = item;
+        left = right = null; // Initialize both child references to null.
+    }
+}
+
+// Define a class for the binary tree itself.
+class Tree {
+    // Helper method to perform a postorder traversal of the tree.
+    void postorder(Node root, ArrayList<Integer> list) {
+        if (root == null) {
+            return; // If the current node is null, return (base case).
+        }
+
+        // Recursive calls to traverse the left and right subtrees.
+        postorder(root.left, list);
+        postorder(root.right, list);
+
+        // Add the current node's data to the ArrayList.
+        System.out.print(root.data + " ");
+    }
+
+    // Function to return a list containing the postorder traversal of the tree.
+    ArrayList<Integer> postOrder(Node root) {
+        ArrayList<Integer> list = new ArrayList<>(); // Create an empty ArrayList to store the results.
+        postorder(root, list); // Call the helper method to perform postorder traversal.
+        return list; // Return the ArrayList containing postorder traversal results.
+    }
+ public static void main(String[] args) {
+        // Create nodes for the binary tree.
+        Node root = new Node(19);
+        root.left = new Node(10);
+        root.right = new Node(8);
+        root.left.left = new Node(11);
+        root.left.right = new Node(13);
+
+        // Create an instance of the Tree class.
+        Tree tree = new Tree();
+
+        // Perform a postorder traversal and get the result as an ArrayList.
+        ArrayList<Integer> postorderResult = tree.postOrder(root);
+
+        // Print the postorder traversal result.
+        System.out.println("Postorder traversal result:");
+        for (Integer value : postorderResult) {
+            System.out.print(value + " ");
+        }
+    }
+}
