@@ -1,0 +1,62 @@
+// Define a class Node that represents nodes in the Huffman tree
+class Node implements Comparable<Node> {
+    int data;        // The character frequency
+    Node left;       // Reference to the left child
+    Node right;      // Reference to the right child
+
+    Node(int data) { // Constructor to initialize a node with a character frequency
+        this.data = data;
+        left = null;
+        right = null;
+    }
+
+    public int compareTo(Node p) { // Implement the compareTo method for node comparison
+        if (this.data == p.data)
+            return 1;
+        return this.data - p.data;
+    }
+}
+
+class Solution {
+    public ArrayList<String> huffmanCodes(String s, int f[], int n) {
+        // Code here
+        PriorityQueue<Node> pq = new PriorityQueue<>(); // Create a priority queue for nodes
+
+        // Add each character frequency as a node to the priority queue
+        for (int i = 0; i < n; i++) {
+            Node node = new Node(f[i]);
+            pq.add(node);
+        }
+
+        // Build the Huffman tree by repeatedly combining nodes with the lowest frequencies
+        while (pq.size() > 1) {
+            Node leftNode = pq.peek(); // Get the node with the lowest frequency
+            pq.poll();                // Remove it from the queue
+            Node rightNode = pq.peek(); // Get the next lowest frequency node
+            pq.poll();                // Remove it from the queue
+
+            // Create a new parent node with the sum of frequencies and add it back to the queue
+            Node parentNode = new Node(leftNode.data + rightNode.data);
+            parentNode.left = leftNode;
+            parentNode.right = rightNode;
+            pq.add(parentNode);
+        }
+
+        Node root = pq.peek(); // The remaining node in the queue is the root of the Huffman tree
+        ArrayList<String> list = new ArrayList<>(); // Create a list to store Huffman codes
+        String temp = ""; // Temporary string to build Huffman codes
+        traversal(root, list, temp); // Call the traversal method to generate Huffman codes
+        return list; // Return the list of Huffman codes
+    }
+
+    // Recursive method to traverse the Huffman tree and generate codes
+    void traversal(Node root, ArrayList<String> ans, String temp) {
+        if (root.left == null && root.right == null) {
+            ans.add(temp); // If a leaf node is reached, add the code to the list
+            return;
+        }
+
+        traversal(root.left, ans, temp + '0'); // Traverse the left branch (append '0')
+        traversal(root.right, ans, temp + '1'); // Traverse the right branch (append '1')
+    }
+}
